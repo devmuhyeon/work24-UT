@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/work24-UT/css/reset.css">
+<link rel="stylesheet" href="/work24-UT/css/font.css">
+<link rel="stylesheet" href="/work24-UT/css/common.css">
+<link rel="stylesheet" href="/work24-UT/css/survey.css">
+<link rel="stylesheet" href="/work24-UT/css/co-survey.css">
+
+<title>고용24 사용자 조사 - 공통 설문</title>
+
+</head>
+
+<body>
+
+<div class="survey_wrap">
+	<form id="surveyForm" class="survey_box" novalidate>
+		<input type="hidden" id="user_ut_id" name="user_ut_id">
+
+		<div class="survey_head">
+			<span class="survey_badge">고용24 UT</span>
+			<h1 class="survey_title">STEP5. 공통 설문</h1>
+			<p class="survey_desc">응답해주신 내용은 고용24 서비스 개선 및 사용자 경험 향상을 위한 목적으로만 활용됩니다.</p>
+			<ol class="step_list" aria-label="조사 진행 단계">
+				<li><span class="sr_only">사전 설문</span></li>
+				<li><span class="sr_only">화면 탐색 테스트 안내</span></li>
+				<li><span class="sr_only">화면 탐색 테스트</span></li>
+				<li class="is_current"><span class="sr_only">현재 단계: 공통 설문</span></li>
+				<li><span class="sr_only">결과 전송</span></li>
+			</ol>
+		</div>
+		<div class="survey_body">
+			<!-- Q1 -->
+            <fieldset class="fieldset_group" id="question1">
+                <p class="question_desc">
+                    <span class="question_number">Q1.</span>
+                    두 화면 중 어느 쪽이 더 마음에 드셨나요?
+                </p>
+
+                <div class="option_list">
+                    <div class="option_item">
+                        <input type="radio" id="prefer_1" name="preference" value="1번 화면">
+                        <label for="prefer_1">1번 화면</label>
+                    </div>
+
+                    <div class="option_item">
+                        <input type="radio" id="prefer_2" name="preference" value="2번 화면">
+                        <label for="prefer_2">2번 화면</label>
+                    </div>
+
+                    <div class="option_item">
+                        <input type="radio" id="prefer_same" name="preference" value="비슷하다">
+                        <label for="prefer_same">비슷하다</label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Q2 -->
+            <fieldset class="fieldset_group" id="question2" hidden>
+                <p class="question_desc">
+                    <span class="question_number">Q2.</span>
+                    그 이유는 무엇인가요?
+                    <span class="question_sub">(복수 선택 가능)</span>
+                </p>
+
+                <div class="option_list is-long">
+                    <div class="option_item">
+                        <input type="checkbox" id="reason_fast" name="reason" value="원하는 정보를 빨리 찾을 수 있을 것 같아서">
+                        <label for="reason_fast">
+                            원하는 정보를 빨리 찾을 수 있을 것 같아서
+                        </label>
+                    </div>
+
+                    <div class="option_item">
+                        <input type="checkbox" id="reason_clean" name="reason" value="화면 구성이 깔끔하고 보기 편해서">
+                        <label for="reason_clean">
+                            화면 구성이 깔끔하고 보기 편해서
+                        </label>
+                    </div>
+
+                    <div class="option_item">
+                        <input type="checkbox" id="reason_info" name="reason" value="필요한 정보가 더 잘 보여서">
+                        <label for="reason_info">
+                            필요한 정보가 더 잘 보여서
+                        </label>
+                    </div>
+
+                    <div class="option_item">
+                        <input type="checkbox" id="reason_design" name="reason" value="디자인이 더 세련되어 보여서">
+                        <label for="reason_design">
+                            디자인이 더 세련되어 보여서
+                        </label>
+                    </div>
+
+                    <div class="option_item">
+                        <input type="checkbox" id="reason_sort" name="reason" value="정보가 잘 정리되어 있어서">
+                        <label for="reason_sort">
+                            정보가 잘 정리되어 있어서
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Q3 -->
+            <fieldset class="fieldset_group" id="question3" hidden>
+                <p class="question_desc">
+                    <span class="question_number">Q3.</span>
+                    개선했으면 하는 점이 있다면 자유롭게 작성해주세요.
+                </p>
+
+                <div class="textarea_wrap">
+                    <label for="improve_text" class="sr_only">
+                        개선 의견 입력
+                    </label>
+
+                    <textarea
+                        id="improve_text"
+                        name="improve_text"
+                        class="survey_textarea"
+                        rows="6"
+                        placeholder="의견을 자유롭게 작성해주세요."
+                    ></textarea>
+                </div>
+            </fieldset>
+
+			<!-- 버튼 -->
+			<div class="button_area" id="submitArea"><button type="submit" class="btn_submit">다음 단계 진행하기</button></div>
+
+		</div>
+	</form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="/work24-UT/js/ut-common.js"></script>
+
+<script>
+$(function () {
+
+	function showQuestion(target) {
+		var $target = $(target);
+
+		if ($target.is(':hidden')) {
+			$target
+				.prop('hidden', false)
+				.hide()
+				.slideDown(240);
+		}
+	}
+
+	function showSubmit() {
+		var $submitArea = $('#submitArea');
+
+		if ($submitArea.is(':hidden')) {
+			$submitArea
+				.css('display', 'flex')
+				.hide()
+				.slideDown(240);
+		}
+	}
+
+	$('input[name="preference"]').on('change', function () {
+		showQuestion('#question2');
+	});
+
+	$('input[name="reason"]').on('change', function () {
+		showQuestion('#question3');
+		showSubmit();
+	});
+
+	$('#surveyForm').on('submit', function (e) {
+		e.preventDefault();
+
+		var reasonList = [];
+
+		$('input[name="reason"]:checked').each(function () {
+			reasonList.push($(this).val());
+		});
+
+		var surveyData = {
+			utId: UT.generateId(),
+			preference: $('input[name="preference"]:checked').val(),
+			reason: reasonList,
+			improveText: $.trim($('#improve_text').val()),
+			startTime: new Date().toISOString(),
+			userAgent: navigator.userAgent
+		};
+
+		UT.saveSurvey(surveyData);
+		UT.goTaskGuide();
+	});
+
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+@charset "utf-8";
+
+.question_number {display:inline-flex; align-items:center; justify-content:center; min-width:42px; height:30px; margin-right:8px; border-radius:999px; background:var(--col_skyblue_light); color:var(--col_blue); font-size:15px; font-weight:800;}
+.question_sub {margin-left:6px; color:var(--col_p); font-size:14px; font-weight:500;}
+.option_list.is-long {grid-template-columns:repeat(1, minmax(0, 1fr))}
+.option_item input[type="checkbox"] {position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); border:0;}
+.option_item input[type="checkbox"] + label::before {border-radius:6px;}
+.option_item input[type="checkbox"] + label::after {left:25px; top:50%; width:10px; height:6px; border-left:2px solid var(--col_white); border-bottom:2px solid var(--col_white); border-radius:0; background:transparent; transform:translateY(-65%) rotate(-45deg) scale(0);}
+.option_item input[type="checkbox"]:checked + label {transform:translateY(-2px); border:2px solid var(--col_blue); background:linear-gradient(180deg, #fff 0%, var(--col_skyblue_light) 100%); box-shadow:0 14px 30px rgba(63,88,212,.16), inset 0 0 0 1px rgba(63,88,212,.18); color:var(--col_darkblue);}
+.option_item input[type="checkbox"]:checked + label::before {border-color:var(--col_blue); background:var(--col_blue);}
+.option_item input[type="checkbox"]:checked + label::after {transform:translateY(-65%) rotate(-45deg) scale(1);}
+.option_item input[type="checkbox"]:focus-visible + label,
+.option_item input[type="radio"]:focus-visible + label {outline:3px solid rgba(64,140,255,.45); outline-offset:3px;}
+.textarea_wrap {margin-top:4px;}
+.survey_textarea {width:100%; min-height:160px; padding:18px 20px; border:1px solid var(--col_tabe); border-radius:20px; background:var(--col_white); color:var(--col_body); font-size:16px; font-family:inherit; line-height:1.6; resize:vertical; box-sizing:border-box; box-shadow:0 6px 18px rgba(17,17,17,.04); transition:border-color .16s ease, box-shadow .16s ease;}
+.survey_textarea::placeholder {color:var(--col_dis);}
+.survey_textarea:hover {border-color:rgba(63,88,212,.35);}
+.survey_textarea:focus {border-color:var(--col_blue); outline:3px solid rgba(64,140,255,.35); outline-offset:2px; box-shadow:0 14px 30px rgba(63,88,212,.12);}
