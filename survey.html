@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/work24-UT/css/reset.css">
+<link rel="stylesheet" href="/work24-UT/css/font.css">
+<link rel="stylesheet" href="/work24-UT/css/common.css">
+<link rel="stylesheet" href="/work24-UT/css/survey.css">
+
+<title>고용24 사용자 조사 - 사전 설문</title>
+
+</head>
+
+<body>
+
+<div class="survey_wrap">
+	<form id="surveyForm" class="survey_box" novalidate>
+		<input type="hidden" id="user_ut_id" name="user_ut_id">
+
+		<div class="survey_head">
+			<span class="survey_badge">고용24 UT</span>
+			<h1 class="survey_title">STEP1. 사전 설문</h1>
+			<p class="survey_desc">고용24 콘텐츠 이용 활성화를 위한 사용자 조사입니다. 진행 전 간단한 사전 설문에 응답해주세요.</p>
+			<ol class="step_list" aria-label="조사 진행 단계">
+				<li class="is_current"><span class="sr_only">현재 단계: 사전 설문</span></li>
+				<li><span class="sr_only">화면 탐색 테스트 안내</span></li>
+				<li><span class="sr_only">화면 탐색 테스트</span></li>
+				<li><span class="sr_only">결과 전송</span></li>
+			</ol>
+		</div>
+		<div class="survey_body">
+			<!-- Q1 -->
+			<fieldset class="fieldset_group" id="question1">
+				<p class="question_desc"><span class="question_number">Q1.</span> 연령대를 선택해주세요</p>
+				<div class="option_list">
+					<div class="option_item">
+						<input type="radio" id="age_10" name="age" value="10대">
+						<label for="age_10">10대</label>
+					</div>
+					<div class="option_item">
+						<input type="radio" id="age_20" name="age" value="20~30대">
+						<label for="age_20">20~30대</label>
+					</div>
+
+					<div class="option_item">
+						<input type="radio" id="age_40" name="age" value="40~50대">
+						<label for="age_40">40~50대</label>
+					</div>
+
+					<div class="option_item">
+						<input type="radio" id="age_60" name="age" value="60~64세">
+						<label for="age_60">60~64세</label>
+					</div>
+
+					<div class="option_item">
+						<input type="radio" id="age_65" name="age" value="65세 이상">
+						<label for="age_65">65세 이상</label>
+					</div>
+				</div>
+			</fieldset>
+
+			<!-- Q2 -->
+			<fieldset class="fieldset_group" id="question2" hidden>
+				<p class="question_desc"><span class="question_number">Q2.</span> 고용24 이용 경험이 있으신가요?</p>
+
+				<div class="option_list">
+					<div class="option_item">
+						<input type="radio" id="exp_often" name="experience" value="자주 이용">
+						<label for="exp_often"> 자주 이용</label>
+					</div>
+
+					<div class="option_item">
+						<input type="radio" id="exp_sometimes" name="experience" value="가끔 이용">
+						<label for="exp_sometimes">가끔 이용</label>
+					</div>
+
+					<div class="option_item">
+						<input type="radio" id="exp_first" name="experience" value="처음 방문">
+						<label for="exp_first">처음 방문</label>
+					</div>
+				</div>
+			</fieldset>
+
+			<!-- Q3 -->
+			<fieldset class="fieldset_group" id="question3" hidden>
+				<p class="question_desc"><span class="question_number">Q3.</span> 기업회원이신가요?</p>
+				<div class="option_list">
+					<div class="option_item">
+						<input type="radio" id="member_yes" name="member" value="예">
+						<label for="member_yes">예</label>
+					</div>
+					<div class="option_item">
+						<input type="radio" id="member_no" name="member" value="아니오">
+						<label for="member_no">아니오</label>
+					</div>
+				</div>
+			</fieldset>
+
+			<!-- 버튼 -->
+			<div class="button_area" id="submitArea"><button type="submit" class="btn_submit">다음 단계 진행하기</button></div>
+
+		</div>
+	</form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="/work24-UT/js/ut-common.js"></script>
+
+<script>
+$(function() {
+
+	function generateUTID() {
+
+		const date = new Date();
+
+		const yyyy = date.getFullYear();
+
+		const mm = String(
+			date.getMonth() + 1
+		).padStart(2, '0');
+
+		const dd = String(
+			date.getDate()
+		).padStart(2, '0');
+
+		const random = Math.random()
+			.toString(36)
+			.substring(2, 8)
+			.toUpperCase();
+
+		return 'UT-' + yyyy + mm + dd + '-' + random;
+	}
+
+	const utId = generateUTID();
+
+	$('#user_ut_id').val(utId);
+
+	function showQuestion(target) {
+
+		if ($(target).is(':hidden')) {
+
+			$(target)
+				.prop('hidden', false)
+				.hide()
+				.slideDown(240);
+
+		}
+	}
+
+	$('input[name="age"]').on('change', function() {
+
+		showQuestion('#question2');
+
+		$('#question2')
+			.find('.legend_title')
+			.attr('tabindex', '-1')
+			.focus();
+
+	});
+
+	$('input[name="experience"]').on('change', function() {
+
+		showQuestion('#question3');
+
+		$('#question3')
+			.find('.legend_title')
+			.attr('tabindex', '-1')
+			.focus();
+
+	});
+
+	$('input[name="member"]').on('change', function() {
+
+		$('#submitArea')
+			.css('display', 'flex')
+			.hide()
+			.slideDown(240);
+
+	});
+
+$('#surveyForm').on('submit', function(e) {
+
+	e.preventDefault();
+
+	const surveyData = {
+
+		utId: UT.generateId(),
+
+		age:
+			$('input[name="age"]:checked').val(),
+
+		experience:
+			$('input[name="experience"]:checked').val(),
+
+		member:
+			$('input[name="member"]:checked').val(),
+
+		startTime:
+			new Date().toISOString(),
+
+		userAgent:
+			navigator.userAgent
+
+	};
+
+	UT.saveSurvey(surveyData);
+
+	UT.goTaskGuide();
+
+});
+
+});
+</script>
+
+</body>
+</html>
