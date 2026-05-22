@@ -4,6 +4,8 @@
 
 
 .dimmed_blur { position:absolute; top:0; right:0; z-index:100; width:100%; height:100%; pointer-events:none; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); background:rgba(255,255,255,0.12); pointer-events:auto; touch-action:none;}
+.dimmed_blur.blur_10 {width: calc(100% + 10px);}
+.dimmed_blur.blur_per {width: 200%; right: initial; left: 50%; transform: translateX(-50%);}
 body {overflow: hidden;}
 .quick_top {z-index: 95;}
 .main_wrap .favorite_swiper .swiper-wrapper {display: grid; grid-template-columns: repeat(6, 1fr);}
