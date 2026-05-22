@@ -99,6 +99,17 @@
 				</div>
 			</fieldset>
 
+			<!-- Q4 -->
+			<fieldset class="fieldset_group" id="question4" hidden>
+				<p class="question_desc"><span class="question_number">4.</span> 본 설문은 익명으로 진행되며, 응답 결과는 서비스 개선 및 사용자 경험 분석 목적으로만 활용됩니다.</p>
+				<div class="option_list">
+					<div class="option_item">
+						<input type="radio" id="svry_yes" name="svry" value="예">
+						<label for="svry_yes">네, 확인했습니다.</label>
+					</div>
+				</div>
+			</fieldset>
+
 			<!-- 버튼 -->
 			<div class="button_area" id="submitArea"><button type="submit" class="btn_submit">다음 단계 진행하기</button></div>
 
@@ -113,107 +124,83 @@
 $(function() {
 
 	function generateUTID() {
-
 		const date = new Date();
-
 		const yyyy = date.getFullYear();
-
-		const mm = String(
-			date.getMonth() + 1
-		).padStart(2, '0');
-
-		const dd = String(
-			date.getDate()
-		).padStart(2, '0');
-
-		const random = Math.random()
-			.toString(36)
-			.substring(2, 8)
-			.toUpperCase();
+		const mm = String(date.getMonth() + 1).padStart(2, '0');
+		const dd = String(date.getDate()).padStart(2, '0');
+		const random = Math.random().toString(36).substring(2, 8).toUpperCase();
 
 		return 'UT-' + yyyy + mm + dd + '-' + random;
 	}
 
-	const utId = generateUTID();
-
-	$('#user_ut_id').val(utId);
+	$('#user_ut_id').val(generateUTID());
 
 	function showQuestion(target) {
+		const $target = $(target);
 
-		if ($(target).is(':hidden')) {
-
-			$(target)
+		if ($target.prop('hidden')) {
+			$target
 				.prop('hidden', false)
 				.hide()
 				.slideDown(240);
-
 		}
 	}
 
-	$('input[name="age"]').on('change', function() {
-
-		showQuestion('#question2');
-
-		$('#question2')
-			.find('.legend_title')
-			.attr('tabindex', '-1')
-			.focus();
-
-	});
-
-	$('input[name="experience"]').on('change', function() {
-
-		showQuestion('#question3');
-
-		$('#question3')
-			.find('.legend_title')
-			.attr('tabindex', '-1')
-			.focus();
-
-	});
-
-	$('input[name="member"]').on('change', function() {
-
+	function showSubmit() {
 		$('#submitArea')
 			.css('display', 'flex')
 			.hide()
 			.slideDown(240);
+	}
 
+	/* 처음에는 버튼 숨김 */
+	$('#submitArea').hide();
+
+	$('input[name="age"]').on('change', function() {
+		showQuestion('#question2');
+		$('#question2 .question_desc').attr('tabindex', '-1').focus();
 	});
 
-$('#surveyForm').on('submit', function(e) {
+	$('input[name="experience"]').on('change', function() {
+		showQuestion('#question3');
+		$('#question3 .question_desc').attr('tabindex', '-1').focus();
+	});
 
-	e.preventDefault();
+	$('input[name="member"]').on('change', function() {
+		showQuestion('#question4');
+		$('#question4 .question_desc').attr('tabindex', '-1').focus();
+	});
 
-	const surveyData = {
+	$('input[name="svry"]').on('change', function() {
+		showSubmit();
+	});
 
-		utId: UT.generateId(),
+	$('#surveyForm').on('submit', function(e) {
+		e.preventDefault();
 
-		age:
-			$('input[name="age"]:checked').val(),
+		if (!$('input[name="svry"]:checked').length) {
+			alert('4번 문항은 필수 선택 항목입니다.');
+			$('#question4 .question_desc').attr('tabindex', '-1').focus();
+			return;
+		}
 
-		experience:
-			$('input[name="experience"]:checked').val(),
+		const surveyData = {
+			utId: $('#user_ut_id').val(),
+			age: $('input[name="age"]:checked').val(),
+			experience: $('input[name="experience"]:checked').val(),
+			member: $('input[name="member"]:checked').val(),
+			svry: $('input[name="svry"]:checked').val(),
+			startTime: new Date().toISOString(),
+			userAgent: navigator.userAgent
+		};
 
-		member:
-			$('input[name="member"]:checked').val(),
-
-		startTime:
-			new Date().toISOString(),
-
-		userAgent:
-			navigator.userAgent
-
-	};
-
-	UT.saveSurvey(surveyData);
-
-	UT.goTaskGuide();
-
-});
+		UT.saveSurvey(surveyData);
+		UT.goTaskGuide();
+	});
 
 });
 </script>
+
 
 </body>
 </html>
