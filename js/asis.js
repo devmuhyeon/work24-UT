@@ -1,52 +1,38 @@
 $(function() {
-
 	let isStarted = false;
 	let isFinished = false;
 	let startTime = null;
 	let timeoutTimer = null;
 	let clickCount = 0;
 	let taskResult = null;
-
 	const clickLogs = [];
 	const targetMenu = '취업동향 모아보기';
 	const limitTime = 10 * 1000;
 	const $frame = $('#testFrame');
-
 	$('#targetMenuName').text(targetMenu);
 	$('#startTest').focus();
-
 	$('#startTest').on('click', function() {
-
 		isStarted = true;
 		startTime = Date.now();
-
 		$('#utPage').removeAttr('aria-hidden');
-
 		$('#utOverlay').fadeOut(200, function() {
 			$(this).remove();
 		});
-
 		timeoutTimer = setTimeout(function() {
 			finishFail();
 		}, limitTime);
-
 	});
 
 	function saveClick($clicked) {
-
 		clickCount++;
-
 		clickLogs.push({
 			text: $.trim($clicked.text()),
 			elapsedMs: Date.now() - startTime
 		});
-
 	}
 
 	function makeResult(resultType, $clicked) {
-
 		const endTime = Date.now();
-
 		return {
 			target: targetMenu,
 			result: resultType,
@@ -117,7 +103,6 @@ $(function() {
 		}
 
 		UT.saveTask(taskResult);
-		// UT.goUpload();
 
 	});
 

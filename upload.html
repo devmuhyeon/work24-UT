@@ -1,79 +1,65 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>고용24 사용자 조사 - 결과 전송</title>
+		<title>고용24 사용자 조사 - 결과 전송</title>
 
-<link rel="stylesheet" href="/work24-UT/css/reset.css">
-<link rel="stylesheet" href="/work24-UT/css/font.css">
-<link rel="stylesheet" href="/work24-UT/css/common.css">
-<link rel="stylesheet" href="/work24-UT/css/survey.css">
-<link rel="stylesheet" href="/work24-UT/css/upload.css">
+		<link rel="stylesheet" href="/work24-UT/css/reset.css">
+		<link rel="stylesheet" href="/work24-UT/css/font.css">
+		<link rel="stylesheet" href="/work24-UT/css/common.css">
+		<link rel="stylesheet" href="/work24-UT/css/survey.css">
+		<link rel="stylesheet" href="/work24-UT/css/upload.css">
+	</head>
 
-</head>
+	<body>
+		<div class="result_wrap">
+			<div class="loading_card">
 
-<body>
-<div class="result_wrap">
+				<strong class="result_title">테스트 결과를 제출중입니다.</strong>
+				<p class="result_message" role="status" aria-live="polite">잠시만 기다려주세요.</p>
+				<div class="loading_bar" aria-hidden="true"></div>
+			</div>
+		</div>
 
-	<div class="loading_card">
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="/work24-UT/js/ut-common.js"></script>
 
-		<strong class="result_title">결과를 전송하고 있습니다</strong>
+		<script>
+		$(function() {
 
-		<p
-			class="result_message"
-			role="status"
-			aria-live="polite">
+			UT.sendResult(
 
-			잠시만 기다려주세요.
+				function() {
 
-		</p>
+					$('.loading_spinner').hide();
+					$('.loading_bar').hide();
 
-		<div class="loading_bar" aria-hidden="true"></div>
+					$('.result_title')
+						.text('답변이 제출되었습니다.');
 
-	</div>
+					$('.result_message')
+						.text('설문이 완료되었습니다. 감사합니다! 😊\n바쁘신 중에도 끝까지 참여해 주셔서 진심으로 감사드립니다.\n소중한 의견은 고용24 서비스 개선에 반영하겠습니다.');
+				},
 
-</div>
+				function() {
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="/work24-UT/js/ut-common.js"></script>
+					$('.loading_spinner').hide();
+					$('.loading_bar').hide();
 
-<script>
-$(function() {
+					$('.result_title')
+						.text('전송에 실패했습니다.');
 
-	UT.sendResult(
+					$('.result_message')
+						.text('새로고침 후 다시 시도해주세요.');
 
-		function() {
+				}
 
-			$('.loading_spinner').hide();
-			$('.loading_bar').hide();
+			);
 
-			$('.result_title')
-				.text('전송이 완료되었습니다.');
+		});
+		</script>
 
-			$('.result_message')
-				.text('참여해주셔서 감사합니다.');
-
-		},
-
-		function() {
-
-			$('.loading_spinner').hide();
-			$('.loading_bar').hide();
-
-			$('.result_title')
-				.text('전송에 실패했습니다.');
-
-			$('.result_message')
-				.text('새로고침 후 다시 시도하거나 담당자에게 문의해주세요.');
-
-		}
-
-	);
-
-});
-</script>
-
-</body>
+	</body>
 </html>

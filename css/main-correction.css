@@ -7,3 +7,4 @@
 body {overflow: hidden;}
 .dimmed {z-index: -1;}
 .quick_top {z-index: 95;}
+.main_wrap .favorite_swiper .swiper-wrapper {display: grid; grid-template-columns: repeat(6, 1fr);}
