@@ -9,7 +9,7 @@ $(function() {
 
 	const clickLogs = [];
 	const targetMenu = '취업동향 모아보기';
-	const limitTime = 3 * 1000;
+	const limitTime = 10 * 1000;
 	const $frame = $('#testFrame');
 
 	$('#targetMenuName').text(targetMenu);
