@@ -21,3 +21,19 @@
 
 .step_floating {position: fixed; left: 50%; bottom: 0; z-index: 9999; width: calc(100% - 40px); max-width: 1280px; padding: 22px; border-radius: 28px 28px 0 0; background: linear-gradient(135deg, var(--col_darkblue) 0%, var(--col_blue) 58%, var(--col_skyblue) 100%); color: var(--col_white); box-shadow: 0 18px 50px rgba(17, 17, 17, .24); transform: translateX(-50%);}
 .step_floating .survey_head {padding: 10px;}
+
+.ut_overlay[hidden], .ut_result_overlay[hidden], .ut_custom_alert[hidden] {display: none !important;}
+.ut_result_overlay {position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(15, 23, 42, 0.58); backdrop-filter: blur(6px);}
+.ut_result_box {width: min(460px, 100%); padding: 34px 32px 30px; border-radius: 24px; background: #fff; box-shadow: 0 24px 70px rgba(15, 23, 42, 0.28); text-align: center;}
+.btn_result, .btn_next {display: inline-flex; align-items: center; justify-content: center; width: 100%; min-height: 52px; margin-top: 26px; padding: 0 20px; border: 0; border-radius: 14px; background: #3f58d4; color: #fff; font-size: 17px; font-weight: 700; cursor: pointer;}
+.btn_result:hover, .btn_next:hover {background: #3043a1;}
+.fail_radio_group {margin-top: 22px; padding: 0; border: 0; text-align: left;}
+.radio_item {position: relative; margin-top: 10px;}
+.radio_item:first-of-type {margin-top: 0;}
+.radio_item input {position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0);}
+.radio_item label {display: flex; align-items: center; min-height: 52px; padding: 14px 16px 14px 48px; border: 1px solid #d9dee8; border-radius: 14px; background: #fff; color: #333; font-size: 16px; line-height: 1.4; cursor: pointer;}
+.radio_item label::before {content: ""; position: absolute; left: 18px; top: 50%; width: 18px; height: 18px; border: 2px solid #9aa3b2; border-radius: 50%; transform: translateY(-50%); box-sizing: border-box;}
+.radio_item label::after {content: ""; position: absolute; left: 24px; top: 50%; width: 6px; height: 6px; border-radius: 50%; background: #fff; transform: translateY(-50%) scale(0);}
+.radio_item input:checked + label {border-color: #3f58d4; background: #f3f8ff; color: #111; font-weight: 700;}
+.radio_item input:checked + label::before {border-color: #3f58d4; background: #3f58d4;}
+.radio_item input:checked + label::after {transform: translateY(-50%) scale(1);}
