@@ -47,7 +47,7 @@ body {margin: 0; font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo
 .survey_box {width: 100%; max-width: 900px; overflow: hidden; border: 1px solid var(--col_border); border-radius: 32px; background: rgba(255, 255, 255, .94); box-shadow: 0 26px 80px rgba(17, 17, 17, .14);}
 .survey_head {position: relative; padding: 48px 52px 40px; overflow: hidden; background: linear-gradient(135deg, var(--col_darkblue) 0%, var(--col_blue) 58%, var(--col_skyblue) 100% ); color: var(--col_white);}
 .survey_badge {position: relative; z-index: 1; display: inline-flex; align-items: center; height: 34px; margin-bottom: 20px; padding: 0 15px; border: 1px solid rgba(255, 255, 255, .3); border-radius: 999px; background: rgba(255, 255, 255, .16); font-size: 13px; font-weight: 600; letter-spacing: .04em;}
-.survey_title {position: relative; z-index: 1; margin: 0; color: var(--col_white); font-size: 38px; line-height: 1.25; font-weight: 600; letter-spacing: -.045em;}
+.survey_title {position: relative; z-index: 1; margin: 0; color: var(--col_white); font-size: 30px; line-height: 1.25; font-weight: 600; letter-spacing: -.045em;}
 .survey_desc {position: relative; z-index: 1; margin: 16px 0 0; color: rgba(255, 255, 255, .92); font-size: 17px; line-height: 1.7; width: 100%;}
 .step_list {position: relative; z-index: 1; display: flex; gap: 10px; margin: 30px 0 0; padding: 0; list-style: none;}
 .step_list li {flex: 1; height: 9px; border-radius: 999px; background: rgba(255, 255, 255, .32);}
