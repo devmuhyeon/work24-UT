@@ -7,7 +7,7 @@ $(function() {
 	let taskResult = null;
 	const clickLogs = [];
 	const targetMenu = '고용정책';
-	const limitTime = 10 * 1000;
+	const limitTime = 60 * 1000;
 	const $frame = $('#testFrame');
 	$('#targetMenuName').text(targetMenu);
 	$('#startTest').focus();
