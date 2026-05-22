@@ -3677,7 +3677,6 @@ header.new { position: sticky; transition: transform .3s ease;}
 .new #header_menutree .btn_remote { display: flex; align-items: center; font-size: 14px;}
 .new #header_menutree .btn_screen::after,
 .new #header_menutree .btn_remote::after { content: ''; display: block; width: 16px; height: 16px; margin-left: 4px; background: url(/work24-UT/include/images/ico16_line_down.svg) no-repeat; transition: transform .2s ease;}
-.new #header_menutree .btn_screen[aria-expanded="true"]::after,
 .new #header_menutree .btn_remote[aria-expanded="true"]::after { transform: rotate(180deg);}
 
 /* 251210 글자·화면 설정 다크모드 선택 추가  */

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko" style="overflow: hidden;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>고용24 사용자 조사 - 화면 탐색 테스트</title>
+
+<link rel="stylesheet" href="/work24-UT/css/reset.css">
+<link rel="stylesheet" href="/work24-UT/css/font.css">
+<link rel="stylesheet" href="/work24-UT/css/common.css">
+<link rel="stylesheet" href="/work24-UT/css/survey.css">
+<link rel="stylesheet" href="/work24-UT/css/ut-test.css">
+
+</head>
+
+<body>
+    <div id="utPage" class="ut_page" aria-hidden="true">
+ 
+        <!-- 고용24 화면 HTML -->
+        <div id="utPage" class="ut_page" aria-hidden="true">
+            <iframe
+                id="testFrame"
+                class="ut_frame"
+                title="고용24 화면 탐색 테스트 화면"
+                src="/work24-UT/tobe.html">
+            </iframe>
+        </div>
+
+        <div class="step_floating" role="status" aria-live="polite">
+            <div class="survey_head">
+                <span class="survey_badge">고용24 UT</span>
+                <h1 class="survey_title">STEP3. 화면 탐색 테스트</h1>
+                <p class="survey_desc">화면 상단 메뉴에서 '취업동향 모아보기' 메뉴를 찾아주세요.</p>
+                <ol class="step_list" aria-label="조사 진행 단계">
+                    <li class="is_done"><span class="sr_only">사전 설문</span></li>
+                    <li class="is_done"><span class="sr_only">화면 탐색 테스트 안내</span></li>
+                    <li class="is_current"><span class="sr_only">현재 단계: 화면 탐색 테스트</span></li>
+                    <li><span class="sr_only">결과 전송</span></li>
+                </ol>
+            </div>
+        </div>
+        
+
+    </div>
+
+    <div id="utOverlay" class="ut_overlay" role="dialog" aria-modal="true" aria-labelledby="utOverlayTitle" aria-describedby="utOverlayDesc">
+        <div class="ut_alert">
+            <span class="ut_badge">고용24 UT</span>
+
+            <h1 id="utOverlayTitle" class="ut_alert_title">화면 탐색 테스트를 시작합니다.</h1>
+            <p id="utOverlayDesc" class="ut_alert_desc">안내된 메뉴를 실제 화면에서 찾아 클릭해주세요. 시작 버튼을 누르면 안내창이 사라지고 측정이 시작됩니다.</p>
+
+            <div class="ut_target_box">
+                <span>찾아야 할 메뉴</span>
+                <strong id="targetMenuName">취업동향 모아보기</strong>
+            </div>
+
+            <button type="button" id="startTest" class="btn_start">시작하기</button>
+        </div>
+
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="/work24-UT/js/ut-common.js"></script>
+
+
+<script>
+$(function() {
+
+	let isStarted = false;
+	let startTime = null;
+	let clickCount = 0;
+
+	const clickLogs = [];
+	const targetMenu = '취업동향 모아보기';
+
+	const $frame = $('#testFrame');
+
+	$('#targetMenuName').text(targetMenu);
+
+	$('#startTest').focus();
+
+	$('#startTest').on('click', function() {
+
+		isStarted = true;
+
+		startTime = Date.now();
+
+		$('#utPage').removeAttr('aria-hidden');
+
+		$('#utOverlay').fadeOut(200, function() {
+
+			$(this).remove();
+
+		});
+
+	});
+
+	function saveClick($clicked) {
+
+		clickCount++;
+
+		clickLogs.push({
+
+			text:
+				$.trim($clicked.text()),
+
+			elapsedMs:
+				Date.now() - startTime
+
+		});
+
+	}
+
+	function finishTest($clicked) {
+
+		const endTime = Date.now();
+
+		const taskResult = {
+
+			target: targetMenu,
+
+			clickedText:
+				$.trim($clicked.text()),
+
+			clickCount: clickCount,
+
+			duration:
+				Math.round(
+					(endTime - startTime) / 1000
+				),
+
+			clickPath:
+				UT.makeClickPath(clickLogs),
+
+			startTime:
+				new Date(startTime).toISOString(),
+
+			endTime:
+				new Date(endTime).toISOString(),
+
+			userAgent:
+				navigator.userAgent
+
+		};
+
+		UT.saveTask(taskResult);
+
+		UT.goUpload();
+
+	}
+
+	function bindFrameClick() {
+
+		const frame = $frame[0];
+
+		if (
+			!frame ||
+			!frame.contentWindow ||
+			!frame.contentWindow.document
+		) {
+
+			return;
+
+		}
+
+		const frameDoc =
+			frame.contentWindow.document;
+
+		$(frameDoc).on(
+			'click',
+			'a, button',
+			function(e) {
+
+				if (!isStarted) return;
+
+				const $clicked = $(this);
+
+				saveClick($clicked);
+
+				if (
+					$clicked.attr('data-answer') === 'true'
+				) {
+
+					e.preventDefault();
+
+					finishTest($clicked);
+
+				}
+
+			}
+		);
+
+	}
+
+	$frame.on('load', function() {
+
+		bindFrameClick();
+
+	});
+
+});
+</script>
+
+</body>
+</html>
