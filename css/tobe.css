@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-.new #gnb > ul > li#mm_spec_li {margin-left: 250px !important; display: flex; align-items: center;}
+.new #gnb > ul > li#mm_spec_li {margin-left: 230px !important; display: flex; align-items: center;}
 .new #gnb > ul > li#mm_spec_li > a { border: 1px solid var(--col_blue); border-radius: 9999px; height: 30px; padding: 0 10px;}
 .new #gnb > ul > li#mm_spec_li > a > span {font-size: 14px; color: var(--col_blue); padding: 0;}
 .new #gnb > ul > li#mm_spec_li > a::after, .new #gnb > ul > li#mm_spec_li > a > span::after {display: none;}
