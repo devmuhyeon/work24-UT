@@ -1,1020 +1,520 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>고용24 사용자 경험 조사</title>
-
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-<style>
-@charset "utf-8";
-
-:root{
-    --col_blue:#3F58D4;
-    --col_blue_dark:#3043a1;
-    --col_bg:#f5f7fb;
-    --col_line:#dfe5f2;
-    --col_txt:#222;
-    --col_sub:#666;
-    --col_white:#fff;
-    --radius:20px;
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:"Pretendard","Malgun Gothic",sans-serif;
-    color:var(--col_txt);
-    background:var(--col_bg);
-    line-height:1.5;
-}
-
-button,
-input{
-    font:inherit;
-}
-
-img{
-    max-width:100%;
-    display:block;
-}
-
-.sr_only{
-    position:absolute;
-    width:1px;
-    height:1px;
-    padding:0;
-    margin:-1px;
-    overflow:hidden;
-    clip:rect(0,0,0,0);
-    border:0;
-}
-
-.wrap{
-    max-width:1400px;
-    margin:0 auto;
-    padding:40px 20px 120px;
-}
-
-.survey_head{
-    margin-bottom:40px;
-    text-align:center;
-}
-
-.survey_badge{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    height:38px;
-    padding:0 18px;
-    border-radius:999px;
-    background:rgba(63,88,212,.1);
-    color:var(--col_blue);
-    font-size:0.938rem;
-    font-weight:700;
-}
-
-.survey_title{
-    margin-top:18px;
-    font-size: 30px;
-    font-weight:800;
-    line-height:1.2;
-}
-
-.survey_desc{
-    margin-top:16px;
-    color:var(--col_sub);
-    font-size:1.063rem;
-}
-
-.step_box{
-    margin-top:32px;
-    padding:28px;
-    border-radius:var(--radius);
-    background:var(--col_white);
-    border:1px solid var(--col_line);
-}
-
-.step_box ol{
-    display:flex;
-    flex-direction:column;
-    gap:24px;
-    list-style:none;
-}
-
-.step_box li{
-    display:flex;
-    gap:16px;
-}
-
-.step_num{
-    flex-shrink:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:44px;
-    height:44px;
-    border-radius:50%;
-    background:var(--col_blue);
-    color:#fff;
-    font-weight:700;
-}
-
-.step_txt strong{
-    display:block;
-    margin-bottom:6px;
-    font-size:1.125rem;
-}
-
-.step_txt p{
-    color:var(--col_sub);
-}
-
-.compare_wrap{
-    margin-top: 24px;
-    display:flex;
-    flex-direction: column;
-    gap:24px;
-}
-
-.compare_card{
-    overflow:hidden;
-    border-radius:24px;
-    border:1px solid var(--col_line);
-    background:#fff;
-    box-shadow:0 10px 30px rgba(0,0,0,.05);
-}
-
-.compare_head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:24px 28px;
-    border-bottom:1px solid var(--col_line);
-}
-
-.compare_head h2{
-    font-size:1.5rem;
-}
-
-.compare_tag{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    height:36px;
-    padding:0 18px;
-    border-radius:999px;
-    background:var(--col_blue);
-    color:#fff;
-    font-size:.938rem;
-    font-weight:700;
-}
-
-.mockup{
-    position:relative;
-    aspect-ratio:16/10;
-    padding:28px;
-    background:#eef3ff;
-}
-
-.mockup_inner{
-    overflow:hidden;
-    height:100%;
-    border-radius:18px;
-    background:#fff;
-    border:1px solid #d7dff2;
-}
-
-.mock_header{
-    height:58px;
-    border-bottom:1px solid #e5e9f3;
-    background:#fff;
-}
-
-.mock_body{
-    display:flex;
-    height:calc(100% - 58px);
-}
-
-.mock_lnb{
-    flex-shrink:0;
-    width:220px;
-    padding:18px;
-    background:#f6f8fd;
-    border-right:1px solid #e5e9f3;
-}
-
-.mock_lnb ul{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    list-style:none;
-}
-
-.mock_lnb li{
-    height:40px;
-    border-radius:10px;
-    background:#dbe5ff;
-}
-
-.mock_content{
-    flex:1;
-    padding:18px;
-}
-
-.mock_card_list{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:14px;
-}
-
-.mock_card{
-    height:110px;
-    border-radius:14px;
-    background:#edf2ff;
-}
-
-.mockup.type_b .mock_body{
-    flex-direction:column;
-}
-
-.mockup.type_b .mock_lnb{
-    width:100%;
-    height:72px;
-    border-right:0;
-    border-bottom:1px solid #e5e9f3;
-}
-
-.mockup.type_b .mock_lnb ul{
-    flex-direction:row;
-}
-
-.mockup.type_b .mock_lnb li{
-    flex:1;
-}
-
-.compare_btnbox{
-    padding:0 28px 28px;
-}
-
-.btn_preview{
-    width:100%;
-    height:56px;
-    border:0;
-    border-radius:14px;
-    background:var(--col_blue);
-    color:#fff;
-    font-size:1rem;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.btn_preview:hover{
-    background:var(--col_blue_dark);
-}
-
-.btn_preview:focus,
-.btn_layer_close:focus,
-.scale_item input:focus + label,
-.choice_item input:focus + label{
-    outline:3px solid rgba(63,88,212,.35);
-    outline-offset:3px;
-}
-
-.section_title{
-    margin-top:70px;
-    margin-bottom:24px;
-    font-size:2rem;
-    font-weight:800;
-}
-
-.question_group{
-    display:flex;
-    flex-direction:column;
-    gap:24px;
-}
-
-.question_box{
-    padding:32px;
-    border-radius:24px;
-    border:1px solid var(--col_line);
-    background:#fff;
-}
-
-.question_top{
-    margin-bottom:24px;
-}
-
-.question_num{
-    display:inline-flex;
-    margin-bottom:12px;
-    color:var(--col_blue);
-    font-weight:700;
-}
-
-.question_title{
-    font-size:1.188rem;
-    font-weight:700;
-}
-
-.question_desc{
-    margin-top:8px;
-    color:var(--col_sub);
-    font-size:.938rem;
-}
-
-.scale_group{
-    display:flex;
-    gap:12px;
-    align-items:flex-start;
-}
-
-.scale_txt{
-    min-width:100px;
-    padding-top:18px;
-    color:var(--col_sub);
-    font-size:.938rem;
-}
-
-.scale_list{
-    display:flex;
-    flex:1;
-    gap:10px;
-    list-style:none;
-}
-
-.scale_item{
-    flex:1;
-}
-
-.scale_item input,
-.choice_item input{
-    position:absolute;
-    opacity:0;
-}
-
-.scale_item label{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:100%;
-    min-height:64px;
-    border-radius:16px;
-    border:1px solid var(--col_line);
-    background:#fff;
-    cursor:pointer;
-    font-weight:700;
-}
-
-.scale_item input:checked + label{
-    border-color:var(--col_blue);
-    background:var(--col_blue);
-    color:#fff;
-}
-
-.choice_list{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:14px;
-    list-style:none;
-}
-
-.choice_item label{
-    display:flex;
-    align-items:center;
-    min-height:68px;
-    padding:18px 20px;
-    border-radius:16px;
-    border:1px solid var(--col_line);
-    background:#fff;
-    cursor:pointer;
-    font-weight:600;
-}
-
-.choice_item input:checked + label{
-    border-color:var(--col_blue);
-    background:#eef3ff;
-    color:var(--col_blue_dark);
-}
-
-.submit_box{
-    margin-top:60px;
-    text-align:center;
-}
-
-.btn_submit{
-    min-width:280px;
-    height:64px;
-    border:0;
-    border-radius:18px;
-    background:var(--col_blue);
-    color:#fff;
-    font-size:1.125rem;
-    font-weight:800;
-    cursor:pointer;
-}
-
-.btn_submit:hover{
-    background:var(--col_blue_dark);
-}
-
-.layer_wrap{
-    position:fixed;
-    inset:0;
-    z-index:9999;
-}
-
-.layer_dim{
-    position:absolute;
-    inset:0;
-    background:rgba(0,0,0,.72);
-    backdrop-filter:blur(8px);
-}
-
-.layer_box{
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    width:min(1200px, calc(100% - 40px));
-    max-height:calc(100vh - 40px);
-    margin:20px auto;
-    border-radius:24px;
-    overflow:hidden;
-    background:#fff;
-    z-index:1;
-}
-
-.layer_head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-    padding:24px 32px;
-    border-bottom:1px solid var(--col_line);
-}
-
-.layer_head h2{
-    font-size:1.5rem;
-    font-weight:800;
-}
-
-.btn_layer_close{
-    flex-shrink:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:48px;
-    height:48px;
-    border:0;
-    border-radius:12px;
-    background:#f3f5fa;
-    cursor:pointer;
-    font-size:1.25rem;
-}
-
-.layer_cont{
-    overflow:auto;
-    padding:32px;
-    background:#f5f7fb;
-}
-
-.layer_cont img{
-    width:100%;
-    border-radius:20px;
-    border:1px solid #dfe5f2;
-    background:#fff;
-}
-
-body.layer_open{
-    overflow:hidden;
-}
-</style>
-</head>
-
-<body>
-
-<div class="wrap">
-
-    <header class="survey_head">
-        <span class="survey_badge">고용24 사용자 경험 조사</span>
-        <h1 class="survey_title">화면 사용성 테스트</h1>
-        <p class="survey_desc">제시된 화면을 보고 느낀 점을 솔직하게 답변해 주세요.</p>
-    </header>
-
-    <section class="step_box" aria-labelledby="guide_title">
-        <h2 id="guide_title" class="sr_only">조사 진행 안내</h2>
-
-        <ol>
-            <li>
-                <span class="step_num" aria-hidden="true">1</span>
-                <div class="step_txt">
-                    <strong>디자인 시안을 보여드립니다.</strong>
-                    <p>화면을 천천히 살펴봐 주세요.</p>
-                </div>
-            </li>
-            <li>
-                <span class="step_num" aria-hidden="true">2</span>
-                <div class="step_txt">
-                    <strong>화면에 대한 질문에 답해주세요.</strong>
-                    <p>화면을 보고 느끼신 점을 솔직하고 편하게 답해주세요.</p>
-                </div>
-            </li>
-            <li>
-                <span class="step_num" aria-hidden="true">3</span>
-                <div class="step_txt">
-                    <strong>선호하는 화면을 선택해 주세요.</strong>
-                    <p>두 화면을 모두 보신 후 어떤 화면이 더 마음에 드셨는지 선택해 주세요.</p>
-                </div>
-            </li>
-        </ol>
-    </section>
-
-    <section class="compare_wrap" aria-label="LNB 디자인 비교">
-
-        <article class="compare_card">
-            <div class="compare_head">
-                <h2>LNB A 타입</h2>
-                <span class="compare_tag">TYPE A</span>
-            </div>
-
-            <div class="mockup type_a" aria-hidden="true">
-                <div class="mockup_inner">
-                    <div class="mock_header"></div>
-                    <div class="mock_body">
-                        <div class="mock_lnb">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>고용24 화면 선호도 조사</title>
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <link rel="stylesheet" href="/work24-UT/css/reset.css">
+        <link rel="stylesheet" href="/work24-UT/css/font.css">
+        <link rel="stylesheet" href="/work24-UT/css/common.css">
+        <link rel="stylesheet" href="/work24-UT/css/lnb.css">
+    </head>
+
+    <body>
+
+        <div class="wrap">
+
+            <header class="survey_head">
+                <span class="survey_badge">고용24 사용자 테스트</span>
+                <h1 class="survey_title">화면 선호도 조사</h1>
+                <p class="survey_desc">
+                    두 화면을 비교해 보시고 느낀 점을 선택해 주세요
+                </p>
+            </header>
+
+            <section class="compare_section" aria-label="화면 비교">
+
+                <article class="img_box">
+                    <div class="img_head">
+                        <h2>시안 A</h2>
+                    </div>
+
+                    <div class="img_cont">
+                        <img src="./images/lnb_type01.png" alt="고용24 시안 A 화면 예시">
+                    </div>
+                </article>
+
+                <article class="img_box">
+                    <div class="img_head">
+                        <h2>시안 B</h2>
+                    </div>
+
+                    <div class="img_cont">
+                        <img src="./images/lnb-type02.png" alt="고용24 시안 B 화면 예시">
+                    </div>
+                </article>
+
+            </section>
+
+            <section class="question_area">
+                <!-- 질문 1 -->
+                <div class="question_box active" id="question1">        <fieldset>
+                        <div>
+                            <span class="question_num">질문 1.</span>
+                            <h2 class="question_title">어떤 화면이 더 보기 편하셨나요?</h2>
+                            <p class="question_desc">하나만 선택해 주세요.</p>
+                        </div>
+                        <div class="radio_group">
+                            <ul class="radio_list">
+                                <li class="radio_item">
+                                    <input type="radio" name="q1" id="q1_1">
+                                    <label for="q1_1">시안 A가 더 보기 편했다</label>
+                                </li>
+                                <li class="radio_item">
+                                    <input type="radio" name="q1" id="q1_2">
+                                    <label for="q1_2">시안 B가 더 보기 편했다</label>
+                                </li>
                             </ul>
                         </div>
-                        <div class="mock_content">
-                            <div class="mock_card_list">
-                                <div class="mock_card"></div>
-                                <div class="mock_card"></div>
-                                <div class="mock_card"></div>
-                                <div class="mock_card"></div>
-                            </div>
-                        </div>
-                    </div>
+                    </fieldset>
                 </div>
-            </div>
 
-            <div class="compare_btnbox">
-                <button type="button"
-                        class="btn_preview"
-                        data-layer="layer_type_a"
-                        aria-haspopup="dialog"
-                        aria-controls="layer_type_a">
-                    LNB A 타입 확대하여 보기
-                </button>
-            </div>
-        </article>
+                <!-- 질문 2 -->
+                <div class="question_box" id="question2">
+                    <fieldset>
+                        <div>
+                            <span class="question_num">질문 2.</span>
+                            <h2 class="question_title">이 화면의 구성을 자주 이용하고 싶을 것 같습니다.</h2>
+                            <p class="question_desc">최대 1개 선택 가능</p>
+                        </div>
+                        <div class="scale_group">
+                            <div class="scale_txt">그렇지 않다</div>
+                            <ul class="scale_list">
+                                <li class="scale_item">
+                                    <input type="radio" id="q2_1" name="q2">
+                                    <label for="q2_1">1</label>
+                                </li>
+                                <li class="scale_item">
+                                    <input type="radio" id="q2_2" name="q2">
+                                    <label for="q2_2">2</label>
+                                </li>
+                                <li class="scale_item">
+                                    <input type="radio" id="q2_3" name="q2">
+                                    <label for="q2_3">3</label>
+                                </li>
+                                <li class="scale_item">
+                                    <input type="radio" id="q2_4" name="q2">
+                                    <label for="q2_4">4</label>
+                                </li>
+                                <li class="scale_item">
+                                    <input type="radio" id="q2_5" name="q2">
+                                    <label for="q2_5">5</label>
+                                </li>
+                            </ul>
+                            <div class="scale_txt">그렇다</div>
+                        </div>
+                    </fieldset>
+                </div>
 
-        <article class="compare_card">
-            <div class="compare_head">
-                <h2>LNB B 타입</h2>
-                <span class="compare_tag">TYPE B</span>
-            </div>
+                <!-- 질문 3 -->
+                <div class="question_box" id="question3">
+                    <fieldset>
+                        <div>
+                            <span class="question_num">질문 3.</span>
+                            <h2 class="question_title">이 화면은 불필요하게 복잡하다고 느꼈습니다.</h2>
+                            <p class="question_desc">최대 1개 선택 가능</p>
+                        </div>
+                        <div class="scale_group">
+                            <div class="scale_txt">그렇지 않다</div>
+                            <ul class="scale_list">
+                                <li class="scale_item">
+                                    <input type="radio" id="q3_1" name="q3">
+                                    <label for="q3_1">1</label>
+                                </li>
+                                <li class="scale_item">
+                                    <input type="radio" id="q3_2" name="q3">
+                                    <label for="q3_2">2</label>
+                                </li>
+                                <li class="scale_item">
+                                    <input type="radio" id="q3_3" name="q3">
+                                    <label for="q3_3">3</label>
+                                </li>
+                                <li class="scale_item">
+                                    <input type="radio" id="q3_4" name="q3">
+                                    <label for="q3_4">4</label>
+                                </li>
+                                <li class="scale_item">
+                                    <input type="radio" id="q3_5" name="q3">
+                                    <label for="q3_5">5</label>
+                                </li>
+                            </ul>
+                            <div class="scale_txt">그렇다</div>
+                        </div>
+                    </fieldset>
+                </div>
 
-            <div class="mockup type_b" aria-hidden="true">
-                <div class="mockup_inner">
-                    <div class="mock_header"></div>
-                    <div class="mock_body">
-                        <div class="mock_lnb">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
+                <!-- 질문 4 -->
+                <div class="question_box" id="question4">
+                    <fieldset>
+                        <div>
+                            <span class="question_num">질문 4.</span>
+                            <h2 class="question_title">이 화면은 사용하기 쉬울 것 같아 보입니다.</h2>
+                            <p class="question_desc">최대 1개 선택 가능</p>
+                        </div>
+                        <div class="scale_group">
+                            <div class="scale_txt">그렇지 않다</div>
+                            <ul class="scale_list">
+                                <li class="scale_item">
+                                    <input type="radio" id="q4_1" name="q4">
+                                    <label for="q4_1">1</label>
+                                </li>
+                                <li class="scale_item">
+                                    <input type="radio" id="q4_2" name="q4">
+                                    <label for="q4_2">2</label>
+                                </li>
+                                <li class="scale_item">
+                                    <input type="radio" id="q4_3" name="q4">
+                                    <label for="q4_3">3</label>
+                                </li>
+                                <li class="scale_item">
+                                    <input type="radio" id="q4_4" name="q4">
+                                    <label for="q4_4">4</label>
+                                </li>
+                                <li class="scale_item">
+                                    <input type="radio" id="q4_5" name="q4">
+                                    <label for="q4_5">5</label>
+                                </li>
+                            </ul>
+                            <div class="scale_txt">그렇다</div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- 질문 5 -->
+                <div class="question_box" id="question5">
+                    <fieldset>
+                        <div>
+                            <span class="question_num">질문 5.</span>
+                            <h2 class="question_title">이 화면을 사용하려면 다른 사람의 도움이 필요할 것 같습니다.</h2>
+                            <p class="question_desc">최대 1개 선택 가능</p>
+                        </div>
+                        <div class="scale_group">
+                            <div class="scale_txt">그렇지 않다</div>
+                            <ul class="scale_list">
+                                <li class="scale_item"><input type="radio" id="q5_1" name="q5"><label for="q5_1">1</label></li>
+                                <li class="scale_item"><input type="radio" id="q5_2" name="q5"><label for="q5_2">2</label></li>
+                                <li class="scale_item"><input type="radio" id="q5_3" name="q5"><label for="q5_3">3</label></li>
+                                <li class="scale_item"><input type="radio" id="q5_4" name="q5"><label for="q5_4">4</label></li>
+                                <li class="scale_item"><input type="radio" id="q5_5" name="q5"><label for="q5_5">5</label></li>
+                            </ul>
+                            <div class="scale_txt">그렇다</div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- 질문 6 -->
+                <div class="question_box" id="question6">
+                    <fieldset>
+                        <div>
+                            <span class="question_num">질문 6.</span>
+                            <h2 class="question_title">다양한 기능들이 잘 통합되어 있다고 느꼈습니다.</h2>
+                            <p class="question_desc">최대 1개 선택 가능</p>
+                        </div>
+                        <div class="scale_group">
+                            <div class="scale_txt">그렇지 않다</div>
+                            <ul class="scale_list">
+                                <li class="scale_item"><input type="radio" id="q6_1" name="q6"><label for="q6_1">1</label></li>
+                                <li class="scale_item"><input type="radio" id="q6_2" name="q6"><label for="q6_2">2</label></li>
+                                <li class="scale_item"><input type="radio" id="q6_3" name="q6"><label for="q6_3">3</label></li>
+                                <li class="scale_item"><input type="radio" id="q6_4" name="q6"><label for="q6_4">4</label></li>
+                                <li class="scale_item"><input type="radio" id="q6_5" name="q6"><label for="q6_5">5</label></li>
+                            </ul>
+                            <div class="scale_txt">그렇다</div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- 질문 7 -->
+                <div class="question_box" id="question7">
+                    <fieldset>
+                        <div>
+                            <span class="question_num">질문 7.</span>
+                            <h2 class="question_title">화면 구성의 일관성이 부족하다고 느꼈습니다.</h2>
+                            <p class="question_desc">최대 1개 선택 가능</p>
+                        </div>
+                        <div class="scale_group">
+                            <div class="scale_txt">그렇지 않다</div>
+                            <ul class="scale_list">
+                                <li class="scale_item"><input type="radio" id="q7_1" name="q7"><label for="q7_1">1</label></li>
+                                <li class="scale_item"><input type="radio" id="q7_2" name="q7"><label for="q7_2">2</label></li>
+                                <li class="scale_item"><input type="radio" id="q7_3" name="q7"><label for="q7_3">3</label></li>
+                                <li class="scale_item"><input type="radio" id="q7_4" name="q7"><label for="q7_4">4</label></li>
+                                <li class="scale_item"><input type="radio" id="q7_5" name="q7"><label for="q7_5">5</label></li>
+                            </ul>
+                            <div class="scale_txt">그렇다</div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- 질문 8 -->
+                <div class="question_box" id="question8">
+                    <fieldset>
+                        <div>
+                            <span class="question_num">질문 8.</span>
+                            <h2 class="question_title">
+                                대부분의 사람들이 이 화면의 사용법을 빨리 익힐 수 있을 것이라고 생각합니다.
+                            </h2>
+                            <p class="question_desc">최대 1개 선택 가능</p>
+                        </div>
+                        <div class="scale_group">
+                            <div class="scale_txt">그렇지 않다</div>
+                            <ul class="scale_list">
+                                <li class="scale_item"><input type="radio" id="q8_1" name="q8"><label for="q8_1">1</label></li>
+                                <li class="scale_item"><input type="radio" id="q8_2" name="q8"><label for="q8_2">2</label></li>
+                                <li class="scale_item"><input type="radio" id="q8_3" name="q8"><label for="q8_3">3</label></li>
+                                <li class="scale_item"><input type="radio" id="q8_4" name="q8"><label for="q8_4">4</label></li>
+                                <li class="scale_item"><input type="radio" id="q8_5" name="q8"><label for="q8_5">5</label></li>
+                            </ul>
+                            <div class="scale_txt">그렇다</div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- 질문 9 -->
+                <div class="question_box" id="question9">
+                    <fieldset>
+                        <div>
+                            <span class="question_num">질문 9.</span>
+                            <h2 class="question_title">
+                                이 화면은 사용하기 번거롭다고 느껴졌습니다.
+                            </h2>
+                            <p class="question_desc">최대 1개 선택 가능</p>
+                        </div>
+                        <div class="scale_group">
+                            <div class="scale_txt">그렇지 않다</div>
+                            <ul class="scale_list">
+                                <li class="scale_item"><input type="radio" id="q9_1" name="q9"><label for="q9_1">1</label></li>
+                                <li class="scale_item"><input type="radio" id="q9_2" name="q9"><label for="q9_2">2</label></li>
+                                <li class="scale_item"><input type="radio" id="q9_3" name="q9"><label for="q9_3">3</label></li>
+                                <li class="scale_item"><input type="radio" id="q9_4" name="q9"><label for="q9_4">4</label></li>
+                                <li class="scale_item"><input type="radio" id="q9_5" name="q9"><label for="q9_5">5</label></li>
+                            </ul>
+                            <div class="scale_txt">그렇다</div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- 질문 10 -->
+                <div class="question_box" id="question10">
+                    <fieldset>
+                        <div>
+                            <span class="question_num">질문 10.</span>
+                            <h2 class="question_title">
+                                이 화면을 쉽게 사용할 수 있을 것 같은 자신감이 듭니다.
+                            </h2>
+                            <p class="question_desc">최대 1개 선택 가능</p>
+                        </div>
+                        <div class="scale_group">
+                            <div class="scale_txt">그렇지 않다</div>
+                            <ul class="scale_list">
+                                <li class="scale_item"><input type="radio" id="q10_1" name="q10"><label for="q10_1">1</label></li>
+                                <li class="scale_item"><input type="radio" id="q10_2" name="q10"><label for="q10_2">2</label></li>
+                                <li class="scale_item"><input type="radio" id="q10_3" name="q10"><label for="q10_3">3</label></li>
+                                <li class="scale_item"><input type="radio" id="q10_4" name="q10"><label for="q10_4">4</label></li>
+                                <li class="scale_item"><input type="radio" id="q10_5" name="q10"><label for="q10_5">5</label></li>
+                            </ul>
+                            <div class="scale_txt">그렇다</div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- 질문 11 -->
+                <div class="question_box" id="question11">
+                    <fieldset>
+                        <div>
+                            <span class="question_num">질문 11.</span>
+                            <h2 class="question_title">
+                                이 화면을 사용하기 위해서는 많은 것을 사전에 익혀야 할 것 같습니다.
+                            </h2>
+                            <p class="question_desc">최대 1개 선택 가능</p>
+                        </div>
+                        <div class="scale_group">
+                            <div class="scale_txt">그렇지 않다</div>
+                            <ul class="scale_list">
+                                <li class="scale_item"><input type="radio" id="q11_1" name="q11"><label for="q11_1">1</label></li>
+                                <li class="scale_item"><input type="radio" id="q11_2" name="q11"><label for="q11_2">2</label></li>
+                                <li class="scale_item"><input type="radio" id="q11_3" name="q11"><label for="q11_3">3</label></li>
+                                <li class="scale_item"><input type="radio" id="q11_4" name="q11"><label for="q11_4">4</label></li>
+                                <li class="scale_item"><input type="radio" id="q11_5" name="q11"><label for="q11_5">5</label></li>
+                            </ul>
+                            <div class="scale_txt">그렇다</div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- 질문 12 -->
+                <div class="question_box" id="question12">
+                    <fieldset>
+                        <div>
+                            <span class="question_num">질문 12.</span>
+                            <h2 class="question_title">
+                                원하는 정보를 어디서 찾아야 할지 바로 이해되시나요?
+                            </h2>
+                            <p class="question_desc">최대 1개 선택 가능</p>
+                        </div>
+                        <div class="scale_group">
+                            <div class="scale_txt">그렇지 않다</div>
+                            <ul class="scale_list">
+                                <li class="scale_item"><input type="radio" id="q12_1" name="q12"><label for="q12_1">1</label></li>
+                                <li class="scale_item"><input type="radio" id="q12_2" name="q12"><label for="q12_2">2</label></li>
+                                <li class="scale_item"><input type="radio" id="q12_3" name="q12"><label for="q12_3">3</label></li>
+                                <li class="scale_item"><input type="radio" id="q12_4" name="q12"><label for="q12_4">4</label></li>
+                                <li class="scale_item"><input type="radio" id="q12_5" name="q12"><label for="q12_5">5</label></li>
+                            </ul>
+                            <div class="scale_txt">그렇다</div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- 질문 13 -->
+                <div class="question_box" id="question13">
+                    <fieldset>
+                        <div>
+                            <span class="question_num">질문 13.</span>
+                            <h2 class="question_title">
+                                화면 정보 구성이 한눈에 파악되나요?
+                            </h2>
+                            <p class="question_desc">최대 1개 선택 가능</p>
+                        </div>
+                        <div class="scale_group">
+                            <div class="scale_txt">그렇지 않다</div>
+                            <ul class="scale_list">
+                                <li class="scale_item"><input type="radio" id="q13_1" name="q13"><label for="q13_1">1</label></li>
+                                <li class="scale_item"><input type="radio" id="q13_2" name="q13"><label for="q13_2">2</label></li>
+                                <li class="scale_item"><input type="radio" id="q13_3" name="q13"><label for="q13_3">3</label></li>
+                                <li class="scale_item"><input type="radio" id="q13_4" name="q13"><label for="q13_4">4</label></li>
+                                <li class="scale_item"><input type="radio" id="q13_5" name="q13"><label for="q13_5">5</label></li>
+                            </ul>
+                            <div class="scale_txt">그렇다</div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- 질문 14 -->
+                <div class="question_box" id="question14">
+                    <fieldset>
+                        <div>
+                            <span class="question_num">질문 14.</span>
+                            <h2 class="question_title">
+                                이 화면에서 가장 눈에 띄는 콘텐츠는 무엇인가요?
+                            </h2>
+                            <p class="question_desc">최대 1개 선택 가능</p>
+                        </div>
+                        <div class="radio_group">
+                            <ul class="radio_list">
+                                <li class="radio_item">
+                                    <input type="radio" name="q14" id="q14_1">
+                                    <label for="q14_1">정책/제도</label>
+                                </li>
+                                <li class="radio_item">
+                                    <input type="radio" name="q14" id="q14_2">
+                                    <label for="q14_2">카드뉴스/인포그래픽 같은 콘텐츠</label>
+                                </li>
+                                <li class="radio_item">
+                                    <input type="radio" name="q14" id="q14_3">
+                                    <label for="q14_3">홍보배너</label>
+                                </li>
+                                <li class="radio_item">
+                                    <input type="radio" name="q14" id="q14_4">
+                                    <label for="q14_4">정책홍보</label>
+                                </li>
+                                <li class="radio_item">
+                                    <input type="radio" name="q14" id="q14_5">
+                                    <label for="q14_5">고용 뉴스</label>
+                                </li>
+                                <li class="radio_item">
+                                    <input type="radio" name="q14" id="q14_6">
+                                    <label for="q14_6">뉴스레터 모아보기</label>
+                                </li>
+                                <li class="radio_item">
+                                    <input type="radio" name="q14" id="q14_7">
+                                    <label for="q14_7">
+                                        이벤트, 설문조사, 서식자료실, 지원금 모의계산, 직종별 임금정보
+                                    </label>
+                                </li>
                             </ul>
                         </div>
-                        <div class="mock_content">
-                            <div class="mock_card_list">
-                                <div class="mock_card"></div>
-                                <div class="mock_card"></div>
-                                <div class="mock_card"></div>
-                                <div class="mock_card"></div>
-                            </div>
+                    </fieldset>
+                </div>
+
+                <!-- 질문 15 -->
+                <div class="question_box" id="question15">
+                    <fieldset>
+                        <div>
+                            <span class="question_num">질문 15.</span>
+                            <h2 class="question_title">
+                                가장 먼저 클릭해 보고 싶었던 영역은 어디었나요?
+                            </h2>
+                            <p class="question_desc">최대 1개 선택 가능</p>
                         </div>
-                    </div>
+                        <div class="radio_group">
+                            <ul class="radio_list">
+                                <li class="radio_item">
+                                    <input type="radio" name="q15" id="q15_1">
+                                    <label for="q15_1">정책/제도</label>
+                                </li>
+                                <li class="radio_item">
+                                    <input type="radio" name="q15" id="q15_2">
+                                    <label for="q15_2">카드뉴스/인포그래픽 같은 콘텐츠</label>
+                                </li>
+                                <li class="radio_item">
+                                    <input type="radio" name="q15" id="q15_3">
+                                    <label for="q15_3">홍보배너</label>
+                                </li>
+                                <li class="radio_item">
+                                    <input type="radio" name="q15" id="q15_4">
+                                    <label for="q15_4">정책홍보</label>
+                                </li>
+                                <li class="radio_item">
+                                    <input type="radio" name="q15" id="q15_5">
+                                    <label for="q15_5">고용 뉴스</label>
+                                </li>
+                                <li class="radio_item">
+                                    <input type="radio" name="q15" id="q15_6">
+                                    <label for="q15_6">뉴스레터 모아보기</label>
+                                </li>
+                                <li class="radio_item">
+                                    <input type="radio" name="q15" id="q15_7">
+                                    <label for="q15_7">
+                                        이벤트, 설문조사, 서식자료실, 지원금 모의계산, 직종별 임금정보
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </fieldset>
                 </div>
+            </section>
+            <div class="complete_box" id="completeBox" tabindex="-1" aria-live="polite">
+                <button type="button" class="btn_submit" onclick="location.href='./co-survey.html'"> 다음 테스트로 이동</button>
             </div>
 
-            <div class="compare_btnbox">
-                <button type="button"
-                        class="btn_preview"
-                        data-layer="layer_type_b"
-                        aria-haspopup="dialog"
-                        aria-controls="layer_type_b">
-                    LNB B 타입 확대하여 보기
-                </button>
-            </div>
-        </article>
-
-    </section>
-
-    <h2 class="section_title">화면 사용성 설문</h2>
-
-    <form>
-        <div class="question_group">
-
-            <section class="question_box">
-                <div class="question_top">
-                    <span class="question_num">질문 7</span>
-                    <h3 class="question_title">이 화면의 구성을 자주 이용하고 싶을 것 같습니다.</h3>
-                    <p class="question_desc">최대 1개 선택 가능</p>
-                </div>
-                <div class="scale_group">
-                    <div class="scale_txt">그렇지 않다</div>
-                    <ul class="scale_list">
-                        <li class="scale_item"><input type="radio" id="q7_1" name="q7" value="1"><label for="q7_1">1</label></li>
-                        <li class="scale_item"><input type="radio" id="q7_2" name="q7" value="2"><label for="q7_2">2</label></li>
-                        <li class="scale_item"><input type="radio" id="q7_3" name="q7" value="3"><label for="q7_3">3</label></li>
-                        <li class="scale_item"><input type="radio" id="q7_4" name="q7" value="4"><label for="q7_4">4</label></li>
-                        <li class="scale_item"><input type="radio" id="q7_5" name="q7" value="5"><label for="q7_5">5</label></li>
-                    </ul>
-                    <div class="scale_txt">그렇다</div>
-                </div>
-            </section>
-
-            <section class="question_box">
-                <div class="question_top">
-                    <span class="question_num">질문 8</span>
-                    <h3 class="question_title">이 화면은 불필요하게 복잡하다고 느꼈습니다.</h3>
-                    <p class="question_desc">최대 1개 선택 가능</p>
-                </div>
-                <div class="scale_group">
-                    <div class="scale_txt">그렇지 않다</div>
-                    <ul class="scale_list">
-                        <li class="scale_item"><input type="radio" id="q8_1" name="q8" value="1"><label for="q8_1">1</label></li>
-                        <li class="scale_item"><input type="radio" id="q8_2" name="q8" value="2"><label for="q8_2">2</label></li>
-                        <li class="scale_item"><input type="radio" id="q8_3" name="q8" value="3"><label for="q8_3">3</label></li>
-                        <li class="scale_item"><input type="radio" id="q8_4" name="q8" value="4"><label for="q8_4">4</label></li>
-                        <li class="scale_item"><input type="radio" id="q8_5" name="q8" value="5"><label for="q8_5">5</label></li>
-                    </ul>
-                    <div class="scale_txt">그렇다</div>
-                </div>
-            </section>
-
-            <section class="question_box">
-                <div class="question_top">
-                    <span class="question_num">질문 9</span>
-                    <h3 class="question_title">이 화면은 사용하기 쉬울 것 같아 보입니다.</h3>
-                    <p class="question_desc">최대 1개 선택 가능</p>
-                </div>
-                <div class="scale_group">
-                    <div class="scale_txt">그렇지 않다</div>
-                    <ul class="scale_list">
-                        <li class="scale_item"><input type="radio" id="q9_1" name="q9" value="1"><label for="q9_1">1</label></li>
-                        <li class="scale_item"><input type="radio" id="q9_2" name="q9" value="2"><label for="q9_2">2</label></li>
-                        <li class="scale_item"><input type="radio" id="q9_3" name="q9" value="3"><label for="q9_3">3</label></li>
-                        <li class="scale_item"><input type="radio" id="q9_4" name="q9" value="4"><label for="q9_4">4</label></li>
-                        <li class="scale_item"><input type="radio" id="q9_5" name="q9" value="5"><label for="q9_5">5</label></li>
-                    </ul>
-                    <div class="scale_txt">그렇다</div>
-                </div>
-            </section>
-
-            <section class="question_box">
-                <div class="question_top">
-                    <span class="question_num">질문 10</span>
-                    <h3 class="question_title">이 화면을 사용하려면 다른 사람의 도움이 필요할 것 같습니다.</h3>
-                    <p class="question_desc">최대 1개 선택 가능</p>
-                </div>
-                <div class="scale_group">
-                    <div class="scale_txt">그렇지 않다</div>
-                    <ul class="scale_list">
-                        <li class="scale_item"><input type="radio" id="q10_1" name="q10" value="1"><label for="q10_1">1</label></li>
-                        <li class="scale_item"><input type="radio" id="q10_2" name="q10" value="2"><label for="q10_2">2</label></li>
-                        <li class="scale_item"><input type="radio" id="q10_3" name="q10" value="3"><label for="q10_3">3</label></li>
-                        <li class="scale_item"><input type="radio" id="q10_4" name="q10" value="4"><label for="q10_4">4</label></li>
-                        <li class="scale_item"><input type="radio" id="q10_5" name="q10" value="5"><label for="q10_5">5</label></li>
-                    </ul>
-                    <div class="scale_txt">그렇다</div>
-                </div>
-            </section>
-
-            <section class="question_box">
-                <div class="question_top">
-                    <span class="question_num">질문 11</span>
-                    <h3 class="question_title">다양한 기능들이 잘 통합되어 있다고 느꼈습니다.</h3>
-                    <p class="question_desc">최대 1개 선택 가능</p>
-                </div>
-                <div class="scale_group">
-                    <div class="scale_txt">그렇지 않다</div>
-                    <ul class="scale_list">
-                        <li class="scale_item"><input type="radio" id="q11_1" name="q11" value="1"><label for="q11_1">1</label></li>
-                        <li class="scale_item"><input type="radio" id="q11_2" name="q11" value="2"><label for="q11_2">2</label></li>
-                        <li class="scale_item"><input type="radio" id="q11_3" name="q11" value="3"><label for="q11_3">3</label></li>
-                        <li class="scale_item"><input type="radio" id="q11_4" name="q11" value="4"><label for="q11_4">4</label></li>
-                        <li class="scale_item"><input type="radio" id="q11_5" name="q11" value="5"><label for="q11_5">5</label></li>
-                    </ul>
-                    <div class="scale_txt">그렇다</div>
-                </div>
-            </section>
-
-            <section class="question_box">
-                <div class="question_top">
-                    <span class="question_num">질문 12</span>
-                    <h3 class="question_title">화면 구성의 일관성이 부족하다고 느꼈습니다.</h3>
-                    <p class="question_desc">최대 1개 선택 가능</p>
-                </div>
-                <div class="scale_group">
-                    <div class="scale_txt">그렇지 않다</div>
-                    <ul class="scale_list">
-                        <li class="scale_item"><input type="radio" id="q12_1" name="q12" value="1"><label for="q12_1">1</label></li>
-                        <li class="scale_item"><input type="radio" id="q12_2" name="q12" value="2"><label for="q12_2">2</label></li>
-                        <li class="scale_item"><input type="radio" id="q12_3" name="q12" value="3"><label for="q12_3">3</label></li>
-                        <li class="scale_item"><input type="radio" id="q12_4" name="q12" value="4"><label for="q12_4">4</label></li>
-                        <li class="scale_item"><input type="radio" id="q12_5" name="q12" value="5"><label for="q12_5">5</label></li>
-                    </ul>
-                    <div class="scale_txt">그렇다</div>
-                </div>
-            </section>
-
-            <section class="question_box">
-                <div class="question_top">
-                    <span class="question_num">질문 13</span>
-                    <h3 class="question_title">대부분의 사람들이 이 화면의 사용법을 빨리 익힐 수 있을 것이라고 생각합니다.</h3>
-                    <p class="question_desc">최대 1개 선택 가능</p>
-                </div>
-                <div class="scale_group">
-                    <div class="scale_txt">그렇지 않다</div>
-                    <ul class="scale_list">
-                        <li class="scale_item"><input type="radio" id="q13_1" name="q13" value="1"><label for="q13_1">1</label></li>
-                        <li class="scale_item"><input type="radio" id="q13_2" name="q13" value="2"><label for="q13_2">2</label></li>
-                        <li class="scale_item"><input type="radio" id="q13_3" name="q13" value="3"><label for="q13_3">3</label></li>
-                        <li class="scale_item"><input type="radio" id="q13_4" name="q13" value="4"><label for="q13_4">4</label></li>
-                        <li class="scale_item"><input type="radio" id="q13_5" name="q13" value="5"><label for="q13_5">5</label></li>
-                    </ul>
-                    <div class="scale_txt">그렇다</div>
-                </div>
-            </section>
-
-            <section class="question_box">
-                <div class="question_top">
-                    <span class="question_num">질문 14</span>
-                    <h3 class="question_title">이 화면은 사용하기 번거롭다고 느껴졌습니다.</h3>
-                    <p class="question_desc">최대 1개 선택 가능</p>
-                </div>
-                <div class="scale_group">
-                    <div class="scale_txt">그렇지 않다</div>
-                    <ul class="scale_list">
-                        <li class="scale_item"><input type="radio" id="q14_1" name="q14" value="1"><label for="q14_1">1</label></li>
-                        <li class="scale_item"><input type="radio" id="q14_2" name="q14" value="2"><label for="q14_2">2</label></li>
-                        <li class="scale_item"><input type="radio" id="q14_3" name="q14" value="3"><label for="q14_3">3</label></li>
-                        <li class="scale_item"><input type="radio" id="q14_4" name="q14" value="4"><label for="q14_4">4</label></li>
-                        <li class="scale_item"><input type="radio" id="q14_5" name="q14" value="5"><label for="q14_5">5</label></li>
-                    </ul>
-                    <div class="scale_txt">그렇다</div>
-                </div>
-            </section>
-
-            <section class="question_box">
-                <div class="question_top">
-                    <span class="question_num">질문 15</span>
-                    <h3 class="question_title">이 화면을 쉽게 사용할 수 있을 것 같은 자신감이 듭니다.</h3>
-                    <p class="question_desc">최대 1개 선택 가능</p>
-                </div>
-                <div class="scale_group">
-                    <div class="scale_txt">그렇지 않다</div>
-                    <ul class="scale_list">
-                        <li class="scale_item"><input type="radio" id="q15_1" name="q15" value="1"><label for="q15_1">1</label></li>
-                        <li class="scale_item"><input type="radio" id="q15_2" name="q15" value="2"><label for="q15_2">2</label></li>
-                        <li class="scale_item"><input type="radio" id="q15_3" name="q15" value="3"><label for="q15_3">3</label></li>
-                        <li class="scale_item"><input type="radio" id="q15_4" name="q15" value="4"><label for="q15_4">4</label></li>
-                        <li class="scale_item"><input type="radio" id="q15_5" name="q15" value="5"><label for="q15_5">5</label></li>
-                    </ul>
-                    <div class="scale_txt">그렇다</div>
-                </div>
-            </section>
-
-            <section class="question_box">
-                <div class="question_top">
-                    <span class="question_num">질문 16</span>
-                    <h3 class="question_title">이 화면을 사용하기 위해서는 많은 것을 사전에 익혀야 할 것 같습니다.</h3>
-                    <p class="question_desc">최대 1개 선택 가능</p>
-                </div>
-                <div class="scale_group">
-                    <div class="scale_txt">그렇지 않다</div>
-                    <ul class="scale_list">
-                        <li class="scale_item"><input type="radio" id="q16_1" name="q16" value="1"><label for="q16_1">1</label></li>
-                        <li class="scale_item"><input type="radio" id="q16_2" name="q16" value="2"><label for="q16_2">2</label></li>
-                        <li class="scale_item"><input type="radio" id="q16_3" name="q16" value="3"><label for="q16_3">3</label></li>
-                        <li class="scale_item"><input type="radio" id="q16_4" name="q16" value="4"><label for="q16_4">4</label></li>
-                        <li class="scale_item"><input type="radio" id="q16_5" name="q16" value="5"><label for="q16_5">5</label></li>
-                    </ul>
-                    <div class="scale_txt">그렇다</div>
-                </div>
-            </section>
-
-            <section class="question_box">
-                <div class="question_top">
-                    <span class="question_num">질문 17</span>
-                    <h3 class="question_title">원하는 정보를 어디서 찾아야 할지 바로 이해되시나요?</h3>
-                    <p class="question_desc">최대 1개 선택 가능</p>
-                </div>
-                <div class="scale_group">
-                    <div class="scale_txt">그렇지 않다</div>
-                    <ul class="scale_list">
-                        <li class="scale_item"><input type="radio" id="q17_1" name="q17" value="1"><label for="q17_1">1</label></li>
-                        <li class="scale_item"><input type="radio" id="q17_2" name="q17" value="2"><label for="q17_2">2</label></li>
-                        <li class="scale_item"><input type="radio" id="q17_3" name="q17" value="3"><label for="q17_3">3</label></li>
-                        <li class="scale_item"><input type="radio" id="q17_4" name="q17" value="4"><label for="q17_4">4</label></li>
-                        <li class="scale_item"><input type="radio" id="q17_5" name="q17" value="5"><label for="q17_5">5</label></li>
-                    </ul>
-                    <div class="scale_txt">그렇다</div>
-                </div>
-            </section>
-
-            <section class="question_box">
-                <div class="question_top">
-                    <span class="question_num">질문 18</span>
-                    <h3 class="question_title">화면 정보 구성이 한눈에 파악되나요?</h3>
-                    <p class="question_desc">최대 1개 선택 가능</p>
-                </div>
-                <div class="scale_group">
-                    <div class="scale_txt">그렇지 않다</div>
-                    <ul class="scale_list">
-                        <li class="scale_item"><input type="radio" id="q18_1" name="q18" value="1"><label for="q18_1">1</label></li>
-                        <li class="scale_item"><input type="radio" id="q18_2" name="q18" value="2"><label for="q18_2">2</label></li>
-                        <li class="scale_item"><input type="radio" id="q18_3" name="q18" value="3"><label for="q18_3">3</label></li>
-                        <li class="scale_item"><input type="radio" id="q18_4" name="q18" value="4"><label for="q18_4">4</label></li>
-                        <li class="scale_item"><input type="radio" id="q18_5" name="q18" value="5"><label for="q18_5">5</label></li>
-                    </ul>
-                    <div class="scale_txt">그렇다</div>
-                </div>
-            </section>
-
-            <section class="question_box">
-                <div class="question_top">
-                    <span class="question_num">질문 19</span>
-                    <h3 class="question_title">이 화면에서 가장 눈에 띄는 콘텐츠는 무엇인가요?</h3>
-                    <p class="question_desc">최대 1개 선택 가능</p>
-                </div>
-
-                <ul class="choice_list">
-                    <li class="choice_item"><input type="radio" id="q19_1" name="q19" value="정책/제도"><label for="q19_1">정책/제도</label></li>
-                    <li class="choice_item"><input type="radio" id="q19_2" name="q19" value="카드뉴스/인포그래픽"><label for="q19_2">카드뉴스/인포그래픽 같은 콘텐츠</label></li>
-                    <li class="choice_item"><input type="radio" id="q19_3" name="q19" value="홍보배너"><label for="q19_3">홍보배너</label></li>
-                    <li class="choice_item"><input type="radio" id="q19_4" name="q19" value="정책홍보"><label for="q19_4">정책홍보</label></li>
-                    <li class="choice_item"><input type="radio" id="q19_5" name="q19" value="고용 뉴스"><label for="q19_5">고용 뉴스</label></li>
-                    <li class="choice_item"><input type="radio" id="q19_6" name="q19" value="뉴스레터 모아보기"><label for="q19_6">뉴스레터 모아보기</label></li>
-                    <li class="choice_item"><input type="radio" id="q19_7" name="q19" value="기타 콘텐츠"><label for="q19_7">이벤트, 설문조사, 서식자료실, 지원금 모의계산, 직종별 임금정보</label></li>
-                </ul>
-            </section>
-
-            <section class="question_box">
-                <div class="question_top">
-                    <span class="question_num">질문 20</span>
-                    <h3 class="question_title">가장 먼저 클릭해 보고 싶었던 영역은 어디였나요?</h3>
-                    <p class="question_desc">최대 1개 선택 가능</p>
-                </div>
-
-                <ul class="choice_list">
-                    <li class="choice_item"><input type="radio" id="q20_1" name="q20" value="정책/제도"><label for="q20_1">정책/제도</label></li>
-                    <li class="choice_item"><input type="radio" id="q20_2" name="q20" value="카드뉴스/인포그래픽"><label for="q20_2">카드뉴스/인포그래픽 같은 콘텐츠</label></li>
-                    <li class="choice_item"><input type="radio" id="q20_3" name="q20" value="홍보배너"><label for="q20_3">홍보배너</label></li>
-                    <li class="choice_item"><input type="radio" id="q20_4" name="q20" value="정책홍보"><label for="q20_4">정책홍보</label></li>
-                    <li class="choice_item"><input type="radio" id="q20_5" name="q20" value="고용 뉴스"><label for="q20_5">고용 뉴스</label></li>
-                    <li class="choice_item"><input type="radio" id="q20_6" name="q20" value="뉴스레터 모아보기"><label for="q20_6">뉴스레터 모아보기</label></li>
-                    <li class="choice_item"><input type="radio" id="q20_7" name="q20" value="기타 콘텐츠"><label for="q20_7">이벤트, 설문조사, 서식자료실, 지원금 모의계산, 직종별 임금정보</label></li>
-                </ul>
-            </section>
-
         </div>
 
-        <div class="submit_box">
-            <button type="submit" class="btn_submit">설문 제출하기</button>
-        </div>
-    </form>
+        <script>
+            $(function(){
+                $('.question_box input[type="radio"]').on('change', function(){
+                    const $currentQuestion = $(this).closest('.question_box');
+                    const $nextQuestion = $currentQuestion
+                        .nextAll('.question_box')
+                        .first();
+                    if($nextQuestion.length){
+                        $nextQuestion.addClass('active');
+                        $('html, body').stop().animate({
+                            scrollTop : $nextQuestion.offset().top - 40
+                        }, 400);
+                    }else{
+                        $('#completeBox').addClass('active');
+                        $('html, body').stop().animate({
+                            scrollTop : $('#completeBox').offset().top - 40
+                        }, 400);
+                        $('#completeBox').focus();
+                    }
+                });
+            });
+        </script>
 
-</div>
-
-<div class="layer_wrap" id="layer_type_a" role="dialog" aria-modal="true" aria-labelledby="layer_a_title" hidden>
-    <div class="layer_dim"></div>
-
-    <div class="layer_box" role="document">
-        <div class="layer_head">
-            <h2 id="layer_a_title" tabindex="-1">LNB A 타입 상세보기</h2>
-            <button type="button" class="btn_layer_close">
-                <span class="sr_only">팝업 닫기</span>
-                ✕
-            </button>
-        </div>
-
-        <div class="layer_cont">
-            <img src="./images/lnb_type01.png" alt="고용24 LNB A 타입 화면 예시">
-        </div>
-    </div>
-</div>
-
-<div class="layer_wrap" id="layer_type_b" role="dialog" aria-modal="true" aria-labelledby="layer_b_title" hidden>
-    <div class="layer_dim"></div>
-
-    <div class="layer_box" role="document">
-        <div class="layer_head">
-            <h2 id="layer_b_title" tabindex="-1">LNB B 타입 상세보기</h2>
-            <button type="button" class="btn_layer_close">
-                <span class="sr_only">팝업 닫기</span>
-                ✕
-            </button>
-        </div>
-
-        <div class="layer_cont">
-            <img src="./images/lnb-type02.png" alt="고용24 LNB B 타입 화면 예시">
-        </div>
-    </div>
-</div>
-
-<script>
-$(function(){
-
-    let lastFocus = null;
-
-    $('.btn_preview').on('click', function(){
-
-        const layerId = $(this).data('layer');
-        const $layer = $('#' + layerId);
-
-        lastFocus = $(this);
-
-        $('body').addClass('layer_open');
-
-        $layer.removeAttr('hidden');
-
-        setTimeout(function(){
-            $layer.find('.layer_head h2').focus();
-        }, 10);
-
-    });
-
-    $('.btn_layer_close, .layer_dim').on('click', function(){
-
-        closeLayer($(this).closest('.layer_wrap'));
-
-    });
-
-    $(document).on('keydown', function(e){
-
-        const $openLayer = $('.layer_wrap').not('[hidden]');
-
-        if(!$openLayer.length){
-            return;
-        }
-
-        if(e.key === 'Escape'){
-            closeLayer($openLayer);
-        }
-
-        if(e.key === 'Tab'){
-            trapFocus(e, $openLayer);
-        }
-
-    });
-
-    function closeLayer($layer){
-
-        $layer.attr('hidden', true);
-        $('body').removeClass('layer_open');
-
-        if(lastFocus){
-            lastFocus.focus();
-        }
-
-    }
-
-    function trapFocus(e, $layer){
-
-        const $focusable = $layer.find('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])').filter(':visible');
-
-        if(!$focusable.length){
-            return;
-        }
-
-        const firstEl = $focusable.first()[0];
-        const lastEl = $focusable.last()[0];
-
-        if(e.shiftKey && document.activeElement === firstEl){
-            e.preventDefault();
-            lastEl.focus();
-        }else if(!e.shiftKey && document.activeElement === lastEl){
-            e.preventDefault();
-            firstEl.focus();
-        }
-
-    }
-
-});
-</script>
-
-</body>
+    </body>
 </html>

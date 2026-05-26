@@ -1,5 +1,0 @@
-/* LNB 테스트 페이지 */
-.visual_wrap { position:relative; min-height:100vh; background:#f3f6fb;}
-.visual_box { width:100%;}
-.visual_img { width:100%; min-height:1800px; background:url("/work24-UT/images/lnb_type01.png") no-repeat center top; background-size:100% auto;}
-.visual_info { display:none;}

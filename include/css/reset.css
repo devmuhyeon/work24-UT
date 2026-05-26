@@ -59,7 +59,7 @@ ul,li,ol {
 hr {
 	display:none;
 }
-legend,caption, .blind {
+caption, .blind {
 	position: absolute;
 	width: 1px;
 	height: 1px;
