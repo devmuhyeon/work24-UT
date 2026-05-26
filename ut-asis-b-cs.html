@@ -15,6 +15,40 @@
 
 	<body>
 
+		<!-- 실패 사유 팝업 -->
+		<div id="failPopup" class="ut_result_overlay" role="dialog" aria-modal="true" aria-labelledby="failTitle" aria-describedby="failDesc" hidden>
+			<div class="ut_result_box">
+				<span class="ut_badge">고용24 사용자 경험 조사</span>
+				<h2 id="failTitle" class="ut_alert_title">메뉴를 찾기 어려우셨나요?</h2>
+				<p id="failDesc" class="ut_alert_desc">시간이 초과되었어요. <br>아래 질문에 답해주시면 다음 단계로 넘어갑니다.</p>
+				<fieldset class="fail_radio_group">
+					<legend class="sr_only">실패 이유 선택</legend>
+					<div class="radio_item">
+						<input type="radio" id="failReason01" name="failReason" value="메뉴 이름이 생소해서">
+						<label for="failReason01">메뉴 이름이 생소해서</label>
+					</div>
+					<div class="radio_item">
+						<input type="radio" id="failReason02" name="failReason" value="어느 메뉴 안에 있는지 몰라서">
+						<label for="failReason02">어느 메뉴 안에 있는지 몰라서</label>
+					</div>
+					<div class="radio_item">
+						<input type="radio" id="failReason03" name="failReason" value="메뉴가 너무 많아서">
+						<label for="failReason03">메뉴가 너무 많아서</label>
+					</div>
+					<div class="radio_item">
+						<input type="radio" id="failReason04" name="failReason" value="메뉴가 눈에 잘 보이지 않아서">
+						<label for="failReason04">메뉴가 눈에 잘 보이지 않아서</label>
+					</div>
+					<div class="radio_item">
+						<input type="radio" id="failReason05" name="failReason" value="고용24에 해당 메뉴가 없을 것 같아서">
+						<label for="failReason05">고용24에 해당 메뉴가 없을 것 같아서</label>
+					</div>
+				</fieldset>
+				<button type="button" class="btn_next">다음 테스트로 이동</button>
+			</div>
+		</div>
+
+		<!--  -->
 		<div id="utPage" class="ut_page" aria-hidden="true">
 			<iframe id="testFrame" class="ut_frame" title="고용24 화면 탐색 테스트 화면" src="/work24-UT/asis-b-cs.html"></iframe>
 			<div class="step_floating" role="status" aria-live="polite">
@@ -52,8 +86,90 @@
 		</div>
 
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-		<script src="/work24-UT/js/ut-common.js"></script>
-		<script src="/work24-UT/js/type-b.js"></script>
+		
+<script>
+$(function () {
+
+	const LIMIT = 60 * 1000;
+
+	function openFail(message) {
+
+		$('#failPopup')
+			.removeAttr('hidden')
+			.css({
+				display: 'flex'
+			});
+
+	}
+
+	$('#startTest').on('click', function () {
+
+		sessionStorage.setItem(
+			'b_start',
+			Date.now()
+		);
+
+		$('#utOverlay').hide();
+
+		setTimeout(function () {
+
+			openFail('시간초과');
+
+		}, LIMIT);
+
+	});
+
+	const $frame = $('#testFrame');
+
+	$frame.on('load', function () {
+
+		setTimeout(function () {
+
+			try {
+
+				const frameDoc =
+					$frame[0]
+					.contentWindow
+					.document;
+
+				$(frameDoc)
+					.off('click.move')
+					.on(
+						'click.move',
+						'a',
+						function (e) {
+
+							const href =
+								$(this).attr('href') || '';
+
+							if (
+								href.indexOf(
+									'/work24-UT/ut-asis-b.html'
+								) > -1
+							) {
+
+								e.preventDefault();
+
+								location.href =
+									'/work24-UT/ut-asis-b.html';
+
+							}
+
+						}
+					);
+
+			} catch (e) {
+
+				console.log(e);
+
+			}
+
+		}, 300);
+
+	});
+
+});
+</script>
 
 
 	</body>

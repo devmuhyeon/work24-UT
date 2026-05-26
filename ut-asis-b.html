@@ -81,9 +81,129 @@
 		</div>
 
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-		<script src="/work24-UT/js/ut-common.js"></script>
-		<script src="/work24-UT/js/type-b.js"></script>
+		
+<script>
+$(function () {
 
+	const LIMIT = 60 * 1000;
 
+	const startTime =
+		Number(
+			sessionStorage.getItem('b_start')
+		);
+
+	if (!startTime) {
+
+		alert('시작시간 없음');
+
+		return;
+
+	}
+
+	const remainTime =
+		LIMIT - (Date.now() - startTime);
+
+	if (remainTime <= 0) {
+
+		openFail('전체 시간초과');
+
+		return;
+
+	}
+
+	const totalTimer = setTimeout(function () {
+
+		openFail('전체 시간초과');
+
+	}, remainTime);
+
+	function openFail(message) {
+
+		clearTimeout(totalTimer);
+
+		$('#failDesc').html(message);
+
+		$('#failPopup')
+			.removeAttr('hidden')
+			.css({
+				display: 'flex'
+			});
+
+	}
+
+	function openSuccess() {
+
+		clearTimeout(totalTimer);
+
+		$('#successPopup')
+			.removeAttr('hidden')
+			.css({
+				display: 'flex'
+			});
+
+	}
+
+	const $frame = $('#testFrame');
+
+	function bindFrameEvent() {
+
+		try {
+
+			const frame =
+				$frame[0];
+
+			const frameDoc =
+				frame.contentWindow.document;
+
+			$(frameDoc)
+				.off('click.answer')
+				.on(
+					'click.answer',
+					'a',
+					function (e) {
+
+						const $clicked =
+							$(this);
+
+						console.log(
+							'클릭:',
+							$clicked.text()
+						);
+
+						if (
+							$clicked.attr(
+								'data-answer'
+							) === 'true'
+						) {
+
+							e.preventDefault();
+
+							openSuccess();
+
+						}
+
+					}
+				);
+
+		} catch (e) {
+
+			console.log(e);
+
+		}
+
+	}
+
+	$frame.on('load', function () {
+
+		setTimeout(function () {
+
+			bindFrameEvent();
+
+		}, 300);
+
+	});
+
+});
+</script>
 	</body>
 </html>
