@@ -4,15 +4,21 @@ var UT = (function() {
 	'https://script.google.com/macros/s/AKfycbw3lO05yRJ1KvYgYfD2aS_tVYjkmQPMcmNDoOhZKiQEPpk9JD8DHTTDrbDYMe7gvUeYmg/exec';
 
 	function getParams() {
+
 		return new URLSearchParams(location.search);
+
 	}
 
 	function getGroup() {
+
 		return getParams().get('group') || '1';
+
 	}
 
 	function getTask() {
+
 		return getParams().get('task') || '1';
+
 	}
 
 	function generateId() {
@@ -41,6 +47,7 @@ var UT = (function() {
 			dd +
 			'-' +
 			random;
+
 	}
 
 	function saveSurvey(data) {
@@ -93,13 +100,50 @@ var UT = (function() {
 
 	}
 
-	function goTest() {
+	/*
+		현재 테스트 흐름 기준
 
-		location.href =
-			'/work24-UT/ut-test.html?group=' +
-			encodeURIComponent(getGroup()) +
-			'&task=' +
-			encodeURIComponent(getTask());
+		1. ut-asis-a.html
+		2. ut-tobe-a.html
+		3. ut-asis-b-cs.html
+		4. ut-asis-b.html
+		5. ut-tobe-b.html
+		6. lnb.html
+		7. co-survey.html
+		8. upload.html
+	*/
+
+	function goNext(currentPage) {
+
+		var nextMap = {
+
+			'cover.html' : '/work24-UT/survey.html',
+
+			'survey.html' : '/work24-UT/task.html',
+
+			'task.html' : '/work24-UT/ut-asis-a.html',
+
+			'ut-asis-a.html' : '/work24-UT/ut-tobe-a.html',
+
+			'ut-tobe-a.html' : '/work24-UT/ut-asis-b-cs.html',
+
+			'ut-asis-b-cs.html' : '/work24-UT/ut-asis-b.html',
+
+			'ut-asis-b.html' : '/work24-UT/ut-tobe-b.html',
+
+			'ut-tobe-b.html' : '/work24-UT/lnb.html',
+
+			'lnb.html' : '/work24-UT/co-survey.html',
+
+			'co-survey.html' : '/work24-UT/upload.html'
+
+		};
+
+		if (nextMap[currentPage]) {
+
+			location.href = nextMap[currentPage];
+
+		}
 
 	}
 
@@ -115,21 +159,21 @@ var UT = (function() {
 
 	function makeClickPath(clickLogs) {
 
-	return clickLogs.map(function(item, index) {
+		return clickLogs.map(function(item, index) {
 
-		var prevElapsedMs =
-			index === 0
-				? 0
-				: clickLogs[index - 1].elapsedMs;
+			var prevElapsedMs =
+				index === 0
+					? 0
+					: clickLogs[index - 1].elapsedMs;
 
-		var singleSec =
-			((item.elapsedMs - prevElapsedMs) / 1000).toFixed(1);
+			var singleSec =
+				((item.elapsedMs - prevElapsedMs) / 1000).toFixed(1);
 
-		return item.text + '(' + singleSec + '초)';
+			return item.text + '(' + singleSec + '초)';
 
-	}).join(' > ');
+		}).join(' > ');
 
-}
+	}
 
 	function sendResult(successCallback, errorCallback) {
 
@@ -192,7 +236,7 @@ var UT = (function() {
 
 		goTaskGuide: goTaskGuide,
 
-		goTest: goTest,
+		goNext: goNext,
 
 		goUpload: goUpload,
 

@@ -502,26 +502,64 @@
         </div>
 
         <script>
-            $(function(){
-                $('.question_box input[type="radio"]').on('change', function(){
-                    const $currentQuestion = $(this).closest('.question_box');
-                    const $nextQuestion = $currentQuestion
-                        .nextAll('.question_box')
-                        .first();
-                    if($nextQuestion.length){
-                        $nextQuestion.addClass('active');
-                        $('html, body').stop().animate({
-                            scrollTop : $nextQuestion.offset().top - 40
-                        }, 400);
-                    }else{
-                        $('#completeBox').addClass('active');
-                        $('html, body').stop().animate({
-                            scrollTop : $('#completeBox').offset().top - 40
-                        }, 400);
-                        $('#completeBox').focus();
-                    }
-                });
+            
+$(function () {
+
+    var isCompleteFocused = false;
+
+    $('.question_box input[type="radio"]').on('change', function () {
+
+        var $currentQuestion = $(this).closest('.question_box');
+        var $nextQuestion = $currentQuestion.nextAll('.question_box').first();
+
+        // 다음 질문 열기
+        if ($nextQuestion.length) {
+
+            if (!$nextQuestion.hasClass('active')) {
+                $nextQuestion.addClass('active');
+            }
+
+            $('html, body')
+                .stop()
+                .animate({
+                    scrollTop: $nextQuestion.offset().top - 40
+                }, 400);
+
+            return;
+        }
+
+        // 마지막 질문 완료
+        if (!isCompleteFocused) {
+
+            isCompleteFocused = true;
+
+            $('#completeBox')
+                .addClass('active')
+                .removeAttr('aria-live');
+
+            // 렌더링 이후 스크롤 이동
+            requestAnimationFrame(function () {
+
+                $('html, body')
+                    .stop()
+                    .animate({
+                        scrollTop: $('#completeBox').offset().top - 40
+                    }, 400, function () {
+
+                        // 스크롤 완료 후 포커스
+                        $('#completeBox')
+                            .attr('tabindex', '-1')
+                            .focus();
+
+                    });
+
             });
+
+        }
+
+    });
+
+});
         </script>
 
     </body>
