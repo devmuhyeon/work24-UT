@@ -120,86 +120,55 @@
 	</form>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="/work24-UT/js/jquery-3.7.1.min.js"></script>
+<script src="/work24-UT/js/url.js"></script>
 <script src="/work24-UT/js/ut-common.js"></script>
 
 <script>
-$(function() {
+$('#submitArea').hide();
 
-	function generateUTID() {
-		const date = new Date();
-		const yyyy = date.getFullYear();
-		const mm = String(date.getMonth() + 1).padStart(2, '0');
-		const dd = String(date.getDate()).padStart(2, '0');
-		const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+function showNextQuestion(target) {
 
-		return 'UT-' + yyyy + mm + dd + '-' + random;
-	}
+    var $target = $(target);
 
-	$('#user_ut_id').val(generateUTID());
+    $target
+        .prop('hidden', false)
+        .hide()
+        .slideDown(240, function () {
 
-	function showQuestion(target) {
-		const $target = $(target);
+            $target
+                .find('.question_desc')
+                .attr('tabindex', '-1')
+                .focus();
 
-		if ($target.prop('hidden')) {
-			$target
-				.prop('hidden', false)
-				.hide()
-				.slideDown(240);
-		}
-	}
+        });
 
-	function showSubmit() {
-		$('#submitArea')
-			.css('display', 'flex')
-			.hide()
-			.slideDown(240);
-	}
+}
 
-	/* 처음에는 버튼 숨김 */
-	$('#submitArea').hide();
+$('input[name="age"]').on('change', function () {
 
-	$('input[name="age"]').on('change', function() {
-		showQuestion('#question2');
-		$('#question2 .question_desc').attr('tabindex', '-1').focus();
-	});
+    showNextQuestion('#question2');
 
-	$('input[name="experience"]').on('change', function() {
-		showQuestion('#question3');
-		$('#question3 .question_desc').attr('tabindex', '-1').focus();
-	});
+});
 
-	$('input[name="member"]').on('change', function() {
-		showQuestion('#question4');
-		$('#question4 .question_desc').attr('tabindex', '-1').focus();
-	});
+$('input[name="experience"]').on('change', function () {
 
-	$('input[name="svry"]').on('change', function() {
-		showSubmit();
-	});
+    showNextQuestion('#question3');
 
-	$('#surveyForm').on('submit', function(e) {
-		e.preventDefault();
+});
 
-		if (!$('input[name="svry"]:checked').length) {
-			alert('4번 문항은 필수 선택 항목입니다.');
-			$('#question4 .question_desc').attr('tabindex', '-1').focus();
-			return;
-		}
+$('input[name="member"]').on('change', function () {
 
-		const surveyData = {
-			utId: $('#user_ut_id').val(),
-			age: $('input[name="age"]:checked').val(),
-			experience: $('input[name="experience"]:checked').val(),
-			member: $('input[name="member"]:checked').val(),
-			svry: $('input[name="svry"]:checked').val(),
-			startTime: new Date().toISOString(),
-			userAgent: navigator.userAgent
-		};
+    showNextQuestion('#question4');
 
-		UT.saveSurvey(surveyData);
-		UT.goTaskGuide();
-	});
+});
+
+$('input[name="svry"]').on('change', function () {
+
+    $('#submitArea')
+        .css('display', 'flex')
+        .hide()
+        .slideDown(240);
 
 });
 </script>

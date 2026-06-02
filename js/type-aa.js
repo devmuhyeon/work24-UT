@@ -1,313 +1,187 @@
-$(function() {
+$(function () {
+
+    var isStarted = false;
+    var isFinished = false;
+    var startTime = null;
+    var lastClickTime = null;
+    var timeoutTimer = null;
+    var clickCount = 0;
+    var taskResult = null;
+
+    var clickLogs = [];
+    var targetMenu = '취업동향 모아보기';
+    var limitTime = 40 * 1000;
+
+    var $frame = $('#testFrame');
+
+    $('#targetMenuName').text(targetMenu);
+    $('#startTest').focus();
+
+    function getCurrentTypeKey() {
+        var currentPage = location.pathname.split('/').pop();
+
+        if (currentPage === 'ut-asis-a.html') {
+            return 'typeAAsis';
+        }
+
+        if (currentPage === 'ut-tobe-a.html') {
+            return 'typeATobe';
+        }
 
-	let isStarted = false;
-	let isFinished = false;
-	let startTime = null;
-	let timeoutTimer = null;
-	let clickCount = 0;
-	let taskResult = null;
+        return '';
+    }
 
-	const clickLogs = [];
-	const targetMenu = '취업동향 모아보기';
-	const limitTime = 40 * 1000;
+    function goNextPage() {
+        var currentPage = location.pathname.split('/').pop();
 
-	const $frame = $('#testFrame');
+        if (currentPage === 'ut-asis-a.html') {
+            location.href = '/work24-UT/group_a/ut-tobe-a.html';
+            return;
+        }
 
-	$('#targetMenuName').text(targetMenu);
+        if (currentPage === 'ut-tobe-a.html') {
+            location.href = '/work24-UT/group_a/co-survey.html';
+            return;
+        }
+    }
 
-	$('#startTest').focus();
+    function cleanText(text) {
+        return $.trim(text).replace(/\s+/g, ' ');
+    }
 
-	/*
-		테스트 시작
-	*/
-	$('#startTest').on('click', function() {
+    function getSecond(ms) {
+        return Math.round((ms / 1000) * 10) / 10;
+    }
 
-		isStarted = true;
+    function saveClick($clicked) {
+        var now = Date.now();
+        var stepSecond = getSecond(now - lastClickTime);
 
-		startTime = Date.now();
+        clickCount++;
 
-		$('#utPage').removeAttr('aria-hidden');
+        clickLogs.push({
+            text: cleanText($clicked.text()),
+            second: stepSecond
+        });
 
-		$('#utOverlay').fadeOut(200, function() {
+        lastClickTime = now;
+    }
 
-			$(this).remove();
+    function makeResult(resultType, $clicked) {
+        var endTime = Date.now();
 
-			$frame.focus();
+        return {
+            targetMenu: targetMenu,
+            finalClickMenu: $clicked ? cleanText($clicked.text()) : '',
+            failReason: '',
+            clickCount: clickCount,
+            duration: Math.round((endTime - startTime) / 1000),
+            clickPath: UT_A.makeClickPath(clickLogs),
+            result: resultType,
+            startTime: new Date(startTime).toISOString(),
+            endTime: new Date(endTime).toISOString(),
+            userAgent: navigator.userAgent
+        };
+    }
 
-		});
+    function saveCurrentTask(result) {
+        var key = getCurrentTypeKey();
 
-		timeoutTimer = setTimeout(function() {
+        if (!key) return;
 
-			finishFail();
+        UT_A.saveTask(key, result);
+    }
 
-		}, limitTime);
+    $('#startTest').on('click', function () {
+        isStarted = true;
+        startTime = Date.now();
+        lastClickTime = startTime;
 
-	});
+        $('#utPage').removeAttr('aria-hidden');
 
-	/*
-		클릭 저장
-	*/
-	function saveClick($clicked) {
+        $('#utOverlay').fadeOut(200, function () {
+            $(this).remove();
+            $frame.focus();
+        });
 
-		clickCount++;
+        timeoutTimer = setTimeout(function () {
+            finishFail();
+        }, limitTime);
+    });
 
-		clickLogs.push({
+    function finishSuccess($clicked) {
+        if (isFinished) return;
 
-			text: $.trim($clicked.text()),
+        isFinished = true;
+        clearTimeout(timeoutTimer);
 
-			elapsedMs: Date.now() - startTime
+        taskResult = makeResult('success', $clicked);
+        saveCurrentTask(taskResult);
 
-		});
+        goNextPage();
+    }
 
-	}
+    function finishFail() {
+        if (isFinished) return;
 
-	/*
-		결과 생성
-	*/
-	function makeResult(resultType, $clicked) {
+        isFinished = true;
+        clearTimeout(timeoutTimer);
 
-		const endTime = Date.now();
+        taskResult = makeResult('fail', null);
 
-		return {
+        $('#failPopup')
+            .removeAttr('hidden')
+            .hide()
+            .fadeIn(200, function () {
+                $(this).find('input[name="failReason"]').first().focus();
+            });
+    }
 
-			target: targetMenu,
+    $(document).on('click', '.btn_next', function () {
+        if (!taskResult) return;
 
-			result: resultType,
+        if (taskResult.result === 'fail') {
+            var failReason = $('input[name="failReason"]:checked').val();
 
-			clickedText:
-				$clicked
-					? $.trim($clicked.text())
-					: '',
+            if (!failReason) {
+                $('input[name="failReason"]').first().focus();
+                return;
+            }
 
-			clickCount: clickCount,
+            taskResult.failReason = failReason;
+        }
 
-			duration:
-				Math.round(
-					(endTime - startTime) / 1000
-				),
+        saveCurrentTask(taskResult);
+        goNextPage();
+    });
 
-			clickPath:
-				UT.makeClickPath(clickLogs),
+    function bindFrameClick() {
+        var frame = $frame[0];
 
-			failReason: '',
+        if (!frame || !frame.contentWindow || !frame.contentWindow.document) {
+            return;
+        }
 
-			startTime:
-				new Date(startTime).toISOString(),
+        var frameDoc = frame.contentWindow.document;
 
-			endTime:
-				new Date(endTime).toISOString(),
+        $(frameDoc)
+            .off('click.utTest')
+            .on('click.utTest', 'a, button', function (e) {
+                if (!isStarted || isFinished) return;
 
-			userAgent:
-				navigator.userAgent
+                var $clicked = $(this);
 
-		};
+                saveClick($clicked);
 
-	}
+                if ($clicked.attr('data-answer') === 'true') {
+                    e.preventDefault();
+                    finishSuccess($clicked);
+                }
+            });
+    }
 
-	/*
-		성공 처리
-	*/
-	function finishSuccess($clicked) {
-
-		if (isFinished) return;
-
-		isFinished = true;
-
-		clearTimeout(timeoutTimer);
-
-		taskResult =
-			makeResult('success', $clicked);
-
-		$('#successPopup')
-			.removeAttr('hidden')
-			.hide()
-			.fadeIn(200, function() {
-
-				$(this)
-					.find('.btn_next')
-					.focus();
-
-			});
-
-	}
-
-	/*
-		실패 처리
-	*/
-	function finishFail() {
-
-		if (isFinished) return;
-
-		isFinished = true;
-
-		taskResult =
-			makeResult('fail', null);
-
-		$('#failPopup')
-			.removeAttr('hidden')
-			.hide()
-			.fadeIn(200, function() {
-
-				$(this)
-					.find('input[name="failReason"]')
-					.first()
-					.focus();
-
-			});
-
-	}
-
-	/*
-		다음 버튼
-	*/
-	$(document).on('click', '.btn_next', function() {
-
-		if (!taskResult) return;
-
-		/*
-			실패 사유 검증
-		*/
-		if (taskResult.result === 'fail') {
-
-			const failReason =
-				$('input[name="failReason"]:checked')
-					.val();
-
-			if (!failReason) {
-
-				$('#failError')
-					.removeAttr('hidden');
-
-				$('input[name="failReason"]')
-					.first()
-					.focus();
-
-				return;
-
-			}
-
-			$('#failError')
-				.attr('hidden', true);
-
-			taskResult.failReason =
-				failReason;
-
-		}
-
-		/*
-			결과 저장
-		*/
-		UT.saveTask(taskResult);
-
-		/*
-			현재 페이지 기준 이동
-		*/
-		const currentPage =
-			location.pathname
-				.split('/')
-				.pop();
-
-		if (currentPage === 'ut-asis-a.html') {
-
-			location.href =
-				'/work24-UT/group_a/ut-tobe-a.html';
-
-			return;
-
-		}
-
-		if (currentPage === 'ut-tobe-a.html') {
-
-			location.href =
-				'/work24-UT/co-survey.html';
-
-			return;
-
-		}
-
-	});
-
-	/*
-		failError 숨김
-	*/
-	$(document).on(
-		'change',
-		'input[name="failReason"]',
-		function() {
-
-			$('#failError')
-				.attr('hidden', true);
-
-		}
-	);
-
-	/*
-		iframe 클릭 감지
-	*/
-	function bindFrameClick() {
-
-		const frame = $frame[0];
-
-		if (
-			!frame ||
-			!frame.contentWindow ||
-			!frame.contentWindow.document
-		) {
-
-			return;
-
-		}
-
-		const frameDoc =
-			frame.contentWindow.document;
-
-		$(frameDoc)
-			.off('click.utTest')
-			.on(
-				'click.utTest',
-				'a, button',
-				function(e) {
-
-					if (
-						!isStarted ||
-						isFinished
-					) {
-
-						return;
-
-					}
-
-					const $clicked =
-						$(this);
-
-					saveClick($clicked);
-
-					/*
-						정답 클릭
-					*/
-					if (
-						$clicked.attr('data-answer')
-						=== 'true'
-					) {
-
-						e.preventDefault();
-
-						finishSuccess($clicked);
-
-					}
-
-				}
-			);
-
-	}
-
-	/*
-		iframe load
-	*/
-	$frame.on('load', function() {
-
-		bindFrameClick();
-
-	});
+    $frame.on('load', function () {
+        bindFrameClick();
+    });
 
 });
