@@ -17,7 +17,6 @@
 <div class="survey_wrap">
 	<form id="surveyForm" class="survey_box" novalidate>
 		<input type="hidden" id="user_ut_id" name="user_ut_id">
-
 		<div class="survey_head">
 			<span class="survey_badge">고용24 사용자 경험 조사</span>
 			<h1 class="survey_title">참여 전 확인</h1>
@@ -27,10 +26,8 @@
 				<li><span class="sr_only">고용24 사용자 경험 조사</span></li>
 				<li class="is_current"><span class="sr_only">현재 단계: 참여 전 확인</span></li>
 				<li><span class="sr_only">설문 방법 안내</span></li>
-				<li><span class="sr_only">메뉴 탐색 테스트 - Type A</span></li>
-				<li><span class="sr_only">메뉴 탐색 테스트 - Type B</span></li>
-				<li><span class="sr_only">LNB 비교 테스트</span></li>
-				<li><span class="sr_only">선호도 테스트</span></li>
+				<li><span class="sr_only">메뉴 탐색 테스트</span></li>
+				<li><span class="sr_only">주관식 의견 조사</span></li>
 				<li><span class="sr_only">결과 제출</span></li>
 			</ol>
 		</div>
@@ -54,13 +51,8 @@
 					</div>
 
 					<div class="option_item">
-						<input type="radio" id="age_60" name="age" value="60~64세">
-						<label for="age_60">60~64세</label>
-					</div>
-
-					<div class="option_item">
-						<input type="radio" id="age_65" name="age" value="65세 이상">
-						<label for="age_65">65세 이상</label>
+						<input type="radio" id="age_60" name="age" value="60대 이상">
+						<label for="age_60">60대 이상</label>
 					</div>
 				</div>
 			</fieldset>
@@ -89,15 +81,23 @@
 
 			<!-- Q3 -->
 			<fieldset class="fieldset_group" id="question3" hidden>
-				<p class="question_desc"><span class="question_number">3.</span> 기업회원이신가요?</p>
+				<p class="question_desc"><span class="question_number">3.</span> 고용24 회원이신가요?</p>
 				<div class="option_list">
 					<div class="option_item">
-						<input type="radio" id="member_yes" name="member" value="예">
-						<label for="member_yes">예</label>
+						<input type="radio" id="member_person" name="member" value="개인회원">
+						<label for="member_person">개인회원</label>
 					</div>
 					<div class="option_item">
-						<input type="radio" id="member_no" name="member" value="아니오">
-						<label for="member_no">아니오</label>
+						<input type="radio" id="member_company" name="member" value="기업회원">
+						<label for="member_company">기업회원</label>
+					</div>
+					<div class="option_item">
+						<input type="radio" id="member_double" name="member" value="개인회원+기업회원">
+						<label for="member_double">개인회원+기업회원</label>
+					</div>
+					<div class="option_item">
+						<input type="radio" id="member_none" name="member" value="비회원">
+						<label for="member_none">비회원</label>
 					</div>
 				</div>
 			</fieldset>
@@ -120,86 +120,55 @@
 	</form>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="/work24-UT/js/jquery-3.7.1.min.js"></script>
+<script src="/work24-UT/js/url.js"></script>
 <script src="/work24-UT/js/ut-common.js"></script>
 
 <script>
-$(function() {
+$('#submitArea').hide();
 
-	function generateUTID() {
-		const date = new Date();
-		const yyyy = date.getFullYear();
-		const mm = String(date.getMonth() + 1).padStart(2, '0');
-		const dd = String(date.getDate()).padStart(2, '0');
-		const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+function showNextQuestion(target) {
 
-		return 'UT-' + yyyy + mm + dd + '-' + random;
-	}
+    var $target = $(target);
 
-	$('#user_ut_id').val(generateUTID());
+    $target
+        .prop('hidden', false)
+        .hide()
+        .slideDown(240, function () {
 
-	function showQuestion(target) {
-		const $target = $(target);
+            $target
+                .find('.question_desc')
+                .attr('tabindex', '-1')
+                .focus();
 
-		if ($target.prop('hidden')) {
-			$target
-				.prop('hidden', false)
-				.hide()
-				.slideDown(240);
-		}
-	}
+        });
 
-	function showSubmit() {
-		$('#submitArea')
-			.css('display', 'flex')
-			.hide()
-			.slideDown(240);
-	}
+}
 
-	/* 처음에는 버튼 숨김 */
-	$('#submitArea').hide();
+$('input[name="age"]').on('change', function () {
 
-	$('input[name="age"]').on('change', function() {
-		showQuestion('#question2');
-		$('#question2 .question_desc').attr('tabindex', '-1').focus();
-	});
+    showNextQuestion('#question2');
 
-	$('input[name="experience"]').on('change', function() {
-		showQuestion('#question3');
-		$('#question3 .question_desc').attr('tabindex', '-1').focus();
-	});
+});
 
-	$('input[name="member"]').on('change', function() {
-		showQuestion('#question4');
-		$('#question4 .question_desc').attr('tabindex', '-1').focus();
-	});
+$('input[name="experience"]').on('change', function () {
 
-	$('input[name="svry"]').on('change', function() {
-		showSubmit();
-	});
+    showNextQuestion('#question3');
 
-	$('#surveyForm').on('submit', function(e) {
-		e.preventDefault();
+});
 
-		if (!$('input[name="svry"]:checked').length) {
-			alert('4번 문항은 필수 선택 항목입니다.');
-			$('#question4 .question_desc').attr('tabindex', '-1').focus();
-			return;
-		}
+$('input[name="member"]').on('change', function () {
 
-		const surveyData = {
-			utId: $('#user_ut_id').val(),
-			age: $('input[name="age"]:checked').val(),
-			experience: $('input[name="experience"]:checked').val(),
-			member: $('input[name="member"]:checked').val(),
-			svry: $('input[name="svry"]:checked').val(),
-			startTime: new Date().toISOString(),
-			userAgent: navigator.userAgent
-		};
+    showNextQuestion('#question4');
 
-		UT.saveSurvey(surveyData);
-		UT.goTaskGuide();
-	});
+});
+
+$('input[name="svry"]').on('change', function () {
+
+    $('#submitArea')
+        .css('display', 'flex')
+        .hide()
+        .slideDown(240);
 
 });
 </script>

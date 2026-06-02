@@ -1,288 +1,77 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/work24-UT/css/reset.css">
-<link rel="stylesheet" href="/work24-UT/css/font.css">
-<link rel="stylesheet" href="/work24-UT/css/common.css">
-<link rel="stylesheet" href="/work24-UT/css/survey.css">
-<link rel="stylesheet" href="/work24-UT/css/co-survey.css">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="/work24-UT/css/reset.css">
+		<link rel="stylesheet" href="/work24-UT/css/font.css">
+		<link rel="stylesheet" href="/work24-UT/css/common.css">
+		<link rel="stylesheet" href="/work24-UT/css/survey.css">
+		<link rel="stylesheet" href="/work24-UT/css/co-survey.css">
 
-<title>고용24 사용자 조사</title>
-</head>
+		<title>고용24 사용자 조사</title>
+	</head>
+	<body>
 
-<body>
-
-<div class="survey_wrap">
-	<form id="surveyForm" class="survey_box" novalidate>
-		<input type="hidden" id="user_ut_id" name="user_ut_id">
-
-		<div class="survey_head">
-			<span class="survey_badge">고용24 사용자 경험 조사</span>
-			<h1 class="survey_title">선호도 테스트</h1>
-			<p class="survey_desc">앞서 보고 온 화면들에 대해서 느낀점을 솔직히 답해주세요.</p>
-
-			<ol class="step_list" aria-label="조사 진행 단계">
-				<li><span class="sr_only">고용24 사용자 경험 조사</span></li>
-				<li><span class="sr_only">참여 전 확인</span></li>
-				<li><span class="sr_only">설문 방법 안내</span></li>
-				<li><span class="sr_only">메뉴 탐색 테스트 - Type A</span></li>
-				<li><span class="sr_only">메뉴 탐색 테스트 - Type B</span></li>
-				<li><span class="sr_only">LNB 비교 테스트</span></li>
-				<li class="is_current"><span class="sr_only">현재 단계: 선호도 테스트</span></li>
-				<li><span class="sr_only">결과 제출</span></li>
-			</ol>
-		</div>
-
-		<div class="survey_body">
-
-			<fieldset class="fieldset_group" id="question1">
-                <p class="question_desc">
-                    <span class="question_number">1.</span>선호하는 시안을 선택해 주세요.<span class="question_sub">(단일 선택)</span>
-                </p>
-
-                <div class="option_list is-bn">
-                    <div class="option_item has_view">
-                        <input type="radio" id="prefer_1" name="preference" value="1번 화면">
-                        <label for="prefer_1">
-                            1번 화면 
-                            <button type="button" class="btn_img_view" data-layer="layer_screen_1" aria-haspopup="dialog" aria-controls="layer_screen_1">화면 보기</button>
-                            
-                        </label>
-
-                    </div>
-
-                    <div class="option_item has_view">
-                        <input type="radio" id="prefer_2" name="preference" value="2번 화면">
-                        <label for="prefer_2">
-                            2번 화면
-                            <button type="button" class="btn_img_view" data-layer="layer_screen_2" aria-haspopup="dialog" aria-controls="layer_screen_2">화면 보기</button>
-                        </label>
-
-                    </div>
-
-                    <div class="option_item">
-                        <input type="radio" id="prefer_same" name="preference" value="비슷하다">
-                        <label for="prefer_same">비슷하다</label>
-                    </div>
-                </div>
-            </fieldset>
-
-			<fieldset class="fieldset_group" id="question2" hidden>
-				<p class="question_desc">
-					<span class="question_number">2.</span>
-					그 이유는 무엇인가요?
-					<span class="question_sub">(복수 선택 가능)</span>
-				</p>
-
-				<div class="option_list is-long">
-					<div class="option_item">
-						<input type="checkbox" id="reason_fast" name="reason" value="원하는 정보를 빨리 찾을 수 있을 것 같아서">
-						<label for="reason_fast">원하는 정보를 빨리 찾을 수 있을 것 같아서</label>
-					</div>
-
-					<div class="option_item">
-						<input type="checkbox" id="reason_clean" name="reason" value="화면 구성이 깔끔하고 보기 편해서">
-						<label for="reason_clean">화면 구성이 깔끔하고 보기 편해서</label>
-					</div>
-
-					<div class="option_item">
-						<input type="checkbox" id="reason_info" name="reason" value="필요한 정보가 더 잘 보여서">
-						<label for="reason_info">필요한 정보가 더 잘 보여서</label>
-					</div>
-
-					<div class="option_item">
-						<input type="checkbox" id="reason_design" name="reason" value="디자인이 보기 좋아서">
-						<label for="reason_design">디자인이 보기 좋아서</label>
-					</div>
-
-					<div class="option_item">
-						<input type="checkbox" id="reason_sort" name="reason" value="정보가 잘 정리되어 있어서">
-						<label for="reason_sort">정보가 잘 정리되어 있어서</label>
-					</div>
+		<div class="survey_wrap">
+			<form id="surveyForm" class="survey_box" novalidate>
+				<input type="hidden" id="user_ut_id" name="user_ut_id">
+				<div class="survey_head">
+					<span class="survey_badge">고용24 사용자 경험 조사</span>
+					<h1 class="survey_title">주관식 의견 조사</h1>
+					<p class="survey_desc">앞서 확인한 화면들에 대한 사용 경험과 느낀 점을 자유롭게 작성해 주세요.</p>
+					<ol class="step_list" aria-label="조사 진행 단계">
+						<li><span class="sr_only">고용24 사용자 경험 조사</span></li>
+						<li><span class="sr_only">참여 전 확인</span></li>
+						<li><span class="sr_only">설문 방법 안내</span></li>
+						<li><span class="sr_only">메뉴 탐색 테스트</span></li>
+						<li class="is_current"><span class="sr_only">현재 단계: 주관식 의견 조사</span></li>
+						<li><span class="sr_only">결과 제출</span></li>
+					</ol>
 				</div>
-			</fieldset>
 
-			<fieldset class="fieldset_group" id="question3" hidden>
-				<p class="question_desc">
-					<span class="question_number">3.</span>
-					앞에 본 디자인에 대해서 개선되었으면 하는 점이 있다면 자유롭게 작성해 주세요.
-					<span class="question_sub">(최대 100자)</span>
-				</p>
-
-				<div class="textarea_wrap">
-					<label for="improve_text" class="sr_only">개선 의견 입력</label>
-
-					<textarea id="improve_text" name="improve_text" class="survey_textarea" rows="6" maxlength="100" placeholder="답변을 입력해주세요." aria-describedby="improve_count"></textarea>
-
-					<p class="text_count" id="improve_count" aria-live="polite">
-						<span class="current_count">0</span> / 100
-					</p>
+				<div class="survey_body">
+					<fieldset class="fieldset_group" id="question1" >
+						<p class="question_desc">개선 사항이나 의견이 있으시면 작성해 주세요.<span class="question_sub">(선택 사항)</span>
+						</p>
+						<div class="textarea_wrap">
+							<label for="improve_text" class="sr_only">개선 의견 입력</label>
+							<textarea id="improve_text" name="improve_text" class="survey_textarea" rows="6" maxlength="100" placeholder="답변을 입력해주세요." aria-describedby="improve_count"></textarea>
+							<p class="text_count" id="improve_count" aria-live="polite"><span class="current_count">0</span> / 100</p>
+						</div>
+					</fieldset> 
+					<div class="button_area" id="submitArea"><button type="submit" class="btn_submit">최종 제출</button></div>
 				</div>
-			</fieldset>
-
-			<div class="button_area" id="submitArea" hidden>
-				<button type="submit" class="btn_submit">최종 제출</button>
-			</div>
-
+			</form>
 		</div>
-	</form>
-</div>
-<div class="img_layer" id="layer_screen_1" role="dialog" aria-modal="true" aria-labelledby="layer_screen_1_title" hidden>
-	<div class="img_layer_dim"></div>
+		<script src="/work24-UT/js/jquery-3.7.1.min.js"></script>
+		<script src="/work24-UT/js/ut-common.js"></script>
 
-	<div class="img_layer_box" role="document">
-		<div class="img_layer_head">
-			<h2 id="layer_screen_1_title" tabindex="-1">1번 화면 보기</h2>
+		<script>
+			$(function () {
+				var $textarea = $('#improve_text');
+				var $count = $('#improve_count .current_count');
+				var maxLength = $textarea.attr('maxlength');
+				function updateCount() {
+					var currentLength = $textarea.val().length;
+					$count.text(currentLength);
+					// maxlength 초과 방지
+					if (currentLength > maxLength) {
+						$textarea.val(
+							$textarea.val().substring(0, maxLength)
+						);
 
-			<button type="button" class="btn_img_close">
-				<span class="sr_only">팝업 닫기</span>
-				✕
-			</button>
-		</div>
+						$count.text(maxLength);
+					}
+				}
+				// 입력 시 글자 수 갱신
+				$textarea.on('input', function () {
+					updateCount();
+				});
+				// 최초 실행
+				updateCount();
 
-		<div class="img_layer_cont">
-			<img src="/work24-UT/images/lnb_type01.png" alt="1번 화면">
-		</div>
-	</div>
-</div>
-
-<div class="img_layer" id="layer_screen_2" role="dialog" aria-modal="true" aria-labelledby="layer_screen_2_title" hidden>
-	<div class="img_layer_dim"></div>
-
-	<div class="img_layer_box" role="document">
-		<div class="img_layer_head">
-			<h2 id="layer_screen_2_title" tabindex="-1">2번 화면 보기</h2>
-
-			<button type="button" class="btn_img_close">
-				<span class="sr_only">팝업 닫기</span>
-				✕
-			</button>
-		</div>
-
-		<div class="img_layer_cont">
-			<img src="/work24-UT/images/lnb-type02.png" alt="2번 화면">
-		</div>
-	</div>
-</div>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="/work24-UT/js/ut-common.js"></script>
-
-<script>
-$(function () {
-
-	function showQuestion(target) {
-		var $target = $(target);
-
-		if ($target.is(':hidden')) {
-			$target
-				.prop('hidden', false)
-				.hide()
-				.slideDown(240);
-		}
-	}
-
-	function showSubmit() {
-		var $submitArea = $('#submitArea');
-
-		if ($submitArea.is(':hidden')) {
-			$submitArea
-				.prop('hidden', false)
-				.css('display', 'flex')
-				.hide()
-				.slideDown(240);
-		}
-	}
-
-	$('input[name="preference"]').on('change', function () {
-		showQuestion('#question2');
-	});
-
-	$('input[name="reason"]').on('change', function () {
-		showQuestion('#question3');
-		showSubmit();
-	});
-
-	$('#improve_text').on('input', function () {
-		$('.current_count').text($(this).val().length);
-	});
-
-	$('#surveyForm').on('submit', function (e) {
-		e.preventDefault();
-
-		if (!$('input[name="preference"]:checked').length) {
-			alert('선호하는 시안을 선택해 주세요.');
-			$('input[name="preference"]').first().focus();
-			return;
-		}
-
-		if (!$('input[name="reason"]:checked').length) {
-			alert('선호 이유를 1개 이상 선택해 주세요.');
-			$('input[name="reason"]').first().focus();
-			return;
-		}
-
-		var reasonList = [];
-
-		$('input[name="reason"]:checked').each(function () {
-			reasonList.push($(this).val());
-		});
-
-		var surveyData = {
-			utId: UT.generateId(),
-			preference: $('input[name="preference"]:checked').val(),
-			reason: reasonList,
-			improveText: $.trim($('#improve_text').val()),
-			startTime: new Date().toISOString(),
-			userAgent: navigator.userAgent
-		};
-
-		UT.saveSurvey(surveyData);
-		UT.goUpload();
-	});
-var lastFocus = null;
-
-$('.btn_img_view').on('click', function () {
-	var layerId = $(this).data('layer');
-	var $layer = $('#' + layerId);
-
-	lastFocus = $(this);
-
-	$('body').addClass('layer_open');
-	$layer.prop('hidden', false);
-
-	setTimeout(function () {
-		$layer.find('h2').focus();
-	}, 10);
-});
-
-$('.btn_img_close, .img_layer_dim').on('click', function () {
-	closeImgLayer($(this).closest('.img_layer'));
-});
-
-$(document).on('keydown', function (e) {
-	var $openLayer = $('.img_layer').not('[hidden]');
-
-	if (!$openLayer.length) {
-		return;
-	}
-
-	if (e.key === 'Escape') {
-		closeImgLayer($openLayer);
-	}
-});
-
-function closeImgLayer($layer) {
-	$layer.prop('hidden', true);
-	$('body').removeClass('layer_open');
-
-	if (lastFocus) {
-		lastFocus.focus();
-	}
-}
-});
-</script>
-
-</body>
+			});
+		</script>
+	</body>
 </html>
