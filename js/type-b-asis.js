@@ -4,7 +4,7 @@ $(function() {
 	let startTime = null;
 	let timeoutTimer = null;
 
-	const limitTime = 60 * 1000;
+	const limitTime = 40 * 1000;
 	const targetMenu = '고용정책';
 
 	$('#targetMenuName').text(targetMenu);
@@ -57,25 +57,34 @@ $(function() {
 
 		$(frameDoc)
 			.off('click.utStart')
-			.on('click.utStart', 'a', function(e) {
+			.on(
+				'click.utStart',
+				'a, button',
+				function(e) {
 
-				if (!isStarted) return;
+					if (!isStarted) return;
 
-				const href =
-					$(this).attr('href') || '';
+					const text =
+						$.trim($(this).text());
 
-				if (
-					href.indexOf('/work24-UT/ut-asis-b.html') > -1
-				) {
+					/*
+						고용정책 클릭 시 이동
+					*/
+					if (
+						text.indexOf('고용정책') > -1
+					) {
 
-					e.preventDefault();
+						e.preventDefault();
 
-					location.href =
-						'/work24-UT/ut-asis-b.html';
+						clearTimeout(timeoutTimer);
+
+						location.href =
+							'/work24-UT/ut-asis-b.html';
+
+					}
 
 				}
-
-			});
+			);
 
 	});
 
