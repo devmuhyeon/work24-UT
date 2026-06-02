@@ -18,6 +18,7 @@ $(function () {
     $('#startTest').focus();
 
     function getCurrentTypeKey() {
+
         var currentPage = location.pathname.split('/').pop();
 
         if (currentPage === 'ut-asis-a.html') {
@@ -29,32 +30,45 @@ $(function () {
         }
 
         return '';
+
     }
 
     function goNextPage() {
+
         var currentPage = location.pathname.split('/').pop();
 
         if (currentPage === 'ut-asis-a.html') {
+
             location.href = '/work24-UT/group_a/ut-tobe-a.html';
+
             return;
         }
 
         if (currentPage === 'ut-tobe-a.html') {
+
             location.href = '/work24-UT/group_a/co-survey.html';
+
             return;
         }
+
     }
 
     function cleanText(text) {
+
         return $.trim(text).replace(/\s+/g, ' ');
+
     }
 
     function getSecond(ms) {
+
         return Math.round((ms / 1000) * 10) / 10;
+
     }
 
     function saveClick($clicked) {
+
         var now = Date.now();
+
         var stepSecond = getSecond(now - lastClickTime);
 
         clickCount++;
@@ -65,9 +79,11 @@ $(function () {
         });
 
         lastClickTime = now;
+
     }
 
     function makeResult(resultType, $clicked) {
+
         var endTime = Date.now();
 
         return {
@@ -82,49 +98,76 @@ $(function () {
             endTime: new Date(endTime).toISOString(),
             userAgent: navigator.userAgent
         };
+
     }
 
     function saveCurrentTask(result) {
+
         var key = getCurrentTypeKey();
 
         if (!key) return;
 
         UT_A.saveTask(key, result);
+
     }
 
     $('#startTest').on('click', function () {
+
         isStarted = true;
+
         startTime = Date.now();
+
         lastClickTime = startTime;
 
         $('#utPage').removeAttr('aria-hidden');
 
         $('#utOverlay').fadeOut(200, function () {
+
             $(this).remove();
+
             $frame.focus();
+
         });
 
         timeoutTimer = setTimeout(function () {
+
             finishFail();
+
         }, limitTime);
+
     });
 
     function finishSuccess($clicked) {
+
         if (isFinished) return;
 
         isFinished = true;
+
         clearTimeout(timeoutTimer);
 
         taskResult = makeResult('success', $clicked);
+
         saveCurrentTask(taskResult);
 
-        goNextPage();
+        $('#successPopup')
+            .removeAttr('hidden')
+            .hide()
+            .fadeIn(200, function () {
+
+                $(this)
+                    .find('.btn_next')
+                    .focus();
+
+            });
+
     }
 
     function finishFail() {
+
         if (isFinished) return;
 
         isFinished = true;
+
         clearTimeout(timeoutTimer);
 
         taskResult = makeResult('fail', null);
@@ -133,32 +176,47 @@ $(function () {
             .removeAttr('hidden')
             .hide()
             .fadeIn(200, function () {
-                $(this).find('input[name="failReason"]').first().focus();
+
+                $(this)
+                    .find('input[name="failReason"]')
+                    .first()
+                    .focus();
+
             });
+
     }
 
     $(document).on('click', '.btn_next', function () {
+
         if (!taskResult) return;
 
         if (taskResult.result === 'fail') {
+
             var failReason = $('input[name="failReason"]:checked').val();
 
             if (!failReason) {
+
                 $('input[name="failReason"]').first().focus();
+
                 return;
             }
 
             taskResult.failReason = failReason;
+
+            saveCurrentTask(taskResult);
+
         }
 
-        saveCurrentTask(taskResult);
         goNextPage();
+
     });
 
     function bindFrameClick() {
+
         var frame = $frame[0];
 
         if (!frame || !frame.contentWindow || !frame.contentWindow.document) {
+
             return;
         }
 
@@ -167,6 +225,7 @@ $(function () {
         $(frameDoc)
             .off('click.utTest')
             .on('click.utTest', 'a, button', function (e) {
+
                 if (!isStarted || isFinished) return;
 
                 var $clicked = $(this);
@@ -174,14 +233,21 @@ $(function () {
                 saveClick($clicked);
 
                 if ($clicked.attr('data-answer') === 'true') {
+
                     e.preventDefault();
+
                     finishSuccess($clicked);
+
                 }
+
             });
+
     }
 
     $frame.on('load', function () {
+
         bindFrameClick();
+
     });
 
 });
