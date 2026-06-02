@@ -210,7 +210,7 @@ $(function() {
 		if (currentPage === 'ut-asis-a.html') {
 
 			location.href =
-				'/work24-UT/ut-tobe-a.html';
+				'/work24-UT/group_b/ut-tobe-a.html';
 
 			return;
 
@@ -219,7 +219,7 @@ $(function() {
 		if (currentPage === 'ut-tobe-a.html') {
 
 			location.href =
-				'/work24-UT/ut-asis-b-cs.html';
+				'/work24-UT/co-survey.html';
 
 			return;
 

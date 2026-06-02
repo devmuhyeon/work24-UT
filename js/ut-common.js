@@ -100,18 +100,6 @@ var UT = (function() {
 
 	}
 
-	/*
-		현재 테스트 흐름 기준
-
-		1. ut-asis-a.html
-		2. ut-tobe-a.html
-		3. ut-asis-b-cs.html
-		4. ut-asis-b.html
-		5. ut-tobe-b.html
-		6. lnb.html
-		7. co-survey.html
-		8. upload.html
-	*/
 
 	function goNext(currentPage) {
 
@@ -132,8 +120,6 @@ var UT = (function() {
 			'ut-asis-b.html' : '/work24-UT/ut-tobe-b.html',
 
 			'ut-tobe-b.html' : '/work24-UT/lnb.html',
-
-			'lnb.html' : '/work24-UT/co-survey.html',
 
 			'co-survey.html' : '/work24-UT/upload.html'
 
