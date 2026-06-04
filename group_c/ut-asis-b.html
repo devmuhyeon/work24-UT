@@ -19,7 +19,7 @@
 			<iframe id="testFrame" class="ut_frame" title="고용24 화면 탐색 테스트 화면" src="/work24-UT/asis-b.html" style="overflow-x: hidden;"></iframe>
 			<div class="step_floating" role="status" aria-live="polite">
 				<div class="survey_head">
-					<p class="survey_infotxt">화면 상단 메뉴에서 <span class="aaa_info">'고용정책'</span> 메뉴를 찾아주세요.</p>
+					<p class="survey_infotxt">화면에서 <span class="aaa_info">'고용정책'</span> 메뉴를 찾아주세요.</p>
 
 					<ol class="step_list" aria-label="조사 진행 단계">
                         <li><span class="sr_only">고용24 사용자 경험 조사</span></li>
@@ -95,13 +95,10 @@
 				let timeoutTimer = null;
 
 				const clickLogs = [];
+				const startTimeKey = 'bTypeStartTime';
 
 				const startTime =
-					Number(sessionStorage.getItem('bTypeStartTime')) || Date.now();
-
-				const isTimeout =
-					location.search.indexOf('timeout=true') > -1 ||
-					sessionStorage.getItem('bTypeAsisTimeout') === 'Y';
+					Number(sessionStorage.getItem(startTimeKey)) || Date.now();
 
 				const $frame = $('#testFrame');
 
@@ -198,29 +195,25 @@
 
 						$(frameDoc)
 							.off('click.typeBAsis')
-							.on(
-								'click.typeBAsis',
-								'a, button',
-								function (e) {
+							.on('click.typeBAsis', 'a, button', function (e) {
 
-									if (isFinished) return;
+								if (isFinished) return;
 
-									const $clicked = $(this);
+								const $clicked = $(this);
 
-									saveClick($clicked);
+								saveClick($clicked);
 
-									if (
-										$clicked.attr('data-answer') === 'true'
-									) {
+								if (
+									$clicked.attr('data-answer') === 'true'
+								) {
 
-										e.preventDefault();
+									e.preventDefault();
 
-										openSuccess($clicked);
-
-									}
+									openSuccess($clicked);
 
 								}
-							);
+
+							});
 
 					} catch (e) {
 
@@ -263,10 +256,12 @@
 
 					}
 
-					UT.saveTask('typeBAsis', taskResult);
+					UT.saveTask(
+						'typeBAsis',
+						taskResult
+					);
 
-					sessionStorage.removeItem('bTypeStartTime');
-					sessionStorage.removeItem('bTypeAsisTimeout');
+					sessionStorage.removeItem(startTimeKey);
 
 					location.href =
 						'/work24-UT/group_c/ut-tobe-b.html';
@@ -282,14 +277,6 @@
 					}, 300);
 
 				});
-
-				if (isTimeout) {
-
-					openFail();
-
-					return;
-
-				}
 
 				const remainTime =
 					LIMIT - (Date.now() - startTime);

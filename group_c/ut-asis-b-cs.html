@@ -57,7 +57,7 @@
 			<iframe id="testFrame" class="ut_frame" title="고용24 화면 탐색 테스트 화면" src="/work24-UT/asis-bc-cs.html"></iframe>
 			<div class="step_floating" role="status" aria-live="polite">
 				<div class="survey_head">
-					<p class="survey_infotxt">화면 상단 메뉴에서 <span class="aaa_info">'고용 정책'</span> 메뉴를 찾아주세요.</p>
+					<p class="survey_infotxt">화면에서 <span class="aaa_info">'고용 정책'</span> 메뉴를 찾아주세요.</p>
 
 					<ol class="step_list" aria-label="조사 진행 단계">
                         <li><span class="sr_only">고용24 사용자 경험 조사</span></li>
@@ -87,20 +87,219 @@
 
 		<script src="/work24-UT/js/jquery-3.7.1.min.js"></script>
 		<script src="/work24-UT/js/alert.js"></script>
-		<script src="/work24-UT/js/timeout.js"></script>
 		<script>
-		$(function() {
-				UT_TIMEOUT.init({
-					limitTime: 40 * 1000,
-					startButton: '#startTest',
-					overlay: '#utOverlay',
-					utPage: '#utPage',
-					frame: '#testFrame',
-					startTimeKey: 'bTypeStartTime',
-					timeoutKey: 'bTypeAsisTimeout',
-					answerText: '고용정책',
-					answerHref: '/work24-UT/group_c/ut-asis-b.html',
-					timeoutHref: '/work24-UT/group_c/ut-asis-b.html?timeout=true'
+			$(function () {
+
+				const LIMIT = 40 * 1000;
+				const targetMenu = '고용정책';
+
+				let isStarted = false;
+				let isFinished = false;
+				let timeoutTimer = null;
+				let taskResult = null;
+				let clickCount = 0;
+
+				const clickLogs = [];
+				const startTimeKey = 'bTypeStartTime';
+
+				const $frame = $('#testFrame');
+
+				$('#targetMenuName').text(targetMenu);
+				$('#startTest').focus();
+
+				function getStartTime() {
+
+					return Number(sessionStorage.getItem(startTimeKey)) || Date.now();
+
+				}
+
+				function saveClick($clicked) {
+
+					clickCount++;
+
+					clickLogs.push({
+						text: $.trim($clicked.text()),
+						second: Math.round((Date.now() - getStartTime()) / 1000)
+					});
+
+				}
+
+				function makeResult(resultType, $clicked) {
+
+					const startTime = getStartTime();
+					const endTime = Date.now();
+
+					return {
+						targetMenu: targetMenu,
+						finalClickMenu: $clicked ? $.trim($clicked.text()) : '',
+						failReason: '',
+						clickCount: clickCount,
+						duration: Math.round((endTime - startTime) / 1000),
+						clickPath: UT.makeClickPath(clickLogs),
+						result: resultType,
+						startTime: new Date(startTime).toISOString(),
+						endTime: new Date(endTime).toISOString(),
+						userAgent: navigator.userAgent
+					};
+
+				}
+
+				function openFail() {
+
+					if (isFinished) return;
+
+					isFinished = true;
+					clearTimeout(timeoutTimer);
+
+					taskResult = makeResult('fail', null);
+
+					$('#failPopup')
+						.removeAttr('hidden')
+						.hide()
+						.fadeIn(200, function () {
+
+							$(this)
+								.find('input[name="failReason"]')
+								.first()
+								.focus();
+
+						});
+
+				}
+
+				function goNext() {
+
+					location.href =
+						'/work24-UT/group_c/ut-asis-b.html';
+
+				}
+
+				function bindFrameEvent() {
+
+					try {
+
+						const frame = $frame[0];
+
+						if (
+							!frame ||
+							!frame.contentWindow ||
+							!frame.contentWindow.document
+						) {
+							return;
+						}
+
+						const frameDoc = frame.contentWindow.document;
+
+						$(frameDoc)
+							.off('click.typeBStart')
+							.on('click.typeBStart', 'a, button', function (e) {
+
+								if (
+									!isStarted ||
+									isFinished
+								) {
+									return;
+								}
+
+								const $clicked = $(this);
+
+								saveClick($clicked);
+
+								if (
+									$clicked.attr('data-answer') === 'true' ||
+									$.trim($clicked.text()).indexOf(targetMenu) > -1
+								) {
+
+									e.preventDefault();
+
+									isFinished = true;
+									clearTimeout(timeoutTimer);
+
+									goNext();
+
+								}
+
+							});
+
+					} catch (e) {
+
+						console.log(e);
+
+					}
+
+				}
+
+				$('#startTest').on('click', function () {
+
+					isStarted = true;
+
+					sessionStorage.setItem(
+						startTimeKey,
+						Date.now()
+					);
+
+					$('#utPage').removeAttr('aria-hidden');
+
+					$('#utOverlay').fadeOut(200, function () {
+
+						$(this).remove();
+
+					});
+
+					timeoutTimer = setTimeout(function () {
+
+						openFail();
+
+					}, LIMIT);
+
+				});
+
+				$(document).on('change', 'input[name="failReason"]', function () {
+
+					$('#failError').attr('hidden', true);
+
+				});
+
+				$(document).on('click', '.btn_next', function () {
+
+					if (!taskResult) return;
+
+					const failReason =
+						$('input[name="failReason"]:checked').val();
+
+					if (!failReason) {
+
+						$('#failError').removeAttr('hidden');
+
+						$('input[name="failReason"]')
+							.first()
+							.focus();
+
+						return;
+
+					}
+
+					$('#failError').attr('hidden', true);
+
+					taskResult.failReason = failReason;
+
+					UT.saveTask(
+						'typeBAsisFirst',
+						taskResult
+					);
+
+					goNext();
+
+				});
+
+				$frame.on('load', function () {
+
+					setTimeout(function () {
+
+						bindFrameEvent();
+
+					}, 300);
+
 				});
 
 			});
