@@ -7,8 +7,55 @@ $(function() {
 	const limitTime = 40 * 1000;
 	const targetMenu = '고용정책';
 
+	const startTimeKey = 'bTypeStartTime';
+	const timeoutKey = 'bTypeAsisTimeout';
+
 	$('#targetMenuName').text(targetMenu);
 	$('#startTest').focus();
+
+	function getStartTime() {
+		return Number(sessionStorage.getItem(startTimeKey));
+	}
+
+	function getElapsedTime() {
+		const savedStartTime = getStartTime();
+
+		if (!savedStartTime) {
+			return 0;
+		}
+
+		return Date.now() - savedStartTime;
+	}
+
+	function getRemainTime() {
+		return limitTime - getElapsedTime();
+	}
+
+	function goTimeoutPage() {
+		if (sessionStorage.getItem(timeoutKey) === 'Y') {
+			return;
+		}
+
+		sessionStorage.setItem(timeoutKey, 'Y');
+
+		location.href =
+			'/work24-UT/group_d/ut-asis-b.html?timeout=true';
+	}
+
+	function startLimitTimer() {
+		const remainTime = getRemainTime();
+
+		clearTimeout(timeoutTimer);
+
+		if (remainTime <= 0) {
+			goTimeoutPage();
+			return;
+		}
+
+		timeoutTimer = setTimeout(function() {
+			goTimeoutPage();
+		}, remainTime);
+	}
 
 	$('#startTest').on('click', function() {
 
@@ -16,9 +63,11 @@ $(function() {
 		startTime = Date.now();
 
 		sessionStorage.setItem(
-			'bTypeStartTime',
+			startTimeKey,
 			startTime
 		);
+
+		sessionStorage.removeItem(timeoutKey);
 
 		$('#utPage').removeAttr('aria-hidden');
 
@@ -28,12 +77,7 @@ $(function() {
 
 		});
 
-		timeoutTimer = setTimeout(function() {
-
-			location.href =
-				'/work24-UT/group_d/ut-asis-b.html?timeout=true';
-
-		}, limitTime);
+		startLimitTimer();
 
 	});
 
