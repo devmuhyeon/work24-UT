@@ -100,7 +100,8 @@
 					Number(sessionStorage.getItem('bTypeStartTime')) || Date.now();
 
 				const isTimeout =
-					location.search.indexOf('timeout=true') > -1;
+					location.search.indexOf('timeout=true') > -1 ||
+					sessionStorage.getItem('bTypeAsisTimeout') === 'Y';
 
 				const $frame = $('#testFrame');
 
@@ -256,6 +257,8 @@
 
 						}
 
+						$('#failError').attr('hidden', true);
+
 						taskResult.failReason = failReason;
 
 					}
@@ -263,6 +266,7 @@
 					UT.saveTask('typeBAsis', taskResult);
 
 					sessionStorage.removeItem('bTypeStartTime');
+					sessionStorage.removeItem('bTypeAsisTimeout');
 
 					location.href =
 						'/work24-UT/group_c/ut-tobe-b.html';
@@ -305,6 +309,6 @@
 				}, remainTime);
 
 			});
-			</script>
+		</script>
 	</body>
 </html>

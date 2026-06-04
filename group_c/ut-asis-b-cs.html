@@ -87,88 +87,23 @@
 
 		<script src="/work24-UT/js/jquery-3.7.1.min.js"></script>
 		<script src="/work24-UT/js/alert.js"></script>
+		<script src="/work24-UT/js/timeout.js"></script>
 		<script>
-		$(function () {
-
-			const LIMIT = 40 * 1000;
-
-			function openFail(message) {
-
-				$('#failPopup')
-					.removeAttr('hidden')
-					.css({
-						display: 'flex'
-					});
-
-			}
-
-			$('#startTest').on('click', function () {
-
-				sessionStorage.setItem(
-					'b_start',
-					Date.now()
-				);
-
-				$('#utOverlay').hide();
-
-				setTimeout(function () {
-
-					openFail('시간초과');
-
-				}, LIMIT);
+		$(function() {
+				UT_TIMEOUT.init({
+					limitTime: 40 * 1000,
+					startButton: '#startTest',
+					overlay: '#utOverlay',
+					utPage: '#utPage',
+					frame: '#testFrame',
+					startTimeKey: 'bTypeStartTime',
+					timeoutKey: 'bTypeAsisTimeout',
+					answerText: '고용정책',
+					answerHref: '/work24-UT/group_c/ut-asis-b.html',
+					timeoutHref: '/work24-UT/group_c/ut-asis-b.html?timeout=true'
+				});
 
 			});
-
-			const $frame = $('#testFrame');
-
-			$frame.on('load', function () {
-
-				setTimeout(function () {
-
-					try {
-
-						const frameDoc =
-							$frame[0]
-							.contentWindow
-							.document;
-
-						$(frameDoc)
-							.off('click.move')
-							.on(
-								'click.move',
-								'a',
-								function (e) {
-
-									const href =
-										$(this).attr('href') || '';
-
-									if (
-										href.indexOf(
-											'/work24-UT/group_c/ut-asis-b.html'
-										) > -1
-									) {
-
-										e.preventDefault();
-
-										location.href =
-											'/work24-UT/group_c/ut-asis-b.html';
-
-									}
-
-								}
-							);
-
-					} catch (e) {
-
-						console.log(e);
-
-					}
-
-				}, 300);
-
-			});
-
-		});
 		</script>
 
 
