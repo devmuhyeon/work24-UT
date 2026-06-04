@@ -31,7 +31,7 @@ $(function() {
 		timeoutTimer = setTimeout(function() {
 
 			location.href =
-				'/work24-UT/group_c/ut-asis-b.html?timeout=true';
+				'/work24-UT/group_d/ut-asis-b.html?timeout=true';
 
 		}, limitTime);
 
@@ -74,7 +74,7 @@ $(function() {
 						clearTimeout(timeoutTimer);
 
 						location.href =
-							'/work24-UT/group_c/ut-asis-b.html';
+							'/work24-UT/group_d/ut-asis-b.html';
 
 					}
 

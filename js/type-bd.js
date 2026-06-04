@@ -147,7 +147,7 @@ $(function() {
 		);
 
 		location.href =
-			'/work24-UT/group_c/co-survey.html';
+			'/work24-UT/group_d/ut-asis-b-cs.html';
 
 	});
 
