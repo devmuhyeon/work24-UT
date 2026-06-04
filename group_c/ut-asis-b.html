@@ -88,6 +88,7 @@
 
 				const LIMIT = 40 * 1000;
 				const targetMenu = '고용정책';
+				const startTimeKey = 'bTypeStartTime';
 
 				let isFinished = false;
 				let taskResult = null;
@@ -95,12 +96,10 @@
 				let timeoutTimer = null;
 
 				const clickLogs = [];
-				const startTimeKey = 'bTypeStartTime';
+				const $frame = $('#testFrame');
 
 				const startTime =
 					Number(sessionStorage.getItem(startTimeKey)) || Date.now();
-
-				const $frame = $('#testFrame');
 
 				function saveClick($clicked) {
 
@@ -174,6 +173,13 @@
 								.focus();
 
 						});
+
+				}
+
+				function goTobePage() {
+
+					location.href =
+						'/work24-UT/group_c/ut-tobe-b.html';
 
 				}
 
@@ -263,8 +269,7 @@
 
 					sessionStorage.removeItem(startTimeKey);
 
-					location.href =
-						'/work24-UT/group_c/ut-tobe-b.html';
+					goTobePage();
 
 				});
 
