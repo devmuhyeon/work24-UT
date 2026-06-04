@@ -86,7 +86,9 @@
 		</div>
 
 		<script src="/work24-UT/js/jquery-3.7.1.min.js"></script>
+		<script src="/work24-UT/js/ut-c-common.js"></script>
 		<script src="/work24-UT/js/alert.js"></script>
+		<script src="/work24-UT/js/jquery-3.7.1.min.js"></script>
 		<script>
 			$(function () {
 
@@ -166,17 +168,10 @@
 
 				}
 
-				function goAsisPage() {
+				function goNext() {
 
 					location.href =
 						'/work24-UT/group_c/ut-asis-b.html';
-
-				}
-
-				function goTobePage() {
-
-					location.href =
-						'/work24-UT/group_c/ut-tobe-b.html';
 
 				}
 
@@ -197,8 +192,8 @@
 						const frameDoc = frame.contentWindow.document;
 
 						$(frameDoc)
-							.off('click.typeBAsisStart')
-							.on('click.typeBAsisStart', 'a, button', function (e) {
+							.off('click.typeBStart')
+							.on('click.typeBStart', 'a, button', function (e) {
 
 								if (
 									!isStarted ||
@@ -221,7 +216,7 @@
 									isFinished = true;
 									clearTimeout(timeoutTimer);
 
-									goAsisPage();
+									goNext();
 
 								}
 
@@ -294,9 +289,7 @@
 						taskResult
 					);
 
-					sessionStorage.removeItem(startTimeKey);
-
-					goTobePage();
+					goNext();
 
 				});
 
@@ -312,7 +305,6 @@
 
 			});
 		</script>
-
 
 	</body>
 </html>
