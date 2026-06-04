@@ -26,8 +26,8 @@
 		<!-- //main layer popup -->
 
 		<nav id="skipnav">
-			<a href="#">본문 바로가기</a>
-			<a href="#">주메뉴 바로가기</a>
+			<a>본문 바로가기</a>
+			<a>주메뉴 바로가기</a>
 		</nav>
 		<!-- #HEADER -->
 		<header class="new">
@@ -96,7 +96,7 @@
 
 						<!-- utility -->
 						<li class="header_search"style="position: relative; pointer-events: none; touch-action:none; cursor: default;">
-							<a href="#" class="" role="button">
+							<a class="" role="button">
 								<span class="ico ico09"></span>
 								<span>검색</span>
 								<div class="dimmed_blur blur_mxx"></div>
@@ -365,7 +365,7 @@
 							</ul>
 						</div>
 						<!-- //gnb -->
-						<a href="javascript:void(0)" class="header_allmenu" title="전체메뉴 버튼"style="position: relative; pointer-events: none; touch-action:none; cursor: default;">
+						<a class="header_allmenu" title="전체메뉴 버튼"style="position: relative; pointer-events: none; touch-action:none; cursor: default;">
 							<div class="lines">
 								<span class="t"></span>
 								<span class="c"></span>
@@ -395,33 +395,33 @@
 					<div class="form_search_wrap">
 						<div class="main_top_search"><!-- 20250611 class 수정(기존: main_search_area) -->
 							<div class="inner_select" id="srchCateDiv">
-								<button type="button" class="btn_cate_select" id="topQuerySelect" title="검색 유형 열기">
+								<button tabindex="-1" type="button" class="btn_cate_select" id="topQuerySelect" title="검색 유형 열기">
 									<span>전체</span>
 								</button>
 							</div>
 							<!-- 카테고리레이어 -->
 							<div class="layer_search layer_cate_search" style="display:none;">
 								<ul>
-									<li><a href="#" class="active" data-value="all" data-title="전체"><span>전체</span></a></li>
-									<li><a href="#" data-value="report" data-title="신고·신청"><span>신고·신청</span></a></li>
-									<li><a href="#" data-value="policy_emp" data-title="정책"><span>정책</span></a></li>
-									<li><a href="#" data-value="tb_workinfo" data-title="채용"><span>채용</span></a></li>
-									<li><a href="#" data-value="tb_bizinfo" data-title="기업"><span>기업</span></a></li>
-									<li><a href="#" data-value="training" data-title="훈련"><span>훈련</span></a></li>
-									<li><a href="#" data-value="news" data-title="뉴스·자료"><span>뉴스·자료</span></a></li>
-									<li><a href="#" data-value="jobCourse" data-title="직업·진로"><span>직업·진로</span></a></li>
-									<li><a href="#" data-value="qual" data-title="자격"><span>자격</span></a></li>
+									<li><a class="active" data-value="all" data-title="전체"><span>전체</span></a></li>
+									<li><a data-value="report" data-title="신고·신청"><span>신고·신청</span></a></li>
+									<li><a data-value="policy_emp" data-title="정책"><span>정책</span></a></li>
+									<li><a data-value="tb_workinfo" data-title="채용"><span>채용</span></a></li>
+									<li><a data-value="tb_bizinfo" data-title="기업"><span>기업</span></a></li>
+									<li><a data-value="training" data-title="훈련"><span>훈련</span></a></li>
+									<li><a data-value="news" data-title="뉴스·자료"><span>뉴스·자료</span></a></li>
+									<li><a data-value="jobCourse" data-title="직업·진로"><span>직업·진로</span></a></li>
+									<li><a data-value="qual" data-title="자격"><span>자격</span></a></li>
 									
-									<li><a href="#" data-value="etc" data-title="기타"><span>기타</span></a></li>
+									<li><a data-value="etc" data-title="기타"><span>기타</span></a></li>
 								</ul>
 							</div>
 							<!-- //카테고리레이어 -->
 							<div class="input_wrap">
-								<input type="text" placeholder="필요한 서비스를 찾아보세요" title="검색어 입력" id="topQuery" maxlength="150" class="ui-autocomplete-input" autocomplete="off">
-								<button type="button" id="topQueryDelBtn" class="btn_del" aria-label="검색어 삭제" style="display: none;"></button>
+								<input type="text" tabindex="-1" placeholder="필요한 서비스를 찾아보세요" title="검색어 입력" id="topQuery" maxlength="150" class="ui-autocomplete-input" autocomplete="off">
+								<button type="button" tabindex="-1" id="topQueryDelBtn" class="btn_del" aria-label="검색어 삭제" style="display: none;"></button>
 							</div>
-							<a href="#" id="btn_vrt_keyboard" class="btn_vrt_keyboard"><span class="blind">가상키보드 실행</span></a><!-- 20250611 추가 -->
-							<a href="#" id="findSearchData" class="btn_main_search"><span class="blind">검색</span></a>
+							<a id="btn_vrt_keyboard" class="btn_vrt_keyboard"><span class="blind">가상키보드 실행</span></a><!-- 20250611 추가 -->
+							<a id="findSearchData" class="btn_main_search"><span class="blind">검색</span></a>
 							<!-- 자동완성레이어(20250611 추가, div 위치 기존과 다름) -->
 							<div class="layer_auto_search_wrap" style="display: none">
 								<div class="layer_search layer_auto_search">
@@ -444,10 +444,10 @@
 					<div>
 						<div class="txt_c">
 							<div class="tab" role="tablist">
-								<button id="tab-1100" type="button" role="tab" aria-selected="false" aria-controls="panel-1100">취업준비</button>
-								<button id="tab-1200" type="button" role="tab" class="active" aria-selected="true" aria-controls="panel-1200">일자리 찾기</button>
-								<button id="tab-1300" type="button" role="tab" aria-selected="false" aria-controls="panel-1300">훈련 역량 강화</button>
-								<button id="tab-1400" type="button" role="tab" aria-selected="false" aria-controls="panel-1400">실업·육아휴직</button>
+								<button tabindex="-1" id="tab-1100" type="button" role="tab" aria-selected="false" aria-controls="panel-1100">취업준비</button>
+								<button tabindex="-1" id="tab-1200" type="button" role="tab" class="active" aria-selected="true" aria-controls="panel-1200">일자리 찾기</button>
+								<button tabindex="-1" id="tab-1300" type="button" role="tab" aria-selected="false" aria-controls="panel-1300">훈련 역량 강화</button>
+								<button tabindex="-1" id="tab-1400" type="button" role="tab" aria-selected="false" aria-controls="panel-1400">실업·육아휴직</button>
 							</div>
 						</div>
 						<div class="favorite_swiper_wrp" id="wrp-pan-else">
@@ -455,7 +455,7 @@
 							<div id="panel-1100" class="swiper-container swiper-initialized swiper-horizontal favorite_swiper tabpanels" role="tabpanel" aria-labelledby="tab-1100" hidden="">
 							<ul class="swiper-wrapper p_ty1" aria-live="polite" id="swiper-wrapper-97a28fc07107e13f" style="transition-duration: 0ms;">
 								<li class="swiper-slide">
-									<a href="#">
+									<a >
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p1-1.svg" alt="">
@@ -467,7 +467,7 @@
 								</li>
 								<!-- 구직자취업역량 강화프로그램 -->
 								<li class="swiper-slide">
-									<a href="#">
+									<a >
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p1-2.svg" alt="">
@@ -479,7 +479,7 @@
 								</li>
 								<!-- 잡케어(AI진로·경력설계) -->
 								<li class="swiper-slide">
-									<a href="#">
+									<a >
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p1-6.svg" alt="">
@@ -491,7 +491,7 @@
 								</li>
 								<!-- 취업똑똑 온라인 취업상담 -->
 								<li class="swiper-slide">
-									<a href="#">
+									<a >
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p1-14.svg" alt="">
@@ -503,7 +503,7 @@
 								</li>
 								<!-- 직업심리검사 -->
 								<li class="swiper-slide">
-									<a href="#">
+									<a >
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p1-4.svg" alt="">
@@ -515,7 +515,7 @@
 								</li>
 								<!-- 재학생 맞춤형 고용서비스 -->
 								<li class="swiper-slide">
-									<a href="#">
+									<a >
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p1-5.svg" alt="">
@@ -527,7 +527,7 @@
 								</li>
 								<!-- 국민취업지원제도 신청 -->
 								<li class="swiper-slide">
-									<a href="#" tabindex="-1" aria-hidden="true">
+									<a tabindex="-1" aria-hidden="true">
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p1-7.svg" alt="">
@@ -539,7 +539,7 @@
 								</li>
 								<!-- 구직촉진수당 신청 -->
 								<li class="swiper-slide">
-									<a href="#" tabindex="-1" aria-hidden="true">
+									<a tabindex="-1" aria-hidden="true">
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p1-8.svg" alt="">
@@ -551,7 +551,7 @@
 								</li>
 								<!-- 취업동향 모아보기 -->
 								<li class="swiper-slide">
-									<a href="#" tabindex="-1" aria-hidden="true">
+									<a tabindex="-1" aria-hidden="true">
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p1-9.svg" alt="">
@@ -563,7 +563,7 @@
 								</li>
 								<!-- 우리학교 취업지원실 -->
 								<li class="swiper-slide">
-									<a href="#" tabindex="-1" aria-hidden="true">
+									<a tabindex="-1" aria-hidden="true">
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p1-10.svg" alt="">
@@ -576,15 +576,15 @@
 								<li class="swiper-slide blank-slide"></li>
 								<li class="swiper-slide blank-slide"></li></ul>
 									<div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"></div>
-									<button type="button" class="swiper-button-prev btn_left" title="이전 슬라이드 이동" aria-label="이전 항목으로 이동" aria-controls="swiper-wrapper-97a28fc07107e13f" aria-disabled="false"></button>
-									<button type="button" class="swiper-button-next btn_right" title="다음 슬라이드 이동" aria-label="다음 항목으로 이동" aria-controls="swiper-wrapper-97a28fc07107e13f" aria-disabled="false"></button>
+									<button tabindex="-1" type="button" class="swiper-button-prev btn_left" title="이전 슬라이드 이동" aria-label="이전 항목으로 이동" aria-controls="swiper-wrapper-97a28fc07107e13f" aria-disabled="false"></button>
+									<button tabindex="-1" type="button" class="swiper-button-next btn_right" title="다음 슬라이드 이동" aria-label="다음 항목으로 이동" aria-controls="swiper-wrapper-97a28fc07107e13f" aria-disabled="false"></button>
 								<span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
 								<!-- //우리학교 취업지원실 -->
 								<!-- 일자리 찾기 -->
 									<div id="panel-1200" class="swiper-container swiper-initialized swiper-horizontal favorite_swiper tabpanels" role="tabpanel" aria-labelledby="tab-1200">
 									<ul class="swiper-wrapper p_ty2" aria-live="polite" id="swiper-wrapper-fdbdd1349846737f" style="transform: translate3d(0px, 0px, 0px);">
 										<li class="swiper-slide swiper-slide-active" role="group" aria-label="1 / 12" style="width: 192px;">
-											<a href="#">
+											<a >
 												<div class="img_area_wrap">
 													<span class="img_area">
 														<img src="/work24-UT/include/images/ico_favorite_p2-1.svg" alt="">
@@ -596,7 +596,7 @@
 										</li>
 										<!-- 구직신청 -->
 										<li class="swiper-slide swiper-slide-active" role="group" aria-label="2 / 12" style="width: 192px;">
-											<a href="#">
+											<a >
 												<div class="img_area_wrap">
 													<span class="img_area">
 														<img src="/work24-UT/include/images/ico_favorite_p2-2.svg" alt="">
@@ -608,7 +608,7 @@
 										</li>
 										<!-- 구직관리 -->
 										<li class="swiper-slide" role="group" aria-label="3 / 12" style="width: 192px;">
-											<a href="#" onclick="fn_goPageUrl('/wk', 'EBG020000000582', '/a/b/2100/mypageResumeMngMainPost.do', 'EBM01', 'N', '');">
+											<a onclick="fn_goPageUrl('/wk', 'EBG020000000582', '/a/b/2100/mypageResumeMngMainPost.do', 'EBM01', 'N', '');">
 												<div class="img_area_wrap">
 													<span class="img_area">
 														<img src="/work24-UT/include/images/ico_favorite_p2-3.svg" alt="">
@@ -620,7 +620,7 @@
 										</li>
 										<!-- 맞춤채용정보 -->
 										<li class="swiper-slide" role="group" aria-label="4 / 12" style="width: 192px;">
-											<a href="#" onclick="fn_goPageUrl('/wk', 'EBG020000000462', '/p/c/1310/custmadeInfoListPost.do', 'EBM01', 'N', '');">
+											<a onclick="fn_goPageUrl('/wk', 'EBG020000000462', '/p/c/1310/custmadeInfoListPost.do', 'EBM01', 'N', '');">
 												<div class="img_area_wrap">
 													<span class="img_area">
 														<img src="/work24-UT/include/images/ico_favorite_p2-4.svg" alt="">
@@ -632,7 +632,7 @@
 										</li>
 										<!-- AI추천(일자리) -->
 										<li class="swiper-slide" role="group" aria-label="5 / 12" style="width: 192px;">
-											<a href="#" onclick="fn_goPageUrl('/cm', 'EBG020000000473', '/b/a/0110/selectMyRecommandPost.do', 'EBM01', 'N', '');">
+											<a onclick="fn_goPageUrl('/cm', 'EBG020000000473', '/b/a/0110/selectMyRecommandPost.do', 'EBM01', 'N', '');">
 												<div class="img_area_wrap">
 													<span class="img_area">
 														<img src="/work24-UT/include/images/ico_favorite_p2-5.svg" alt="">
@@ -644,7 +644,7 @@
 										</li>
 										<!-- 채용행사 -->
 										<li class="swiper-slide" role="group" aria-label="6 / 12" style="width: 192px;">
-											<a href="#">
+											<a >
 												<div class="img_area_wrap">
 													<span class="img_area">
 														<img src="/work24-UT/include/images/ico_favorite_p2-6.svg" alt="">
@@ -656,7 +656,7 @@
 										</li>
 										<!-- 중장년 내일센터 -->
 										<li class="swiper-slide" role="group" aria-label="7 / 12" style="width: 192px;">
-											<a href="#" onclick="fn_goPageUrl('/wk', 'EBG020000000077', '/u/b/1000/seniorChgJobSptSvcPost.do', 'EBM01', 'N', '');" tabindex="-1" aria-hidden="true">
+											<a onclick="fn_goPageUrl('/wk', 'EBG020000000077', '/u/b/1000/seniorChgJobSptSvcPost.do', 'EBM01', 'N', '');" tabindex="-1" aria-hidden="true">
 												<div class="img_area_wrap">
 													<span class="img_area">
 														<img src="/work24-UT/include/images/ico_favorite_p2-7.svg" alt="">
@@ -672,9 +672,9 @@
 										<li class="swiper-slide blank-slide" role="group" aria-label="11 / 12" style="width: 192px;"></li>
 										<li class="swiper-slide blank-slide" role="group" aria-label="12 / 12" style="width: 192px;"></li>
 									</ul>
-									<div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"><button type="button" class="swiper-pagination-bullet swiper-pagination-bullet-active" title="1 페이지로 이동" aria-current="true"></button><button type="button" class="swiper-pagination-bullet" title="2 페이지로 이동"></button></div>
-											<button type="button" class="swiper-button-prev btn_left swiper-button-disabled" title="이전 슬라이드 이동" disabled="" aria-label="이전 항목으로 이동" aria-controls="swiper-wrapper-fdbdd1349846737f" aria-disabled="true" aria-hidden="true"></button>
-											<button type="button" class="swiper-button-next btn_right" title="다음 슬라이드 이동" aria-label="다음 항목으로 이동" aria-controls="swiper-wrapper-fdbdd1349846737f" aria-disabled="false"></button>
+									<div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"><button tabindex="-1" type="button" class="swiper-pagination-bullet swiper-pagination-bullet-active" title="1 페이지로 이동" aria-current="true"></button><button tabindex="-1" type="button" class="swiper-pagination-bullet" title="2 페이지로 이동"></button></div>
+											<button tabindex="-1" type="button" class="swiper-button-prev btn_left swiper-button-disabled" title="이전 슬라이드 이동" disabled="" aria-label="이전 항목으로 이동" aria-controls="swiper-wrapper-fdbdd1349846737f" aria-disabled="true" aria-hidden="true"></button>
+											<button tabindex="-1" type="button" class="swiper-button-next btn_right" title="다음 슬라이드 이동" aria-label="다음 항목으로 이동" aria-controls="swiper-wrapper-fdbdd1349846737f" aria-disabled="false"></button>
 										<span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
 									</div>
 										<!-- //중장년 내일센터 -->
@@ -682,7 +682,7 @@
 										<div id="panel-1300" class="swiper-container swiper-initialized swiper-horizontal favorite_swiper tabpanels" role="tabpanel" aria-labelledby="tab-1300" hidden="">
 									<ul class="swiper-wrapper p_ty3" aria-live="polite" id="swiper-wrapper-d7e669d47a79794a" style="transition-duration: 0ms;">
 										<li class="swiper-slide">
-											<a href="#" onclick="fn_goPageUrl('/hr', 'EBG020000000296', '/h/a/1100/selectIssueRequestPost.do', 'EBM01', 'N', '');">
+											<a onclick="fn_goPageUrl('/hr', 'EBG020000000296', '/h/a/1100/selectIssueRequestPost.do', 'EBM01', 'N', '');">
 												<div class="img_area_wrap">
 													<span class="img_area">
 														<img src="/work24-UT/include/images/ico_favorite_p3-1.svg" alt="">
@@ -694,7 +694,7 @@
 										</li>
 										<!-- 훈련찾기·신청 -->
 								<li class="swiper-slide">
-									<a href="#" onclick="fn_goPageUrl('/hr', 'EBG020000000310', '/a/a/1100/trnnCrsInfPost.do', 'EBM01', 'N', '');">
+									<a onclick="fn_goPageUrl('/hr', 'EBG020000000310', '/a/a/1100/trnnCrsInfPost.do', 'EBM01', 'N', '');">
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p3-2.svg" alt="">
@@ -706,7 +706,7 @@
 								</li>
 								<!-- 훈련관리 -->
 								<li class="swiper-slide">
-									<a href="#" onclick="fn_goPageUrl('/hr', 'EBG020000000629', '/i/a/1110/selectTraHisPost.do', 'EBM01', 'N', '');">
+									<a onclick="fn_goPageUrl('/hr', 'EBG020000000629', '/i/a/1110/selectTraHisPost.do', 'EBM01', 'N', '');">
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p3-3.svg" alt="">
@@ -718,7 +718,7 @@
 								</li>
 								<!-- 맞춤훈련정보 -->
 								<li class="swiper-slide">
-									<a href="#" onclick="fn_goPageUrl('/hr', 'EBG029000000004', '/a/a/2100/custmadeTrainInfoPost.do', 'EBM01', 'N', '');">
+									<a onclick="fn_goPageUrl('/hr', 'EBG029000000004', '/a/a/2100/custmadeTrainInfoPost.do', 'EBM01', 'N', '');">
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p3-4.svg" alt="">
@@ -730,7 +730,7 @@
 								</li>
 								<!-- AI추천(훈련) -->
 								<li class="swiper-slide">
-									<a href="#" onclick="fn_goPageUrl('/cm', 'EBG020000005001', '/b/a/0110/selectMyRecommandTrainPost.do', 'EBM01', 'N', '');">
+									<a onclick="fn_goPageUrl('/cm', 'EBG020000005001', '/b/a/0110/selectMyRecommandTrainPost.do', 'EBM01', 'N', '');">
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p3-5.svg" alt="">
@@ -742,7 +742,7 @@
 								</li>
 								<!-- 미래내일 일경험 -->
 								<li class="swiper-slide">
-									<a href="#" onclick="fn_goPageUrl('/cm', 'EBG020000000120', '/', 'EBM01', 'N', '');">
+									<a onclick="fn_goPageUrl('/cm', 'EBG020000000120', '/', 'EBM01', 'N', '');">
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p3-6.svg" alt="">
@@ -754,7 +754,7 @@
 								</li>
 								<!-- 청년성장프로젝트 -->
 								<li class="swiper-slide">
-									<a href="#" onclick="fn_goPageUrl('/wk', 'EBG020020105001', '/v/a/1000/youngGrowIntroPost.do', 'EBM01', 'N', '');" tabindex="-1" aria-hidden="true">
+									<a onclick="fn_goPageUrl('/wk', 'EBG020020105001', '/v/a/1000/youngGrowIntroPost.do', 'EBM01', 'N', '');" tabindex="-1" aria-hidden="true">
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p3-7.svg" alt="">
@@ -766,7 +766,7 @@
 								</li>
 								<!-- 청년일자리 도약장려금 -->
 								<li class="swiper-slide">
-									<a href="#" onclick="fn_goPageUrl('/wk', 'EBG020130109001', '/k/h/1100/retrieveYngJumpIndivSptfndPayStatusPost.do', 'EBM01', 'N', '');" tabindex="-1" aria-hidden="true">
+									<a onclick="fn_goPageUrl('/wk', 'EBG020130109001', '/k/h/1100/retrieveYngJumpIndivSptfndPayStatusPost.do', 'EBM01', 'N', '');" tabindex="-1" aria-hidden="true">
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p3-8.svg" alt="">
@@ -778,7 +778,7 @@
 								</li>
 								<!-- 청년도전지원사업 -->
 								<li class="swiper-slide">
-									<a href="#" onclick="fn_goPageUrl('/wk', 'EBG020020105030', '/g/b/1100/busiIntroPost.do', 'EBM01', 'N', '');" tabindex="-1" aria-hidden="true">
+									<a onclick="fn_goPageUrl('/wk', 'EBG020020105030', '/g/b/1100/busiIntroPost.do', 'EBM01', 'N', '');" tabindex="-1" aria-hidden="true">
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p3-9.svg" alt="">
@@ -790,7 +790,7 @@
 								</li>
 								<!-- 직장적응지원 -->
 								<li class="swiper-slide">
-									<a href="#" onclick="fn_goPageUrl('/wk', 'EBG020020105031', '/v/a/1000/workPlaceIntroPost.do', 'EBM01', 'N', '');" tabindex="-1" aria-hidden="true">
+									<a onclick="fn_goPageUrl('/wk', 'EBG020020105031', '/v/a/1000/workPlaceIntroPost.do', 'EBM01', 'N', '');" tabindex="-1" aria-hidden="true">
 										<div class="img_area_wrap">
 											<span class="img_area">
 												<img src="/work24-UT/include/images/ico_favorite_p3-10.svg" alt="">
@@ -803,15 +803,15 @@
 									<li class="swiper-slide blank-slide"></li>
 									<li class="swiper-slide blank-slide"></li></ul>
 											<div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"></div>
-											<button type="button" class="swiper-button-prev btn_left" title="이전 슬라이드 이동" aria-label="이전 항목으로 이동" aria-controls="swiper-wrapper-d7e669d47a79794a" aria-disabled="false"></button>
-											<button type="button" class="swiper-button-next btn_right" title="다음 슬라이드 이동" aria-label="다음 항목으로 이동" aria-controls="swiper-wrapper-d7e669d47a79794a" aria-disabled="false"></button>
+											<button tabindex="-1" type="button" class="swiper-button-prev btn_left" title="이전 슬라이드 이동" aria-label="이전 항목으로 이동" aria-controls="swiper-wrapper-d7e669d47a79794a" aria-disabled="false"></button>
+											<button tabindex="-1" type="button" class="swiper-button-next btn_right" title="다음 슬라이드 이동" aria-label="다음 항목으로 이동" aria-controls="swiper-wrapper-d7e669d47a79794a" aria-disabled="false"></button>
 										<span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
 										<!-- //직장적응지원 -->
 									<!-- 수급자격 신청자 온라인 교육 -->
 									<div id="panel-1400" class="swiper-container swiper-initialized swiper-horizontal favorite_swiper tabpanels" role="tabpanel" aria-labelledby="tab-1400" hidden="">
 									<ul class="swiper-wrapper p_ty4" aria-live="polite" id="swiper-wrapper-4d172e9d5adb10bb0" style="transition-duration: 0ms;">
 									<li class="swiper-slide">
-										<a href="#" onclick="fn_goPageUrl('/ei', 'EBG020000000161', '/a/b/1100/retrievePuIncqualClmntOnlineViewPost.do', 'EBM01', 'N', '');">
+										<a onclick="fn_goPageUrl('/ei', 'EBG020000000161', '/a/b/1100/retrievePuIncqualClmntOnlineViewPost.do', 'EBM01', 'N', '');">
 											<div class="img_area_wrap">
 												<span class="img_area">
 													<img src="/work24-UT/include/images/ico_favorite_p4-1.svg" alt="">
@@ -823,7 +823,7 @@
 									</li>
 									<!-- 실업인정 인터넷 신청 -->
 									<li class="swiper-slide">
-										<a href="#" onclick="fn_goPageUrl('/ei', 'EBG020000000210', '/a/h/1200/openHPEIAH1200M01Post.do', 'EBM01', 'N', '');">
+										<a onclick="fn_goPageUrl('/ei', 'EBG020000000210', '/a/h/1200/openHPEIAH1200M01Post.do', 'EBM01', 'N', '');">
 											<div class="img_area_wrap">
 												<span class="img_area">
 													<img src="/work24-UT/include/images/ico_favorite_p4-2.svg" alt="">
@@ -835,7 +835,7 @@
 									</li>
 									<!-- 취업특강(1차 실업 인정교육 포함) -->
 									<li class="swiper-slide">
-										<a href="#" onclick="fn_goPageUrl('/ei', 'EBG020000000235', '/a/g/1100/openHPEIAG1100M01Post.do', 'EBM01', 'N', '');">
+										<a onclick="fn_goPageUrl('/ei', 'EBG020000000235', '/a/g/1100/openHPEIAG1100M01Post.do', 'EBM01', 'N', '');">
 											<div class="img_area_wrap">
 												<span class="img_area">
 													<img src="/work24-UT/include/images/ico_favorite_p4-3.svg" alt="">
@@ -847,7 +847,7 @@
 									</li>
 									<!-- 취업드림수첩 -->
 									<li class="swiper-slide">
-										<a href="#" onclick="fn_goPageUrl('/ei', 'EBG020000000207', '/a/h/1100/retrieveEmpymnHopeCardInfoPost.do', 'EBM01', 'N', '');">
+										<a onclick="fn_goPageUrl('/ei', 'EBG020000000207', '/a/h/1100/retrieveEmpymnHopeCardInfoPost.do', 'EBM01', 'N', '');">
 											<div class="img_area_wrap">
 												<span class="img_area">
 													<img src="/work24-UT/include/images/ico_favorite_p4-4.svg" alt="">
@@ -859,7 +859,7 @@
 									</li>
 									<!-- 육아휴직 급여 신청 -->
 									<li class="swiper-slide">
-										<a href="#" onclick="fn_goPageUrl('/ei', 'EBG020000000419', '/b/b/1100/openHPEIBB1100M01Post.do', 'EBM01', 'N', '');">
+										<a onclick="fn_goPageUrl('/ei', 'EBG020000000419', '/b/b/1100/openHPEIBB1100M01Post.do', 'EBM01', 'N', '');">
 											<div class="img_area_wrap">
 												<span class="img_area">
 													<img src="/work24-UT/include/images/ico_favorite_p4-5.svg" alt="">
@@ -871,7 +871,7 @@
 									</li>
 									<!-- 출산전후휴가 급여신청 -->
 									<li class="swiper-slide">
-										<a href="#" onclick="fn_goPageUrl('/ei', 'EBG020000000395', '/b/a/1100/openHPEIBA1100M02Post.do', 'EBM01', 'N', '');">
+										<a onclick="fn_goPageUrl('/ei', 'EBG020000000395', '/b/a/1100/openHPEIBA1100M02Post.do', 'EBM01', 'N', '');">
 											<div class="img_area_wrap">
 												<span class="img_area">
 													<img src="/work24-UT/include/images/ico_favorite_p4-6.svg" alt="">
@@ -883,7 +883,7 @@
 									</li>
 									<!-- 수급자격신청서 인터넷 제출 -->
 									<li class="swiper-slide">
-										<a href="#" onclick="fn_goPageUrl('/ei', 'EBG020000000170', '/a/b/1200/openHPEIAB1200M01Post.do', 'EBM01', 'N', '');" tabindex="-1" aria-hidden="true">
+										<a onclick="fn_goPageUrl('/ei', 'EBG020000000170', '/a/b/1200/openHPEIAB1200M01Post.do', 'EBM01', 'N', '');" tabindex="-1" aria-hidden="true">
 											<div class="img_area_wrap">
 												<span class="img_area">
 													<img src="/work24-UT/include/images/ico_favorite_p4-7.svg" alt="">
@@ -895,7 +895,7 @@
 									</li>
 									<!-- 취업사실신고 -->
 									<li class="swiper-slide">
-										<a href="#" onclick="fn_goPageUrl('/ei', 'EBG020000000236', '/a/m/1100/retrievePuEmpymnFactDclrtView.do', 'EBM01', 'N', '');" tabindex="-1" aria-hidden="true">
+										<a onclick="fn_goPageUrl('/ei', 'EBG020000000236', '/a/m/1100/retrievePuEmpymnFactDclrtView.do', 'EBM01', 'N', '');" tabindex="-1" aria-hidden="true">
 											<div class="img_area_wrap">
 												<span class="img_area">
 													<img src="/work24-UT/include/images/ico_favorite_p4-8.svg" alt="">
@@ -907,7 +907,7 @@
 									</li>
 									<!-- 고용정책 -->
 									<li class="swiper-slide">
-										<a href="#" tabindex="-1" aria-hidden="true">
+										<a tabindex="-1" aria-hidden="true">
 											<div class="img_area_wrap">
 												<span class="img_area">
 													<img src="/work24-UT/include/images/ico_favorite_p4-9.svg" alt="">
@@ -919,7 +919,7 @@
 									</li>
 									<!-- 수혜가능정보 -->
 									<li class="swiper-slide">
-										<a href="#" tabindex="-1" aria-hidden="true">
+										<a tabindex="-1" aria-hidden="true">
 											<div class="img_area_wrap">
 												<span class="img_area">
 													<img src="/work24-UT/include/images/ico_favorite_p4-10.svg" alt="">
@@ -932,8 +932,8 @@
 									<li class="swiper-slide blank-slide"></li>
 									<li class="swiper-slide blank-slide"></li></ul>
 										<div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"></div>
-											<button type="button" class="swiper-button-prev btn_left" title="이전 슬라이드 이동" aria-label="이전 항목으로 이동" aria-controls="swiper-wrapper-4d172e9d5adb10bb0" aria-disabled="false"></button>
-											<button type="button" class="swiper-button-next btn_right" title="다음 슬라이드 이동" aria-label="다음 항목으로 이동" aria-controls="swiper-wrapper-4d172e9d5adb10bb0" aria-disabled="false"></button>
+											<button tabindex="-1" type="button" class="swiper-button-prev btn_left" title="이전 슬라이드 이동" aria-label="이전 항목으로 이동" aria-controls="swiper-wrapper-4d172e9d5adb10bb0" aria-disabled="false"></button>
+											<button tabindex="-1" type="button" class="swiper-button-next btn_right" title="다음 슬라이드 이동" aria-label="다음 항목으로 이동" aria-controls="swiper-wrapper-4d172e9d5adb10bb0" aria-disabled="false"></button>
 											<span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
 											<!-- script는 퍼블리싱 레이아웃 용으로 참고만 해주세요 -->
 											<!-- //수혜가능정보 -->
@@ -942,7 +942,7 @@
 										<div id="panel-fav-login" class="swiper-container swiper-initialized swiper-horizontal favorite_swiper">
 											<ul class="swiper-wrapper" aria-live="polite" id="swiper-wrapper-54d488214b7aa1a9" style="transition-duration: 0ms;">
 												<li class="swiper-slide status hovered">
-													<a class="img_area_pr" href="#">
+													<a class="img_area_pr" >
 														<div class="img_area_wrap">
 															<p class="count"><strong></strong> 건</p>
 														</div>
@@ -956,7 +956,7 @@
 													</a>
 												</li>
 												<li class="swiper-slide">
-													<a href="#" >
+													<a >
 														<div class="img_area_wrap">
 															<i class="set"></i>
 														</div>
@@ -964,7 +964,7 @@
 													</a>
 												</li>
 												<li class="swiper-slide">
-													<a href="#">
+													<a >
 														<div class="img_area_wrap">
 															<i class="set"></i>
 														</div>
@@ -972,7 +972,7 @@
 													</a>
 												</li>
 												<li class="swiper-slide">
-													<a href="#">
+													<a >
 														<div class="img_area_wrap">
 															<i class="set"></i>
 														</div>
@@ -980,7 +980,7 @@
 													</a>
 												</li>
 												<li class="swiper-slide">
-													<a href="#">
+													<a >
 														<div class="img_area_wrap">
 															<i class="set"></i>
 														</div>
@@ -988,7 +988,7 @@
 													</a>
 												</li>
 												<li class="swiper-slide">
-													<a href="#">
+													<a >
 														<div class="img_area_wrap">
 															<i class="set"></i>
 														</div>
@@ -997,10 +997,10 @@
 												</li>
 											</ul>
 											<div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"></div>
-											<button type="button" class="swiper-button-prev btn_left" title="이전 슬라이드 이동" aria-label="이전 항목으로 이동" aria-controls="swiper-wrapper-54d488214b7aa1a9" aria-disabled="false"></button>
-											<button type="button" class="swiper-button-next btn_right" title="다음 슬라이드 이동" aria-label="다음 항목으로 이동" aria-controls="swiper-wrapper-54d488214b7aa1a9" aria-disabled="false"></button>
+											<button tabindex="-1" type="button" class="swiper-button-prev btn_left" title="이전 슬라이드 이동" aria-label="이전 항목으로 이동" aria-controls="swiper-wrapper-54d488214b7aa1a9" aria-disabled="false"></button>
+											<button tabindex="-1" type="button" class="swiper-button-next btn_right" title="다음 슬라이드 이동" aria-label="다음 항목으로 이동" aria-controls="swiper-wrapper-54d488214b7aa1a9" aria-disabled="false"></button>
 										<span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
-										<p class="text_set">나만의 메뉴를 <a href="#" class="f_weight_600 txt_underline">설정</a>하고 더 편하게 이용하세요.</p>
+										<p class="text_set">나만의 메뉴를 <a class="f_weight_600 txt_underline">설정</a>하고 더 편하게 이용하세요.</p>
 									</div>
 								</div>
 							</div>
@@ -1010,25 +1010,25 @@
 								</div>
 								<div class="box_wrap">
 									<div class="box">
-										<a href="#" class="link">
+										<a class="link">
 											<span class="tit">채용공고 수</span>
 											<strong class="count"><span>130,828</span>건</strong>
 										</a>
 							<ul>
-								<li><a href="#">지역별 일자리 정보 찾기</a></li>
-								<li><a href="#">직종별 일자리 정보 찾기</a></li>
-								<li><a href="#">테마별 일자리 정보 찾기</a></li>
+								<li><a >지역별 일자리 정보 찾기</a></li>
+								<li><a >직종별 일자리 정보 찾기</a></li>
+								<li><a >테마별 일자리 정보 찾기</a></li>
 							</ul>
 						</div>
 						<div class="box">
-							<a href="#" class="link">
+							<a class="link">
 								<span class="tit">교육·훈련 수</span>
 								<strong class="count"><span>21,877</span>건</strong>
 							</a>
 							<ul>
-								<li><a href="#">국민내일배움카드 훈련과정</a></li>
-								<li><a href="#">K-디지털 아카데미 훈련과정</a></li>
-								<li><a href="#">정부부처별 훈련과정</a></li>
+								<li><a >국민내일배움카드 훈련과정</a></li>
+								<li><a >K-디지털 아카데미 훈련과정</a></li>
+								<li><a >정부부처별 훈련과정</a></li>
 							</ul>
 						</div>
 					</div>
@@ -1037,42 +1037,42 @@
 					<h2>고용정책 정보</h2>
 					<ul class="service">
 						<li>
-							<a href="#" class="ico60_bag">
+							<a class="ico60_bag">
 								<strong class="tit">취업준비</strong>
 								<p class="txt_ellipsis line2">취업은 하고 싶은데, 어떻게 해야 할지 모르겠어요</p>
 								<span class="ico_arr">바로가기</span>
 							</a>
 						</li>
 						<li>
-							<a href="#" class="ico60_search">
+							<a class="ico60_search">
 								<strong class="tit">일자리 찾기</strong>
 								<p class="txt_ellipsis line2">내게 맞는 일자리를 찾고 싶어요</p>
 								<span class="ico_arr">바로가기</span>
 							</a>
 						</li>
 						<li>
-							<a href="#" class="ico60_card">
+							<a class="ico60_card">
 								<strong class="tit">교육훈련</strong>
 								<p class="txt_ellipsis line2">취업하기 위해 공부하거나 자격증을 따고 싶어요</p>
 								<span class="ico_arr">바로가기</span>
 							</a>
 						</li>
 						<li>
-							<a href="#" class="ico60_pay">
+							<a class="ico60_pay">
 								<strong class="tit">실업급여</strong>
 								<p class="txt_ellipsis line2">최근에 어쩔 수 없이 퇴사했어요.조만간 퇴사할 것 같아요</p>
 								<span class="ico_arr">바로가기</span>
 							</a>
 						</li>
 						<li>
-							<a href="#" class="ico60_tipheart">
+							<a class="ico60_tipheart">
 								<strong class="tit">출산·육아</strong>
 								<p class="txt_ellipsis line2">출산/육아를 위해 일을 쉬거나 근무 시간을 줄여야 할 거 같아요</p>
 								<span class="ico_arr">바로가기</span>
 							</a>
 						</li>
 					</ul>
-					<a href="#" class="btn_more"><span class="blind">고용정책 정보</span> 더보기</a>
+					<a class="btn_more"><span class="blind">고용정책 정보</span> 더보기</a>
 				</div>
 			</div>
 		</div>
