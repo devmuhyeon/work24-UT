@@ -48,73 +48,74 @@
 		</div>
 		<script src="/work24-UT/js/jquery-3.7.1.min.js"></script>
 		<script src="/work24-UT/js/ut-a-common.js"></script>
+		<script src="/work24-UT/js/ut-alert.js"></script>
 
-<script>
-	document.addEventListener('DOMContentLoaded', function () {
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
 
-		var form = document.getElementById('surveyForm');
-		var textarea = document.getElementById('improve_text');
-		var count = document.querySelector('#improve_count .current_count');
-		var btnSubmit = document.getElementById('btnSubmit');
-		var maxLength = textarea ? Number(textarea.getAttribute('maxlength')) || 100 : 100;
+				var form = document.getElementById('surveyForm');
+				var textarea = document.getElementById('improve_text');
+				var count = document.querySelector('#improve_count .current_count');
+				var btnSubmit = document.getElementById('btnSubmit');
+				var maxLength = textarea ? Number(textarea.getAttribute('maxlength')) || 100 : 100;
 
-		function updateCount() {
-			if (!textarea || !count) return;
+				function updateCount() {
+					if (!textarea || !count) return;
 
-			if (textarea.value.length > maxLength) {
-				textarea.value = textarea.value.substring(0, maxLength);
-			}
+					if (textarea.value.length > maxLength) {
+						textarea.value = textarea.value.substring(0, maxLength);
+					}
 
-			count.textContent = textarea.value.length;
-		}
+					count.textContent = textarea.value.length;
+				}
 
-		function saveAndMove() {
-			var improveText = textarea ? textarea.value.trim() : '';
+				function saveAndMove() {
+					var improveText = textarea ? textarea.value.trim() : '';
 
-			sessionStorage.setItem(
-				'utCoSurvey',
-				JSON.stringify({
-					improveText: improveText
-				})
-			);
+					sessionStorage.setItem(
+						'utCoSurvey',
+						JSON.stringify({
+							improveText: improveText
+						})
+					);
 
-			location.href = '/work24-UT/group_a/upload.html';
-		}
+					location.href = '/work24-UT/group_a/upload.html';
+				}
 
-		/* form 기본 GET 전송 강제 차단 */
-		if (form) {
-			form.setAttribute('method', 'post');
-			form.setAttribute('action', 'javascript:void(0);');
+				/* form 기본 GET 전송 강제 차단 */
+				if (form) {
+					form.setAttribute('method', 'post');
+					form.setAttribute('action', 'javascript:void(0);');
 
-			form.addEventListener('submit', function (e) {
-				e.preventDefault();
-				e.stopPropagation();
+					form.addEventListener('submit', function (e) {
+						e.preventDefault();
+						e.stopPropagation();
 
-				saveAndMove();
+						saveAndMove();
 
-				return false;
-			}, true);
-		}
+						return false;
+					}, true);
+				}
 
-		if (textarea) {
-			textarea.addEventListener('input', updateCount);
-			updateCount();
-		}
+				if (textarea) {
+					textarea.addEventListener('input', updateCount);
+					updateCount();
+				}
 
-		if (btnSubmit) {
-			btnSubmit.setAttribute('type', 'button');
+				if (btnSubmit) {
+					btnSubmit.setAttribute('type', 'button');
 
-			btnSubmit.addEventListener('click', function (e) {
-				e.preventDefault();
-				e.stopPropagation();
+					btnSubmit.addEventListener('click', function (e) {
+						e.preventDefault();
+						e.stopPropagation();
 
-				saveAndMove();
+						saveAndMove();
 
-				return false;
-			}, true);
-		}
+						return false;
+					}, true);
+				}
 
-	});
-</script>
+			});
+		</script>
 	</body>
 </html>
