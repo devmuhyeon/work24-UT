@@ -8,7 +8,7 @@ $(function() {
 	let taskResult = null;
 
 	const clickLogs = [];
-	const targetMenu = '취업동향 모아보기';
+	const targetMenu = '고용정책';
 	const limitTime = 40 * 1000;
 
 	const $frame = $('#testFrame');
@@ -207,19 +207,25 @@ $(function() {
 				.split('/')
 				.pop();
 
-		if (currentPage === 'ut-asis-a.html') {
+		/*
+			B AS-IS
+		*/
+		if (currentPage === 'ut-asis-b.html') {
 
 			location.href =
-				'/work24-UT/group_b/ut-tobe-a.html';
+				'/work24-UT/ut-tobe-b.html';
 
 			return;
 
 		}
 
-		if (currentPage === 'ut-tobe-a.html') {
+		/*
+			B TO-BE
+		*/
+		if (currentPage === 'ut-tobe-b.html') {
 
 			location.href =
-				'/work24-UT/co-survey.html';
+				'/work24-UT/lnb.html';
 
 			return;
 

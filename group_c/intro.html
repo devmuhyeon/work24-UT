@@ -47,45 +47,14 @@
         </div>
 
         <script src="/work24-UT/js/jquery-3.7.1.min.js"></script>
-        <script src="/work24-UT/js/url.js"></script>
+        <script src="/work24-UT/js/ut-c-common.js"></script>
         <script>
             $(function () {
-
-                var isValid = UT_URL.setGroupFromUrl();
-
-                if (!isValid) {
-
-                    $('.btn_submit')
-                        .prop('disabled', true)
-                        .attr('aria-disabled', 'true')
-                        .on('click', function (e) {
-                            e.preventDefault();
-                        });
-
-                    alert('잘못된 접근입니다.');
-
-                    if (document.referrer) {
-
-                        history.back();
-
-                    } else {
-
-                        location.href = '/work24-UT/intro.html';
-
-                    }
-
-                    return;
-
-                }
-
-                var group = UT_URL.getGroup();
-
-                $('.btn_submit').attr(
-                    'href',
-                    '/work24-UT/survey.html?group=' + encodeURIComponent(group)
-                );
-
+                sessionStorage.setItem('ut_group', 'C');
+                $('#btnStart').on('click', function () {
+                    location.href = '/work24-UT/group_c/survey.html';
+                });
             });
-            </script>
+        </script>
     </body>
 </html>
