@@ -10,6 +10,22 @@
         <link rel="stylesheet" href="/work24-UT/css/survey.css">
         <link rel="stylesheet" href="/work24-UT/css/intro.css">
         <title>고용24 사용자 경험 조사</title>
+        <script>
+            $(function () {
+                var ua = navigator.userAgent;
+                var isPhone =
+                    /iPhone|iPod|Windows Phone|IEMobile|BlackBerry|Opera Mini/i.test(ua) ||
+                    (/Android/i.test(ua) && /Mobile/i.test(ua));
+                if (isPhone) {
+                    $('body').html(
+                        '<main style="padding:40px;text-align:center;">' +
+                            '<h1>PC 환경에서만 참여 가능합니다.</h1>' +
+                            '<p>모바일에서는 참여할 수 없습니다.</p>' +
+                        '</main>'
+                    );
+                }
+            });
+            </script>
     </head>
 
     <body>
