@@ -88,7 +88,6 @@
 		<script src="/work24-UT/js/jquery-3.7.1.min.js"></script>
 		<script src="/work24-UT/js/ut-c-common.js"></script>
 		<script src="/work24-UT/js/alert.js"></script>
-		<script src="/work24-UT/js/jquery-3.7.1.min.js"></script>
 		<script>
 			$(function () {
 
@@ -155,7 +154,11 @@
 					taskResult = makeResult('fail', null);
 
 					$('#failPopup')
+						.appendTo('body')
 						.removeAttr('hidden')
+						.css({
+							display: 'flex'
+						})
 						.hide()
 						.fadeIn(200, function () {
 
@@ -289,7 +292,10 @@
 						taskResult
 					);
 
-					goNext();
+					sessionStorage.removeItem(startTimeKey);
+
+					location.href =
+						'/work24-UT/group_c/ut-tobe-b.html';
 
 				});
 
