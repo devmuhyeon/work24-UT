@@ -224,7 +224,7 @@ $(function () {
 
         $(frameDoc)
             .off('click.utTest')
-            .on('click.utTest', 'a, button', function (e) {
+            .on('click.utTest', 'a, button', 'a span', function (e) {
 
                 if (!isStarted || isFinished) return;
 
