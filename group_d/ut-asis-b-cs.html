@@ -86,77 +86,151 @@
 		</div>
 
 		<script src="/work24-UT/js/jquery-3.7.1.min.js"></script>
+		<script src="/work24-UT/js/ut-d-common.js"></script>
 		<script src="/work24-UT/js/alert.js"></script>
 		<script>
-		$(function () {
+			$(function () {
 
-			const LIMIT = 40 * 1000;
+				const LIMIT = 40 * 1000;
+				const targetMenu = '고용정책';
+				const startTimeKey = 'bTypeStartTime';
 
-			function openFail(message) {
+				let isStarted = false;
+				let isFinished = false;
+				let timeoutTimer = null;
+				let taskResult = null;
+				let clickCount = 0;
 
-				$('#failPopup')
-					.removeAttr('hidden')
-					.css({
-						display: 'flex'
+				const clickLogs = [];
+				const $frame = $('#testFrame');
+
+				$('#targetMenuName').text(targetMenu);
+				$('#startTest').focus();
+
+				function getStartTime() {
+
+					return Number(sessionStorage.getItem(startTimeKey)) || Date.now();
+
+				}
+
+				function saveClick($clicked) {
+
+					clickCount++;
+
+					clickLogs.push({
+						text: $.trim($clicked.text()),
+						second: Math.round((Date.now() - getStartTime()) / 1000)
 					});
 
-			}
+				}
 
-			$('#startTest').on('click', function () {
+				function makeResult(resultType, $clicked) {
 
-				sessionStorage.setItem(
-					'b_start',
-					Date.now()
-				);
+					const startTime = getStartTime();
+					const endTime = Date.now();
 
-				$('#utOverlay').hide();
+					return {
+						targetMenu: targetMenu,
+						finalClickMenu: $clicked ? $.trim($clicked.text()) : '',
+						failReason: '',
+						clickCount: clickCount,
+						duration: Math.round((endTime - startTime) / 1000),
+						clickPath: UT.makeClickPath(clickLogs),
+						result: resultType,
+						startTime: new Date(startTime).toISOString(),
+						endTime: new Date(endTime).toISOString(),
+						userAgent: navigator.userAgent
+					};
 
-				setTimeout(function () {
+				}
 
-					openFail('시간초과');
+				function openFail() {
 
-				}, LIMIT);
+					if (isFinished) return;
 
-			});
+					isFinished = true;
+					clearTimeout(timeoutTimer);
 
-			const $frame = $('#testFrame');
+					taskResult = makeResult('fail', null);
 
-			$frame.on('load', function () {
+					$('#failPopup')
+						.appendTo('body')
+						.removeAttr('hidden')
+						.css({
+							display: 'flex'
+						})
+						.hide()
+						.fadeIn(200, function () {
 
-				setTimeout(function () {
+							$(this)
+								.find('input[name="failReason"]')
+								.first()
+								.focus();
+
+						});
+
+				}
+
+				function goAsisPage() {
+
+					location.href =
+						'/work24-UT/group_d/ut-asis-b.html';
+
+				}
+
+				function goSurveyPage() {
+
+					location.href =
+						'/work24-UT/group_d/co-survey.html';
+
+				}
+
+				function bindFrameEvent() {
 
 					try {
 
-						const frameDoc =
-							$frame[0]
-							.contentWindow
-							.document;
+						const frame = $frame[0];
+
+						if (
+							!frame ||
+							!frame.contentWindow ||
+							!frame.contentWindow.document
+						) {
+							return;
+						}
+
+						const frameDoc = frame.contentWindow.document;
 
 						$(frameDoc)
-							.off('click.move')
-							.on(
-								'click.move',
-								'a',
-								function (e) {
+							.off('click.typeBAsisStart')
+							.on('click.typeBAsisStart', 'a, button', function (e) {
 
-									const href =
-										$(this).attr('href') || '';
+								if (
+									!isStarted ||
+									isFinished
+								) {
+									return;
+								}
 
-									if (
-										href.indexOf(
-											'/work24-UT/group_d/ut-asis-b.html'
-										) > -1
-									) {
+								const $clicked = $(this);
 
-										e.preventDefault();
+								saveClick($clicked);
 
-										location.href =
-											'/work24-UT/group_d/ut-asis-b.html';
+								if (
+									$clicked.attr('data-answer') === 'true' ||
+									$.trim($clicked.text()).indexOf(targetMenu) > -1
+								) {
 
-									}
+									e.preventDefault();
+
+									isFinished = true;
+									clearTimeout(timeoutTimer);
+
+									goAsisPage();
 
 								}
-							);
+
+							});
 
 					} catch (e) {
 
@@ -164,11 +238,84 @@
 
 					}
 
-				}, 300);
+				}
+
+				$('#startTest').on('click', function () {
+
+					isStarted = true;
+
+					sessionStorage.setItem(
+						startTimeKey,
+						Date.now()
+					);
+
+					$('#utPage').removeAttr('aria-hidden');
+
+					$('#utOverlay').fadeOut(200, function () {
+
+						$(this).remove();
+
+					});
+
+					timeoutTimer = setTimeout(function () {
+
+						openFail();
+
+					}, LIMIT);
+
+				});
+
+				$(document).on('change', 'input[name="failReason"]', function () {
+
+					$('#failError').attr('hidden', true);
+
+				});
+
+				$(document).on('click', '.btn_next', function () {
+
+					if (!taskResult) return;
+
+					const failReason =
+						$('input[name="failReason"]:checked').val();
+
+					if (!failReason) {
+
+						$('#failError').removeAttr('hidden');
+
+						$('input[name="failReason"]')
+							.first()
+							.focus();
+
+						return;
+
+					}
+
+					$('#failError').attr('hidden', true);
+
+					taskResult.failReason = failReason;
+
+					UT.saveTask(
+						'typeBAsis',
+						taskResult
+					);
+
+					sessionStorage.removeItem(startTimeKey);
+
+					goSurveyPage();
+
+				});
+
+				$frame.on('load', function () {
+
+					setTimeout(function () {
+
+						bindFrameEvent();
+
+					}, 300);
+
+				});
 
 			});
-
-		});
 		</script>
 
 

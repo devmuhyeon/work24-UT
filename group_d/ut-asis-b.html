@@ -88,6 +88,7 @@
 
 				const LIMIT = 40 * 1000;
 				const targetMenu = '고용정책';
+				const startTimeKey = 'bTypeStartTime';
 
 				let isFinished = false;
 				let taskResult = null;
@@ -95,14 +96,10 @@
 				let timeoutTimer = null;
 
 				const clickLogs = [];
+				const $frame = $('#testFrame');
 
 				const startTime =
-					Number(sessionStorage.getItem('bTypeStartTime')) || Date.now();
-
-				const isTimeout =
-					location.search.indexOf('timeout=true') > -1;
-
-				const $frame = $('#testFrame');
+					Number(sessionStorage.getItem(startTimeKey)) || Date.now();
 
 				function saveClick($clicked) {
 
@@ -144,6 +141,7 @@
 					taskResult = makeResult('success', $clicked);
 
 					$('#successPopup')
+						.appendTo('body')
 						.removeAttr('hidden')
 						.hide()
 						.fadeIn(200, function () {
@@ -166,6 +164,7 @@
 					taskResult = makeResult('fail', null);
 
 					$('#failPopup')
+						.appendTo('body')
 						.removeAttr('hidden')
 						.hide()
 						.fadeIn(200, function () {
@@ -176,6 +175,13 @@
 								.focus();
 
 						});
+
+				}
+
+				function goSurveyPage() {
+
+					location.href =
+						'/work24-UT/group_d/co-survey.html';
 
 				}
 
@@ -197,29 +203,25 @@
 
 						$(frameDoc)
 							.off('click.typeBAsis')
-							.on(
-								'click.typeBAsis',
-								'a, button',
-								function (e) {
+							.on('click.typeBAsis', 'a, button', function (e) {
 
-									if (isFinished) return;
+								if (isFinished) return;
 
-									const $clicked = $(this);
+								const $clicked = $(this);
 
-									saveClick($clicked);
+								saveClick($clicked);
 
-									if (
-										$clicked.attr('data-answer') === 'true'
-									) {
+								if (
+									$clicked.attr('data-answer') === 'true'
+								) {
 
-										e.preventDefault();
+									e.preventDefault();
 
-										openSuccess($clicked);
-
-									}
+									openSuccess($clicked);
 
 								}
-							);
+
+							});
 
 					} catch (e) {
 
@@ -256,16 +258,20 @@
 
 						}
 
+						$('#failError').attr('hidden', true);
+
 						taskResult.failReason = failReason;
 
 					}
 
-					UT.saveTask('typeBAsis', taskResult);
+					UT.saveTask(
+						'typeBAsis',
+						taskResult
+					);
 
-					sessionStorage.removeItem('bTypeStartTime');
+					sessionStorage.removeItem(startTimeKey);
 
-					location.href =
-						'/work24-UT/group_d/co-survey.html';
+					goSurveyPage();
 
 				});
 
@@ -278,14 +284,6 @@
 					}, 300);
 
 				});
-
-				if (isTimeout) {
-
-					openFail();
-
-					return;
-
-				}
 
 				const remainTime =
 					LIMIT - (Date.now() - startTime);
@@ -305,6 +303,6 @@
 				}, remainTime);
 
 			});
-			</script>
+		</script>
 	</body>
 </html>
