@@ -17,11 +17,10 @@
 				'flex-direction:column;' +
 				'justify-content:center;' +
 				'align-items:center;' +
-				'min-height:100vh;' +
 				'padding:24px;' +
 				'box-sizing:border-box;' +
 				'text-align:center;' +
-				'line-height:1.8;' +
+				'line-height:1.5;' +
 			'">' +
 
 				'<h1 style="margin:0 0 24px;font-size:24px;font-weight:700; color: #111111;">PC 환경에서만 참여 가능합니다.</h1>' +
