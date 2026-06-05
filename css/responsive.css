@@ -1,0 +1,17 @@
+@charset "utf-8";
+
+@media screen and (max-width: 1400px) {
+	.ut_frame {zoom: 1; height: 100vh;}
+}
+@media screen and (max-width: 1259px) {
+	.ut_frame {zoom: 0.95; height: calc(100vh + 300px);}
+}
+@media screen and (max-width: 1279px) {
+    .ut_frame {zoom: 0.75; height: calc(100vh + 500px);}
+}
+@media screen and (max-width: 1023px) {
+    .ut_frame {zoom: 0.7; height: calc(100vh + 500px);}
+}
+@media screen and (max-width: 959px) {
+    .ut_frame {zoom: 0.55; height: calc(100vh + 800px);}
+}
