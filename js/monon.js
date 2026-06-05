@@ -24,7 +24,7 @@
 				'line-height:1.8;' +
 			'">' +
 
-				'<h1 style="margin:0 0 24px;font-size:20px;font-weight:700;">PC 환경에서만 참여 가능합니다.</h1>' +
+				'<h1 style="margin:0 0 24px;font-size:20px;font-weight:700; color: #111111;">PC 환경에서만 참여 가능합니다.</h1>' +
 
 				'<p style="margin:0 0 16px;font-size:14px; color: #757575;">현재 진행되는 사용자 경험 조사는 PC 화면 기준으로 제작되어 있습니다.</p>' +
 
