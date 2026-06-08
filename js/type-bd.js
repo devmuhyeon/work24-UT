@@ -204,10 +204,27 @@ $(function() {
 
 	}
 
-	$frame.on('load', function() {
+	var isFrameBound = false;
+    function initFrame() {
+        if (isFrameBound) return;
+        isFrameBound = true;
 
-		bindFrameClick();
+        bindFrameClick();
+    }
 
-	});
+    // load 이벤트
+    $frame.on('load', function () {
+        console.log('load');
+        initFrame();
+    });
+
+    // 이미 로딩된 경우 대응
+    if ($frame[0].contentDocument?.readyState === 'complete') {
+        console.log('already loaded');
+        initFrame();
+    }
+
+    // fallback
+    setTimeout(initFrame, 500);
 
 });
