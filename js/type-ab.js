@@ -279,4 +279,9 @@ $(function () {
 
         }, 500);
 
+        setTimeout(function () {
+
+            initFrame();
+
+        }, 1000);
 });
