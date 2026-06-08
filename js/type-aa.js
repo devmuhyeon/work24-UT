@@ -69,16 +69,14 @@ $(function () {
 
         var now = Date.now();
 
-        var stepSecond = getSecond(now - lastClickTime);
+        var totalSecond = getSecond(now - startTime);
 
         clickCount++;
 
         clickLogs.push({
             text: cleanText($clicked.text()),
-            second: stepSecond
+            second: totalSecond
         });
-
-        lastClickTime = now;
 
     }
 
@@ -224,11 +222,17 @@ $(function () {
 
         $(frameDoc)
             .off('click.utTest')
-            .on('click.utTest', 'a, button, a span', function (e) {
+            .on('click.utTest', 'a, button', function (e) {
 
                 if (!isStarted || isFinished) return;
 
-                var $clicked = $(this);
+                var $clicked = $(e.target).closest('a, button');
+
+                if (!$clicked.length) return;
+
+                var clickText = cleanText($clicked.text());
+
+                if (!clickText) return;
 
                 saveClick($clicked);
 

@@ -41,11 +41,17 @@ $(function() {
 
 	function saveClick($clicked) {
 
+		var text = $.trim($clicked.text());
+
+		if ($clicked.closest('.lnb').length) {
+			text = 'lnb.' + text;
+		}
+
 		clickCount++;
 
 		clickLogs.push({
-			text: $.trim($clicked.text()),
-			second: Math.round((Date.now() - startTime) / 1000)
+			text: text,
+			second: Number(((Date.now() - startTime) / 1000).toFixed(1))
 		});
 
 	}
@@ -59,7 +65,7 @@ $(function() {
 			finalClickMenu: $clicked ? $.trim($clicked.text()) : '',
 			failReason: '',
 			clickCount: clickCount,
-			duration: Math.round((endTime - startTime) / 1000),
+			duration: ((endTime - startTime) / 1000).toFixed(1),
 			clickPath: UT.makeClickPath(clickLogs),
 			result: resultType,
 			startTime: new Date(startTime).toISOString(),
