@@ -94,10 +94,30 @@
 
 				let isFinished = false;
 				let taskResult = null;
-				let clickCount = 0;
+				const logKey = 'bTypeAsisClickLogs';
+
+					let savedLogData = {};
+
+					try {
+
+						savedLogData = JSON.parse(
+							sessionStorage.getItem(logKey) || '{}'
+						);
+
+					} catch (e) {
+
+						savedLogData = {};
+
+					}
+
+					let clickCount =
+						Number(savedLogData.clickCount) || 0;
 				let timeoutTimer = null;
 
-				const clickLogs = [];
+				const clickLogs =
+	$.isArray(savedLogData.clickLogs)
+		? savedLogData.clickLogs
+		: [];
 				const $frame = $('#testFrame');
 
 				const startTime =
@@ -277,6 +297,7 @@
 						taskResult
 					);
 
+					sessionStorage.removeItem(logKey);
 					sessionStorage.removeItem(startTimeKey);
 
 					goSurveyPage();

@@ -104,6 +104,7 @@
 				let clickCount = 0;
 
 				const clickLogs = [];
+				const logKey = 'bTypeAsisClickLogs';
 				const $frame = $('#testFrame');
 
 				$('#targetMenuName').text(targetMenu);
@@ -127,8 +128,20 @@
 
 					clickLogs.push({
 						text: text,
-						second: Number(((Date.now() - startTime) / 1000).toFixed(1))
+						second: Number(((Date.now() - getStartTime()) / 1000).toFixed(1))
 					});
+
+				}
+
+				function saveTempLog() {
+
+					sessionStorage.setItem(
+						logKey,
+						JSON.stringify({
+							clickCount: clickCount,
+							clickLogs: clickLogs
+						})
+					);
 
 				}
 
@@ -181,10 +194,18 @@
 
 				function goAsisPage() {
 
-					location.href =
-						'/work24-UT/group_d/ut-asis-b.html';
+						sessionStorage.setItem(
+							logKey,
+							JSON.stringify({
+								clickCount: clickCount,
+								clickLogs: clickLogs
+							})
+						);
 
-				}
+						location.href =
+							'/work24-UT/group_d/ut-asis-b.html';
+
+					}
 
 				function goSurveyPage() {
 
@@ -219,10 +240,11 @@
 								) {
 									return;
 								}
-
+								
 								const $clicked = $(this);
 
 								saveClick($clicked);
+								saveTempLog();
 
 								if (
 									$clicked.attr('data-answer') === 'true' ||
@@ -307,6 +329,7 @@
 						taskResult
 					);
 
+					sessionStorage.removeItem(logKey);
 					sessionStorage.removeItem(startTimeKey);
 
 					goSurveyPage();

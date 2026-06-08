@@ -104,6 +104,7 @@
 				let clickCount = 0;
 
 				const clickLogs = [];
+				const logKey = 'bTypeAsisClickLogs';
 				const $frame = $('#testFrame');
 
 				$('#targetMenuName').text(targetMenu);
@@ -127,7 +128,7 @@
 
 					clickLogs.push({
 						text: text,
-						second: Number(((Date.now() - startTime) / 1000).toFixed(1))
+						second: Number(((Date.now() - getStartTime()) / 1000).toFixed(1))
 					});
 
 				}
@@ -216,6 +217,19 @@
 								const $clicked = $(this);
 
 								saveClick($clicked);
+								saveTempLog();
+
+								function saveTempLog() {
+
+									sessionStorage.setItem(
+										logKey,
+										JSON.stringify({
+											clickCount: clickCount,
+											clickLogs: clickLogs
+										})
+									);
+
+								}
 
 								if (
 									$clicked.attr('data-answer') === 'true' ||
