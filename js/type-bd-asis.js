@@ -4,7 +4,7 @@ $(function() {
 	let startTime = null;
 	let timeoutTimer = null;
 
-	const limitTime = 40 * 1000;
+	const limitTime = 60 * 1000;
 	const targetMenu = '고용정책';
 
 	const startTimeKey = 'bTypeStartTime';

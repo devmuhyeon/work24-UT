@@ -9,7 +9,7 @@ $(function() {
 
 	const clickLogs = [];
 	const targetMenu = '고용정책';
-	const limitTime = 40 * 1000;
+	const limitTime = 60 * 1000;
 
 	const $frame = $('#testFrame');
 
